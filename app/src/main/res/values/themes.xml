@@ -1,0 +1,34 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.AliaMoment" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryVariant">@color/color_primary_dark</item>
+        <item name="colorOnPrimary">@color/color_on_primary</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/color_primary</item>
+        <item name="colorSecondaryVariant">@color/color_primary_dark</item>
+        <item name="colorOnSecondary">@color/color_on_primary</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.AliaMoment.NoActionBar" parent="Theme.AliaMoment">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
+    <style name="Theme.AliaMoment.NoActionBar.SplashBackground" parent="Theme.AliaMoment.NoActionBar">
+        <item name="android:statusBarColor">@color/color_white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowSplashscreenContent">@drawable/bg_window_splash</item>
+    </style>
+
+    <style name="Theme.MaterialComponents.DayNight.BottomSheetDialog.App" parent="Theme.MaterialComponents.DayNight.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.Design.BottomSheet.Modal.App</item>
+    </style>
+
+    <style name="Widget.Design.BottomSheet.Modal.App" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bg_bottom_navigation_shadow</item>
+    </style>
+
+</resources>

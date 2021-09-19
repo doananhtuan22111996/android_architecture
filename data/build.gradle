@@ -1,0 +1,107 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+}
+
+android {
+    compileSdkVersion versions.application.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion versions.application.minSdkVersion
+        targetSdkVersion versions.application.targetSdkVersion
+        versionCode versions.application.versionCode
+        versionName versions.application.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "mode"
+    productFlavors {
+
+        ext.loadConfig = { context ->
+            Properties configProps = new Properties()
+            configProps.load(project.rootProject.file("env.${context.name}.properties").newDataInputStream())
+            context.buildConfigField("String", "MAIN_DOMAIN", configProps.getProperty('main.domain'))
+            context.buildConfigField("String", "OTABLE_ENDPOINT", configProps.getProperty('otable.endpoint'))
+            context.buildConfigField("String", "SPARROW_ID", configProps.getProperty('sparrow.id'))
+            context.buildConfigField("String", "SPARROW_URL_STORE", configProps.getProperty('sparrow.url_store'))
+        }
+
+        dev {
+            dimension "mode"
+            loadConfig(productFlavors.dev)
+        }
+        staging {
+            dimension "mode"
+            loadConfig(productFlavors.staging)
+        }
+        prod {
+            dimension "mode"
+            loadConfig(productFlavors.prod)
+        }
+    }
+
+    compileOptions {
+        incremental true
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+
+    api project(path: ':domain')
+
+    // testing
+    testImplementation "junit:junit:${versions.test.junit}"
+    androidTestImplementation "androidx.test.ext:junit:${versions.test.androidxJunit}"
+    androidTestImplementation "androidx.test.espresso:espresso-core:${versions.test.espressoCore}"
+
+    // debug
+    implementation "com.facebook.stetho:stetho:${versions.debug.stetho}"
+    api "com.facebook.stetho:stetho-okhttp3:${versions.debug.stetho}"
+    api "com.squareup.okhttp3:logging-interceptor:${versions.debug.loggingInterceptor}"
+
+    // firebase
+    api platform("com.google.firebase:firebase-bom:${versions.firebase.bom}")
+    api 'com.google.firebase:firebase-analytics-ktx'
+    api 'com.google.firebase:firebase-messaging-ktx'
+    api 'com.google.firebase:firebase-crashlytics-ktx'
+
+    // local
+    implementation "androidx.security:security-crypto-ktx:${versions.local.securePreference}"
+
+    // Android core
+    api "androidx.core:core-ktx:${versions.androidX.coreKTX}"
+    api "androidx.appcompat:appcompat:${versions.androidX.appcompat}"
+
+    // DI
+    implementation "com.google.dagger:dagger:${versions.di.dagger}"
+    kapt "com.google.dagger:dagger-compiler:${versions.di.dagger}"
+
+    api "com.squareup.retrofit2:retrofit:${versions.httpClient.retrofit}"
+    api "com.squareup.retrofit2:converter-gson:${versions.httpClient.retrofit}"
+    api "com.squareup.retrofit2:adapter-rxjava3:${versions.httpClient.retrofit}"
+
+}
+
+kapt {
+    correctErrorTypes true
+}

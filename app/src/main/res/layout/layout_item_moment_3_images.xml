@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="vn.geekup.app.domain.model.moment.MomentImagePosition" />
+
+        <variable
+            name="url1"
+            type="String" />
+
+        <variable
+            name="url2"
+            type="String" />
+
+        <variable
+            name="url3"
+            type="String" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/lnImagesVertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivImage1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_image_momnet_landscap"
+            app:momentImageUrl="@{url1}"
+            app:positionImage="@{MomentImagePosition.ALL_TOP}" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clImagesHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_4">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivImage2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="@dimen/margin_2"
+                android:background="@drawable/bg_image_moment_square"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="H, 1:1"
+                app:layout_constraintEnd_toStartOf="@id/ivImage3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:momentImageUrl="@{url2}"
+                app:positionImage="@{MomentImagePosition.BOTTOM_LEFT}" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivImage3"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/margin_2"
+                android:background="@drawable/bg_image_moment_square"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="H, 1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ivImage2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:momentImageUrl="@{url3}"
+                app:positionImage="@{MomentImagePosition.BOTTOM_RIGHT}" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

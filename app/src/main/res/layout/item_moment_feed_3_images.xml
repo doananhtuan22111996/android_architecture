@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="moment"
+            type="vn.geekup.app.model.moment.MomentModelV" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_4"
+        android:background="@color/color_item_moment"
+        android:paddingHorizontal="@dimen/padding_16"
+        android:paddingTop="@dimen/padding_15"
+        android:paddingBottom="@dimen/padding_12">
+
+        <include
+            android:id="@+id/layoutMomentHeader"
+            layout="@layout/layout_item_moment_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:moment="@{moment}" />
+
+        <View
+            android:id="@+id/vLine"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/stroke_0.5"
+            android:layout_marginStart="-16dp"
+            android:layout_marginTop="@dimen/margin_9"
+            android:layout_marginEnd="-16dp"
+            android:background="@color/color_item_moment_line"
+            app:layout_constraintTop_toBottomOf="@id/layoutMomentHeader" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvContent"
+            style="@style/TextAppearance.FontPath.Gilroy.Body_15_Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_15"
+            android:hyphenationFrequency="none"
+            android:visibility="@{moment.content.isEmpty() == true ? View.GONE : View.VISIBLE}"
+            app:layout_constraintTop_toBottomOf="@id/vLine"
+            app:moment="@{moment}"
+            app:onClickLink="@{moment.onClickLinkListener}"
+            app:onClickSeeMore="@{moment.onClickSeeMoreListener}"
+            tools:text="Đồng đội cùng làm cùng chơi #WorkFromHome rồi vẫn nhớ lời cảm ơn… see more" />
+
+        <include
+            android:id="@+id/layoutMoment3Images"
+            layout="@layout/layout_item_moment_3_images"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_12"
+            android:visibility="@{moment.imgUrls.size() == 3 ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toBottomOf="@id/tvContent"
+            app:url1="@{moment.imgUrls.size() == 3 ? moment.imgUrls.get(0).original : ``}"
+            app:url2="@{moment.imgUrls.size() == 3 ? moment.imgUrls.get(1).square.x1 : ``}"
+            app:url3="@{moment.imgUrls.size() == 3 ? moment.imgUrls.get(2).square.x1 : ``}" />
+
+        <include
+            android:id="@+id/layoutMomentFooter"
+            layout="@layout/layout_item_moment_footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_11"
+            app:layout_constraintTop_toBottomOf="@id/layoutMoment3Images"
+            app:isCommented="@{moment.thisUserCommented}"
+            app:isLiked="@{moment.thisUserLiked}"
+            app:isShared="@{false}"
+            app:numberComments="@{moment.commentCount}"
+            app:numberLikes="@{moment.likeCount}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

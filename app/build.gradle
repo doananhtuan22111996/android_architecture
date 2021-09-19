@@ -1,0 +1,173 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
+}
+
+// Load keystore
+def keystorePropertiesFile = rootProject.file("keystore.properties");
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+android {
+    compileSdkVersion versions.application.compileSdkVersion
+
+    defaultConfig {
+        applicationId "vn.geekup.alia"
+        minSdkVersion versions.application.minSdkVersion
+        targetSdkVersion versions.application.targetSdkVersion
+        versionCode versions.application.versionCode
+        versionName versions.application.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+    }
+
+    signingConfigs {
+        release {
+            storeFile file(keystoreProperties['KEY_FILE'])
+            storePassword keystoreProperties['KEY_PASS']
+            keyAlias keystoreProperties['KEY_ALIAS']
+            keyPassword keystoreProperties['KEY_PASS']
+        }
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            shrinkResources false
+            minifyEnabled false
+        }
+        release {
+            debuggable false
+            shrinkResources true
+            minifyEnabled true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    flavorDimensions "mode"
+    productFlavors {
+
+        ext.loadConfig = { context ->
+            Properties configProps = new Properties()
+            configProps.load(project.rootProject.file("env.${context.name}.properties").newDataInputStream())
+            context.applicationId configProps.getProperty("application.id")
+            context.manifestPlaceholders = [
+                    applicationName: configProps.getProperty("application.name"),
+            ]
+        }
+
+        dev {
+            dimension "mode"
+            loadConfig(productFlavors.dev)
+        }
+        staging {
+            dimension "mode"
+            loadConfig(productFlavors.staging)
+        }
+        prod {
+            dimension "mode"
+            loadConfig(productFlavors.prod)
+        }
+    }
+    android.variantFilter { variant ->
+        if (variant.buildType.name == 'release' && variant.getFlavors().get(0).name == 'dev') {
+            variant.setIgnore(true)
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            Properties configProps = new Properties()
+            configProps.load(project.rootProject.file("env.${variant.flavorName}.properties").newDataInputStream())
+            def appName = configProps.getProperty("application.name")
+            def formattedDate = new Date().format('yyyyddMMHHmm')
+            def newApkName = "${appName.toLowerCase().replace(" ", "_")}_${formattedDate}.apk"
+            outputFileName = new File(newApkName)
+        }
+    }
+
+    packagingOptions {
+        exclude 'LICENSE.txt'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+        exclude 'META-INF/jersey-module-version'
+    }
+
+    compileOptions {
+        incremental true
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildFeatures {
+        dataBinding true
+        viewBinding true
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation "org.jetbrains.kotlin:kotlin-reflect:${versions.kotlin.kotlinStdlib}"
+//    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    testImplementation "junit:junit:${versions.test.junit}"
+    androidTestImplementation "androidx.test.ext:junit:${versions.test.androidxJunit}"
+    androidTestImplementation "androidx.test.espresso:espresso-core:${versions.test.espressoCore}"
+
+    implementation project(path: ':data')
+
+    implementation "io.reactivex.rxjava3:rxandroid:${versions.reactive.rxandroid}"
+
+    // DI
+    implementation "com.google.dagger:dagger:${versions.di.dagger}"
+    kapt "com.google.dagger:dagger-compiler:${versions.di.dagger}"
+    implementation "com.google.dagger:dagger-android:${versions.di.dagger}"
+    implementation "com.google.dagger:dagger-android-support:${versions.di.dagger}"
+    kapt "com.google.dagger:dagger-android-processor:${versions.di.dagger}"
+
+    // Image
+    implementation "com.github.bumptech.glide:glide:${versions.resource.glide}"
+    implementation "jp.wasabeef:glide-transformations:${versions.resource.glideTransformations}"
+    kapt "com.github.bumptech.glide:compiler:${versions.resource.glide}"
+
+    // Font
+//    implementation "dv.trung.glux:glux-font:${versions.resource.glux}"
+//    kapt "dv.trung.glux:glux-font-compiler:${versions.resource.glux}"
+
+    // AndroidX
+    implementation "com.google.android.material:material:${versions.google.material}"
+    implementation "androidx.constraintlayout:constraintlayout:${versions.androidX.constraintlayout}"
+    implementation "androidx.core:core-splashscreen:${versions.androidX.splashScreen}"
+
+    implementation "androidx.navigation:navigation-fragment-ktx:${versions.androidX.navigation}"
+    implementation "androidx.navigation:navigation-ui-ktx:${versions.androidX.navigation}"
+
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.androidX.lifecycle}"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:${versions.androidX.lifecycle}"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:${versions.swipeLayout.swiperefreshlayout}"
+
+//    implementation "androidx.paging:paging-runtime-ktx:$versions.androidX.paging"
+
+    implementation "org.jsoup:jsoup:${versions.anothers.jsoup}"
+    implementation "io.github.ponnamkarthik:richlinkpreview:${versions.anothers.richlink}"
+}
+
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xmaxerrs" << "500" // or whatever number you want
+    }
+}

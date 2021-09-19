@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/momentFeedFragment">
+
+    <fragment
+        android:id="@+id/momentFeedFragment"
+        android:name="vn.geekup.app.module.moment.feed.MomentFeedFragment"
+        android:label="fragment_feed_moment"
+        tools:layout="@layout/fragment_moment_feed" />
+
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="vn.geekup.app.module.notification.NotificationFragment"
+        android:label="fragment_notification"
+        tools:layout="@layout/fragment_notification" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="vn.geekup.app.module.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/momentDetailFragment"
+        android:name="vn.geekup.app.module.moment.detail.MomentDetailFragment"
+        android:label="fragment_moment_detail"
+        tools:layout="@layout/fragment_moment_detail" />
+
+    <fragment
+        android:id="@+id/previewMainFragment"
+        android:name="vn.geekup.app.module.media.PreviewMainFragment"
+        android:label="fragment_main_preview"
+        tools:layout="@layout/fragment_main_preview" />
+
+
+</navigation>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="vn.geekup.app.domain.model.moment.MomentImagePosition" />
+
+        <variable
+            name="url1"
+            type="String" />
+
+        <variable
+            name="url2"
+            type="String" />
+
+        <variable
+            name="url3"
+            type="String" />
+
+        <variable
+            name="url4"
+            type="String" />
+
+        <variable
+            name="numberMore"
+            type="Integer"
+            android:value="0" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/lnImagesVertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clImagesHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivImage1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="@dimen/margin_2"
+                android:background="@drawable/bg_image_moment_square"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@id/ivImage2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:momentImageUrl="@{url1}"
+                app:positionImage="@{MomentImagePosition.TOP_LEFT}" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivImage2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/margin_2"
+                android:background="@drawable/bg_image_moment_square"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ivImage1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:momentImageUrl="@{url2}"
+                app:positionImage="@{MomentImagePosition.TOP_RIGHT}" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clImagesHorizontal2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_4">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivImage3"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="@dimen/margin_2"
+                android:background="@drawable/bg_image_moment_square"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="H, 1:1"
+                app:layout_constraintEnd_toStartOf="@id/ivImage4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:momentImageUrl="@{url3}"
+                app:positionImage="@{MomentImagePosition.BOTTOM_LEFT}" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivImage4"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/margin_2"
+                android:background="@drawable/bg_image_moment_square"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="H, 1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ivImage3"
+                app:layout_constraintTop_toTopOf="parent"
+                app:momentImageUrl="@{url4}"
+                app:positionImage="@{MomentImagePosition.BOTTOM_RIGHT}" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/vNumberMore"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_image_moment_number_more"
+                android:visibility="@{numberMore > 0 ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="H, 1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/ivImage4"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvNumberMore"
+                style="@style/TextAppearance.FontPath.Gilroy.H1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@{`+` + numberMore}"
+                android:textColor="@color/color_white"
+                android:visibility="@{numberMore > 0 ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="@id/vNumberMore"
+                app:layout_constraintEnd_toEndOf="@id/vNumberMore"
+                app:layout_constraintStart_toStartOf="@id/vNumberMore"
+                app:layout_constraintTop_toTopOf="@id/vNumberMore" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

@@ -1,0 +1,71 @@
+<resources>
+    <string name="action_ok">OK</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_create">Create</string>
+    <string name="action_logout">Logout</string>
+
+    <string name="default_notification_channel_id">999</string>
+    <string name="default_notification_channel_name">Alia Moment</string>
+
+    <string name="message_unknown_error">An unknown error has occurred. Please try again.</string>
+    <string name="message_authenticate_permission">You don\'t have permission to access, please login by another account</string>
+    <string name="message_no_authenticate">No authentication</string>
+
+    <string name="title_alert_force_update">New version available</string>
+    <string name="message_alert_force_update">The new version is already on the Google Play store. To continue using the application, please update it to the newest version.</string>
+
+    <string name="title_alert_logout">Logout</string>
+    <string name="message_alert_logout">Do you want to logout?</string>
+
+    <string name="message_no_internet_access">Please check your network connection</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_splash_fragment">Hello splash fragment</string>
+    <string name="hello_main_fragment">Hello main fragment</string>
+    <!-- TODO: End Remove or change this placeholder text -->
+
+    <string name="nav_moment_feeds">Moment Feeds</string>
+    <string name="nav_notifications">Notifications</string>
+    <string name="nav_profile">Profile</string>
+    <string name="login_share_and_store_every_moments_at_geek_up">Share and store every moments at GEEK Up.</string>
+    <string name="login_with_otable">Login with OTable</string>
+    <string name="moment_feeds_are_empty">Moment Feed Is Empty</string>
+    <string name="item_moment_liked">Liked</string>
+    <string name="item_moment_comment_7pts">+7pts</string>
+    <string name="item_moment_share_10pts">+10pts</string>
+    <string name="moment_header_bar_let_s_share_the_moment_you_smile">Let’s share the moment you smile</string>
+    <string name="item_moment_like_7pts">+5pts</string>
+    <string name="item_moment_share">Share</string>
+    <string name="moment_header_bar_status">Happy %1$s 🤟, %2$s!</string>
+    <string name="just_now">just now</string>
+    <string name="minute">m</string>
+    <string name="hour">h</string>
+    <string name="calendar_select_date">Select date</string>
+    <string name="calendar_all_days">All Days</string>
+    <string name="close">Close</string>
+    <string name="reset">Reset</string>
+    <string name="moment_detail_title">%1$s\'s moment</string>
+    <string name="moment_detail_comment_empty">Moment Comment Is Empty</string>
+    <string name="moment_detail_leave_your_comment">Leave your comment</string>
+    <string name="view_previous_comment">View previous comment ...</string>
+    <string name="preview_image_title">%1$d / %2$d</string>
+    <string name="profile_your_indicator">Your indicator</string>
+    <string name="profile_sparrow">Sparrow</string>
+    <string name="profile_pts">&#160;pts</string>
+    <string name="profile_give_now">Give now</string>
+    <string name="profile_the_ranger">The Ranger</string>
+    <string name="profile_hide_indicator_on_newsfeed">Hide indicator on Newsfeed</string>
+    <string name="profile_show_indicator_on_newsfeed">Show indicator on Newsfeed</string>
+    <string name="profile_alia_points_history">Alia points history</string>
+    <string name="your_profile">Your Profile</string>
+    <string name="user_engagement_is_empty">User Engagement Is Empty</string>
+    <string name="user_engagement_point">+%1$d Alia pts&#160;</string>
+    <string name="user_engagement_like">Like %1$s’s moment</string>
+    <string name="user_engagement_comment">Reply on %1$s’s moment</string>
+    <string name="user_engagement_created">Create moment in %1$s</string>
+    <string name="profile_learn_more">Learn more</string>
+    <string name="profile_alia">Alia</string>
+    <string name="profile_the_ranger_next_level">%1$d to %2$s</string>
+    <string name="hide">Hide</string>
+
+</resources>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.AppCompat.Button.Primary_Button" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/bg_button_primary_selector</item>
+        <item name="android:textAppearanceButton">
+            @style/TextAppearance.FontPath.Gilroy.Title_Medium
+        </item>
+        <item name="android:textColor">@color/color_white</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="Widget.AppCompat.Button.Secondary_button" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/bg_button_secondary_selector</item>
+        <item name="android:textAppearanceButton">
+            @style/TextAppearance.FontPath.Gilroy.Body_13_Medium
+        </item>
+        <item name="android:textColor">@color/color_4</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:layout_height">@dimen/size_32</item>
+    </style>
+
+    <!--    On Boarding-->
+    <style name="Widget.AppCompat.Button.OnBoarding" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/bg_btn_onboarding</item>
+        <item name="android:textAppearanceButton">
+            @style/TextAppearance.FontPath.Gilroy.Title_Medium
+        </item>
+        <item name="android:textColor">@color/color_1</item>
+        <item name="textAllCaps">false</item>
+    </style>
+    <!--    End On Boarding-->
+
+    <!--    Moment-->
+    <style name="Widget.AppCompat.Button.Moment_Footer" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/bg_button_moment_footer_selector</item>
+        <item name="android:textAppearanceButton">
+            @style/TextAppearance.FontPath.Gilroy.Body_14_Medium
+        </item>
+        <item name="android:textColor">@color/color_text_button_moment_footer_selector</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+    <!--    End Moment-->
+
+</resources>

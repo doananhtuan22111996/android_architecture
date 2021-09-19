@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="day"
+            type="String" />
+
+        <variable
+            name="userInfo"
+            type="vn.geekup.app.domain.model.user.UserInfoModel" />
+
+        <variable
+            name="userIndicator"
+            type="vn.geekup.app.model.user.UserIndicatorModelV" />
+
+    </data>
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_white"
+        app:elevation="0dp">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@color/color_bg_app"
+                android:gravity="bottom"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolBarDummy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/padding_16"
+                    android:visibility="invisible"
+                    app:contentInsetEnd="0dp"
+                    app:contentInsetStart="0dp"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <View
+                        android:id="@+id/vDummy"
+                        android:layout_width="@dimen/size_40"
+                        android:layout_height="@dimen/size_40"
+                        android:padding="@dimen/padding_12" />
+
+                </androidx.appcompat.widget.Toolbar>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/lnContainerCreate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_white"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/padding_16"
+                    android:paddingBottom="@dimen/padding_16">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivAvatar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_avatar_moment_header_bar"
+                        app:avatarImageUrl="@{userInfo.avatar}" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvCreatorMoment"
+                        style="@style/TextAppearance.FontPath.Gilroy.Body_13_Regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_8"
+                        android:background="@drawable/bg_corner_radius_12"
+                        android:backgroundTint="@color/color_9"
+                        android:drawableEnd="@drawable/ic_happy_24"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="@dimen/padding_12"
+                        android:paddingVertical="@dimen/padding_10"
+                        android:text="@string/moment_header_bar_let_s_share_the_moment_you_smile"
+                        android:textColor="@color/color_5" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <include
+                    android:id="@+id/layoutIndicator"
+                    layout="@layout/item_user_indicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_16"
+                    android:layout_marginBottom="@dimen/margin_16"
+                    app:userIndicator="@{userIndicator}" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:paddingHorizontal="@dimen/padding_16"
+                app:contentInsetEnd="0dp"
+                app:contentInsetStart="0dp"
+                app:layout_collapseMode="pin">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clContainerStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvStatus"
+                        style="@style/TextAppearance.FontPath.Gilroy.Title_Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{@string/moment_header_bar_status(day, userInfo.shortName)}"
+                        app:layout_constraintBottom_toBottomOf="@id/ivSearch"
+                        app:layout_constraintEnd_toStartOf="@id/ivCalendar"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/ivSearch"
+                        tools:text="Happy Monday 🤟, Hoang!" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivCalendar"
+                        android:layout_width="@dimen/size_40"
+                        android:layout_height="@dimen/size_40"
+                        android:padding="@dimen/padding_12"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintEnd_toStartOf="@id/ivSearch"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_calendar" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivSearch"
+                        android:layout_width="@dimen/size_40"
+                        android:layout_height="@dimen/size_40"
+                        android:padding="@dimen/padding_12"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_search" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        <View
+            android:id="@+id/vLine"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/stroke_0.5"
+            android:layout_gravity="bottom"
+            android:background="@color/color_item_moment_line" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+</layout>

@@ -1,0 +1,19 @@
+plugins {
+    id 'java-library'
+    id 'kotlin'
+    id 'kotlin-kapt'
+}
+
+dependencies {
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin.kotlinStdlib}"
+    api "io.reactivex.rxjava3:rxkotlin:${versions.reactive.rxkotlin}"
+    api "com.google.code.gson:gson:${versions.google.gson}"
+
+    // debug
+    api "com.jakewharton.timber:timber:${versions.debug.timber}"
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}

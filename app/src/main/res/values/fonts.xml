@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextAppearance.FontPath.Gilroy.Medium" parent="android:TextAppearance">
+        <item name="fontFamily">@font/gilroy_medium</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textColor">@color/color_4</item>
+    </style>
+
+    <style name="TextAppearance.FontPath.Gilroy.Regular" parent="android:TextAppearance">
+        <item name="fontFamily">@font/gilroy_regular</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textColor">@color/color_4</item>
+    </style>
+
+    <style name="TextAppearance.FontPath.Gilroy.SemiBold" parent="android:TextAppearance">
+        <item name="fontFamily">@font/gilroy_semibold</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textColor">@color/color_4</item>
+    </style>
+
+    <style name="TextAppearance.FontPath.Gilroy.Bold" parent="android:TextAppearance">
+        <item name="fontFamily">@font/gilroy_bold</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textColor">@color/color_4</item>
+    </style>
+
+    <!--    ============ Match UIkit =============-->
+    <style name="TextAppearance.FontPath.Gilroy.H1" parent="TextAppearance.FontPath.Gilroy.Medium">
+        <item name="android:textSize">@dimen/text_size_24</item>
+        <item name="lineHeight">@dimen/line_height_32</item>
+    </style>
+
+    <style name="TextAppearance.FontPath.Gilroy.H2" parent="TextAppearance.FontPath.Gilroy.Medium">
+        <item name="android:textSize">@dimen/text_size_18</item>
+        <item name="lineHeight">@dimen/line_height_22</item>
+    </style>
+
+    <style name="TextAppearance.FontPath.Gilroy.Title" parent="TextAppearance.FontPath.Gilroy.SemiBold">
+        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="lineHeight">@dimen/line_height_24</item>
+    </style>
+
+    <style name="TextAppearance.FontPath.Gilroy.Title_Medium" parent="TextAppearance.FontPath.Gilroy.Medium">
+        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="lineHeight">@dimen/line_height_24</item>
+    </style>
+
+    <style name="TextAppearance.FontPath.Gilroy.Body_15_Medium" parent="TextAppearance.FontPath.Gilroy.Medium">
+        <item name="android:textSize">@dimen/text_size_15</item>
+        <item name="lineHeight">@dimen/line_height_24</item>
+    </style>
+
+    <style name="TextAppearance.FontPath.Gilroy.Body_15_Regular" parent="TextAppearance.FontPath.Gilroy.Regular">
+        <item name="android:textSize">@dimen/text_size_15</item>
+        <item name="lineHeight">@dimen/line_height_24</item>
+    </style>
+
+    <style name="TextAppearance.FontPath.Gilroy.Body_14_Medium" parent="TextAppearance.FontPath.Gilroy.Medium">
+        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="lineHeight">@dimen/line_height_22</item>
+    </style>
+
+    <style name="TextAppearance.FontPath.Gilroy.Body_14_Regular" parent="TextAppearance.FontPath.Gilroy.Regular">
+        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="lineHeight">@dimen/line_height_22</item>
+    </style>
+
+    <style name="TextAppearance.FontPath.Gilroy.Body_13_Medium" parent="TextAppearance.FontPath.Gilroy.Medium">
+        <item name="android:textSize">@dimen/text_size_13</item>
+        <item name="lineHeight">@dimen/line_height_18</item>
+    </style>
+
+    <style name="TextAppearance.FontPath.Gilroy.Body_13_SemiBold" parent="TextAppearance.FontPath.Gilroy.SemiBold">
+        <item name="android:textSize">@dimen/text_size_13</item>
+        <item name="lineHeight">@dimen/line_height_18</item>
+    </style>
+
+    <style name="TextAppearance.FontPath.Gilroy.Body_13_Regular" parent="TextAppearance.FontPath.Gilroy.Regular">
+        <item name="android:textSize">@dimen/text_size_13</item>
+        <item name="lineHeight">@dimen/line_height_18</item>
+    </style>
+
+    <style name="TextAppearance.FontPath.Gilroy.Caption_12_Medium" parent="TextAppearance.FontPath.Gilroy.Medium">
+        <item name="android:textSize">@dimen/text_size_12</item>
+        <item name="lineHeight">@dimen/line_height_16</item>
+    </style>
+
+    <style name="TextAppearance.FontPath.Gilroy.Caption_11_Medium" parent="TextAppearance.FontPath.Gilroy.Medium">
+        <item name="android:textSize">@dimen/text_size_11</item>
+        <item name="lineHeight">@dimen/line_height_16</item>
+    </style>
+
+    <!--====================================-->
+    <style name="TextAppearance.FontPath.Gilroy.Date_Text_Calendar" parent="TextAppearance.FontPath.Gilroy.Title_Medium">
+        <item name="android:textColor">@color/color_text_calendar_selector</item>
+        <item name="android:textColorPrimary">@color/color_4</item>
+    </style>
+
+    <style name="TextAppearance.FontPath.Gilroy.Week_Day_Calendar" parent="TextAppearance.FontPath.Gilroy.Body_14_Medium">
+        <item name="android:textColor">@color/color_5</item>
+    </style>
+
+</resources>

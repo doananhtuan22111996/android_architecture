@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="userEvent"
+            type="vn.geekup.app.model.user.UserEventModelV" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/lnContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/padding_8">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvHideIndicator"
+            style="@style/TextAppearance.FontPath.Gilroy.Body_13_SemiBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingVertical="@dimen/padding_16"
+            android:text="@{userEvent.enableIndicator == true ? @string/profile_hide_indicator_on_newsfeed : @string/profile_show_indicator_on_newsfeed}"
+            android:textColor="@color/color_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvAliaPointHistory"
+            style="@style/TextAppearance.FontPath.Gilroy.Body_14_Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_16"
+            android:text="@string/profile_alia_points_history"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvHideIndicator" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

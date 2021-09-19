@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<!--    <style name="MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">-->
+<!--        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.Text</item>-->
+<!--        <item name="buttonBarPositiveButtonStyle">@style/MaterialAlertDialog.Button</item>-->
+<!--        <item name="buttonBarNegativeButtonStyle">@style/MaterialAlertDialog.Button</item>-->
+<!--        <item name="buttonBarNeutralButtonStyle">@style/MaterialAlertDialog.Button.Flush</item>-->
+<!--        <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertDialog.Body.Text</item>-->
+<!--    </style>-->
+
+<!--    <style name="MaterialAlertDialog.Text" parent="MaterialAlertDialog.MaterialComponents.Title.Text">-->
+<!--        <item name="android:textAppearance">@style/TextAppearance.FontPath.OpenSans.Semibold</item>-->
+<!--        <item name="android:textSize">20sp</item>-->
+<!--    </style>-->
+
+<!--    <style name="MaterialAlertDialog.Button" parent="Widget.MaterialComponents.Button.TextButton.Dialog">-->
+<!--        <item name="android:textAppearance">@style/TextAppearance.FontPath.OpenSans.Semibold</item>-->
+<!--        <item name="android:textSize">14sp</item>-->
+<!--    </style>-->
+
+<!--    <style name="MaterialAlertDialog.Button.Flush" parent="Widget.MaterialComponents.Button.TextButton.Dialog.Flush">-->
+<!--        <item name="android:textAppearance">@style/TextAppearance.FontPath.OpenSans.Semibold</item>-->
+<!--        <item name="android:textSize">14sp</item>-->
+<!--    </style>-->
+
+<!--    <style name="MaterialAlertDialog.Body.Text" parent="@style/MaterialAlertDialog.MaterialComponents.Body.Text">-->
+<!--        <item name="android:textAppearance">@style/TextAppearance.FontPath.OpenSans.Regular</item>-->
+<!--        <item name="android:textSize">16sp</item>-->
+<!--        <item name="android:textColor">@color/alert_body_text</item>-->
+<!--        <item name="android:layout_marginTop">14dp</item>-->
+<!--        <item name="android:layout_marginBottom">21dp</item>-->
+<!--        <item name="android:lineSpacingMultiplier">1.5</item>-->
+<!--    </style>-->
+
+</resources>

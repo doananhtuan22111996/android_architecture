@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="userInfo"
+            type="vn.geekup.app.model.user.UserInfoModelV" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="@dimen/margin_16"
+            android:background="@drawable/bg_avatar_moment"
+            android:backgroundTint="@color/color_white"
+            app:avatarImageUrl="@{userInfo.avatar}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvEmail"
+            style="@style/TextAppearance.FontPath.Gilroy.Body_13_Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_16"
+            android:text="@{userInfo.email}"
+            android:textColor="@color/color_5"
+            app:layout_constraintBottom_toBottomOf="@id/ivAvatar"
+            app:layout_constraintStart_toEndOf="@id/ivAvatar"
+            tools:text="\@hoang.ng" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvUserName"
+            style="@style/TextAppearance.FontPath.Gilroy.Title_Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_16"
+            android:layout_marginBottom="@dimen/margin_6"
+            android:text="@{userInfo.shortName}"
+            app:layout_constraintBottom_toTopOf="@id/tvEmail"
+            app:layout_constraintStart_toEndOf="@id/ivAvatar"
+            tools:text="Hoàng Nguyễn" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvLogout"
+            style="@style/TextAppearance.FontPath.Gilroy.Body_13_SemiBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_16"
+            android:text="@string/action_logout"
+            app:layout_constraintBottom_toBottomOf="@id/tvEmail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvEmail" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

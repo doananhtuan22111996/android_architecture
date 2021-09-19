@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_primary">@color/color_0</color>
+    <color name="color_primary_dark">@color/color_1</color>
+    <color name="color_accent">@color/color_1</color>
+    <color name="color_on_primary">@color/color_4</color>
+
+<!--    Background-->
+    <color name="color_white">#ffffff</color>
+    <color name="color_bg_app">@color/color_9</color>
+    <color name="color_bottom_navigation">@color/color_white</color>
+    <color name="color_bottom_sheet">@color/color_white</color>
+    <color name="color_bottom_navigation_shadow">#267C8C9A</color>
+    <color name="color_input_type_shadow">#267C8C9A</color>
+    <color name="color_splash">@color/color_white</color>
+    <color name="color_bg_login">@color/color_1</color>
+    <color name="color_status_bar">@color/color_1</color>
+    <color name="color_item_moment">@color/color_white</color>
+    <color name="color_item_moment_avatar">@color/color_9</color>
+    <color name="color_item_moment_image">@color/color_9</color>
+    <color name="color_item_moment_line">@color/color_7</color>
+    <color name="color_item_moment_number_more">#80000000</color>
+    <color name="color_item_moment_button_footer_inactive">#F9F9F9</color>
+    <color name="color_item_moment_button_footer_active">@color/color_2</color>
+
+    <color name="color_bg_button_inactive">@color/color_6</color>
+    <color name="color_bg_button_press">@color/color_0</color>
+    <color name="color_bg_button_active">@color/color_1</color>
+
+    <!--    Bottom Navigation-->
+    <color name="color_bottom_navigation_active">@color/color_1</color>
+    <color name="color_bottom_navigation_inactive">@color/color_on_primary</color>
+
+    <!--    Text-->
+    <color name="color_edt_hint">@color/color_5</color>
+    <color name="color_edt_bg_tint">#E5E7EA</color>
+    <color name="color_login_otable">@color/color_4</color>
+    <color name="color_text_button_moment_footer_inactive">#7C8C9A</color>
+    <color name="color_text_hash_tag">#2593FC</color>
+
+
+</resources>
