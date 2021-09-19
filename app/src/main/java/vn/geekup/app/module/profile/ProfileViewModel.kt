@@ -1,6 +1,7 @@
 package vn.geekup.app.module.profile
 
 import androidx.lifecycle.MutableLiveData
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
@@ -19,6 +20,7 @@ import vn.geekup.app.network.NetworkChange
 import vn.geekup.app.utils.KEY_PAGING_LIMIT_20
 import javax.inject.Inject
 
+@HiltViewModel
 class ProfileViewModel @Inject constructor(
     networkChange: NetworkChange,
     private val authUseCase: AuthUseCase,

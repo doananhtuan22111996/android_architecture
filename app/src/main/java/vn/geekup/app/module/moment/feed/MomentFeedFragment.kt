@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import timber.log.Timber
 import vn.geekup.app.R
@@ -26,7 +28,9 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import java.util.concurrent.TimeUnit
 import androidx.recyclerview.widget.SimpleItemAnimator
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBinding>(),
     RootActivity.OnUserInfoListener {
 
@@ -35,9 +39,7 @@ class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBindi
     private var isEnableIndicator: Boolean = true
     private var dateFilter: String = ""
 
-    override fun provideViewModelClass(): Class<MomentViewModel> {
-        return MomentViewModel::class.java
-    }
+    override val viewModel: MomentViewModel by activityViewModels()
 
     override fun initViewModelByActivityLifecycle(): Boolean = true
 
@@ -48,12 +50,12 @@ class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBindi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.getMomentFeeds(date = dateFilter)
-        (activity as? RootActivity)?.setOnUserInfoListener(this)
+        (baseActivity as? RootActivity)?.setOnUserInfoListener(this)
         initAdapter()
     }
 
     override fun onInitLayout(view: View, savedInstanceState: Bundle?) {
-        activity.setAppColorStatusBar(R.color.color_white)
+        baseActivity.setAppColorStatusBar(R.color.color_white)
         (parentFragment?.parentFragment as? MainFragment)?.bottomNavigationState(true)
         initMomentHeader()
         initRecyclerView()
@@ -116,7 +118,7 @@ class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBindi
         fragmentBinding.layoutMomentHeaderBar.layoutIndicator.root.visible(isEnableIndicator)
         fragmentBinding.layoutMomentHeaderBar.layoutIndicator.tvHide.visible(isEnableIndicator)
         fragmentBinding.layoutMomentHeaderBar.layoutIndicator.tvHide.setOnClickListener {
-            (activity as? RootActivity)?.onUserIndicatorMomentFeedActive(isEnable = false)
+            (baseActivity as? RootActivity)?.onUserIndicatorMomentFeedActive(isEnable = false)
         }
     }
 
@@ -202,7 +204,7 @@ class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBindi
     }
 
     private fun onClickLinkListener(url: String) {
-        activity.openBrowserApp(url)
+        baseActivity.openBrowserApp(url)
     }
 
     private fun eventView() {

@@ -2,6 +2,8 @@ package vn.geekup.app.data.di.services
 
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import vn.geekup.app.data.di.local.LocalModule
 import vn.geekup.app.data.di.remote.RemoteModule
 import vn.geekup.app.data.local.PreferenceWrapper
@@ -11,6 +13,7 @@ import vn.geekup.app.data.services.MiddleWareService
 import javax.inject.Singleton
 
 @Module(includes = [RemoteModule::class, LocalModule::class])
+@InstallIn(SingletonComponent::class)
 class ServiceModule {
 
     @Singleton

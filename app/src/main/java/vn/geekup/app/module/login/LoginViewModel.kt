@@ -1,6 +1,7 @@
 package vn.geekup.app.module.login
 
 import androidx.lifecycle.MutableLiveData
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import vn.geekup.app.base.BaseViewModel
@@ -11,6 +12,7 @@ import vn.geekup.app.domain.usecase.AuthUseCase
 import vn.geekup.app.network.NetworkChange
 import javax.inject.Inject
 
+@HiltViewModel
 class LoginViewModel @Inject constructor(networkChange: NetworkChange, private val authUseCase: AuthUseCase) :
     BaseViewModel(networkChange) {
 

@@ -23,14 +23,14 @@ versions.debug = [
 
 versions.plugin = [
         buildTool    : '7.0.1',
-        kotlin       : '1.5.20',
+        kotlin       : '1.5.30',
         glux         : '0.0.7',
         googleService: '4.3.10',
         crashlytics  : '2.7.1'
 ]
 
 versions.kotlin = [
-        kotlinStdlib: '1.5.20'
+        kotlinStdlib: '1.5.30'
 ]
 
 versions.androidX = [

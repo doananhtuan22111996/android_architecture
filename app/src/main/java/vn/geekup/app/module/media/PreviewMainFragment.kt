@@ -3,25 +3,27 @@ package vn.geekup.app.module.media
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
+import dagger.hilt.android.AndroidEntryPoint
 import vn.geekup.app.R
 import vn.geekup.app.base.BaseFragment
 import vn.geekup.app.databinding.FragmentMainPreviewBinding
 import vn.geekup.app.module.main.MainFragment
 import vn.geekup.app.utils.setAppColorStatusBar
 
+@AndroidEntryPoint
 class PreviewMainFragment : BaseFragment<PreviewMainViewModel, FragmentMainPreviewBinding>() {
 
     private lateinit var adapter: PreviewMainViewPagerAdapter
 
-    override fun provideViewModelClass(): Class<PreviewMainViewModel> =
-        PreviewMainViewModel::class.java
+    override val viewModel: PreviewMainViewModel by viewModels()
 
     override fun provideViewBinding(parent: ViewGroup): FragmentMainPreviewBinding =
         FragmentMainPreviewBinding.inflate(layoutInflater, parent, true)
 
     override fun onInitLayout(view: View, savedInstanceState: Bundle?) {
-        activity.setAppColorStatusBar(R.color.color_3)
+        baseActivity.setAppColorStatusBar(R.color.color_3)
         (parentFragment?.parentFragment as? MainFragment)?.bottomNavigationState(false)
         fragmentBinding.fragment = this
         initViewPager()

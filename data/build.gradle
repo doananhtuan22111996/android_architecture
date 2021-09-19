@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -80,10 +81,10 @@ dependencies {
     api "com.squareup.okhttp3:logging-interceptor:${versions.debug.loggingInterceptor}"
 
     // firebase
-    api platform("com.google.firebase:firebase-bom:${versions.firebase.bom}")
-    api 'com.google.firebase:firebase-analytics-ktx'
-    api 'com.google.firebase:firebase-messaging-ktx'
-    api 'com.google.firebase:firebase-crashlytics-ktx'
+//    api platform("com.google.firebase:firebase-bom:${versions.firebase.bom}")
+//    api 'com.google.firebase:firebase-analytics-ktx'
+//    api 'com.google.firebase:firebase-messaging-ktx'
+//    api 'com.google.firebase:firebase-crashlytics-ktx'
 
     // local
     implementation "androidx.security:security-crypto-ktx:${versions.local.securePreference}"
@@ -93,8 +94,11 @@ dependencies {
     api "androidx.appcompat:appcompat:${versions.androidX.appcompat}"
 
     // DI
-    implementation "com.google.dagger:dagger:${versions.di.dagger}"
-    kapt "com.google.dagger:dagger-compiler:${versions.di.dagger}"
+//    implementation "com.google.dagger:dagger:${versions.di.dagger}"
+//    kapt "com.google.dagger:dagger-compiler:${versions.di.dagger}"
+    //Todo
+    implementation("com.google.dagger:hilt-android:2.38.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.38.1")
 
     api "com.squareup.retrofit2:retrofit:${versions.httpClient.retrofit}"
     api "com.squareup.retrofit2:converter-gson:${versions.httpClient.retrofit}"

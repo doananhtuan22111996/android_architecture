@@ -3,6 +3,8 @@ package vn.geekup.app.data.di.remote
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -25,6 +27,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module(includes = [NetworkModule::class])
+@InstallIn(SingletonComponent::class)
 class RemoteModule {
 
     @Singleton

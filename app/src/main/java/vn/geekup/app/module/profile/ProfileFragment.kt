@@ -15,18 +15,21 @@ import vn.geekup.app.utils.EndlessRecyclerViewScrollListener
 import android.content.Intent
 import android.net.Uri
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import vn.geekup.app.model.user.UserEngagementModelV
 import vn.geekup.app.module.main.MainFragment
 import vn.geekup.app.utils.KEY_ARGUMENT_FRAGMENT
 import vn.geekup.app.utils.setAppColorStatusBar
 
+@AndroidEntryPoint
 class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>() {
 
     private lateinit var adapter: ProfileAdapter
     private lateinit var endlessRecyclerViewScrollListener: EndlessRecyclerViewScrollListener
 
-    override fun provideViewModelClass(): Class<ProfileViewModel> = ProfileViewModel::class.java
+    override val viewModel: ProfileViewModel by viewModels()
 
     override fun provideViewBinding(parent: ViewGroup): FragmentProfileBinding =
         FragmentProfileBinding.inflate(layoutInflater, parent, true)
@@ -39,7 +42,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>()
     }
 
     override fun onInitLayout(view: View, savedInstanceState: Bundle?) {
-        activity.setAppColorStatusBar(R.color.color_white)
+        baseActivity.setAppColorStatusBar(R.color.color_white)
         (parentFragment?.parentFragment as? MainFragment)?.bottomNavigationState(true)
         fragmentBinding.fragment = this
         fragmentBinding.isUserEngagementEmpty = false
@@ -52,7 +55,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>()
 
         viewModel.logout.observe(this, {
             Toast.makeText(context, "Logout Success: $it", Toast.LENGTH_SHORT).show()
-            (activity as? RootActivity)?.popToLogin()
+            (baseActivity as? RootActivity)?.popToLogin()
         })
 
         viewModel.userEngagements.observe(this, {
@@ -102,7 +105,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>()
             ProfileActions.GiveNow -> {
                 try {
                     val intent: Intent? =
-                        activity.packageManager.getLaunchIntentForPackage(vn.geekup.app.data.BuildConfig.SPARROW_ID)
+                        baseActivity.packageManager.getLaunchIntentForPackage(vn.geekup.app.data.BuildConfig.SPARROW_ID)
                     startActivity(intent)
                 } catch (e: Exception) {
                     val browserIntent =
@@ -123,7 +126,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>()
     }
 
     private fun executingFuncIndicator(userEventModelV: UserEventModelV, position: Int) {
-        (activity as? RootActivity)?.onUserIndicatorMomentFeedActive(userEventModelV.isEnableIndicator)
+        (baseActivity as? RootActivity)?.onUserIndicatorMomentFeedActive(userEventModelV.isEnableIndicator)
         adapter.setItemPositionChanged(userEventModelV, position)
     }
 

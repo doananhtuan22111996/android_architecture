@@ -5,20 +5,26 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.IdRes
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import dagger.hilt.android.AndroidEntryPoint
 import vn.geekup.app.R
 import vn.geekup.app.base.BaseFragment
 import vn.geekup.app.databinding.FragmentMainBinding
 import vn.geekup.app.module.root.RootViewModel
 import vn.geekup.app.utils.setAppColorStatusBar
+import vn.geekup.app.utils.visible
 
+@AndroidEntryPoint
 class MainFragment : BaseFragment<RootViewModel, FragmentMainBinding>() {
 
     // Listener for MomentFeedFragment
     interface OnChildFragmentListener {
         fun onAutoReloadMomentFeed()
     }
+
+    override val viewModel: RootViewModel by activityViewModels()
 
     private var onChildFragmentListener: OnChildFragmentListener? = null
 
@@ -27,15 +33,13 @@ class MainFragment : BaseFragment<RootViewModel, FragmentMainBinding>() {
             selectedBottomNavigation(getViewDestination(destination.id))
         }
 
-    override fun provideViewModelClass(): Class<RootViewModel> = RootViewModel::class.java
-
     override fun initViewModelByActivityLifecycle(): Boolean = true
 
     override fun provideViewBinding(parent: ViewGroup): FragmentMainBinding =
         FragmentMainBinding.inflate(layoutInflater, parent, true)
 
     override fun onInitLayout(view: View, savedInstanceState: Bundle?) {
-        activity.setAppColorStatusBar(R.color.color_white)
+        baseActivity.setAppColorStatusBar(R.color.color_white)
         fragmentBinding.fragment = this
         setupMainNavigation()
         selectedBottomNavigation(fragmentBinding.bottomNavigation.lnHome)

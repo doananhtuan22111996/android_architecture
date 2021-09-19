@@ -4,6 +4,9 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import vn.geekup.app.R
 import vn.geekup.app.base.BaseFragment
@@ -12,17 +15,18 @@ import vn.geekup.app.domain.throwable.ServerErrorException
 import vn.geekup.app.module.root.RootActivity
 import vn.geekup.app.utils.*
 
+@AndroidEntryPoint
 class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(),
     RootActivity.OnBackPressListener {
 
-    override fun provideViewModelClass(): Class<LoginViewModel> = LoginViewModel::class.java
+    override val viewModel: LoginViewModel by viewModels()
 
     override fun provideViewBinding(parent: ViewGroup): FragmentLoginBinding =
         FragmentLoginBinding.inflate(layoutInflater, parent, true)
 
     override fun onInitLayout(view: View, savedInstanceState: Bundle?) {
-        (activity as? RootActivity)?.setOnBackPressListener(this)
-        activity.setAppColorStatusBar()
+        (baseActivity as? RootActivity)?.setOnBackPressListener(this)
+        baseActivity.setAppColorStatusBar()
         fragmentBinding.fragment = this
     }
 
@@ -32,7 +36,7 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(),
         viewModel.login.observe(this, {
             Timber.d("Start Main Fragment")
             if (it) {
-                (activity as? RootActivity)?.redirectMain()
+                (baseActivity as? RootActivity)?.redirectMain()
             }
         })
 
@@ -53,7 +57,7 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(),
             viewModel.setIsLoading(false)
             return
         }
-        activity.finish()
+        baseActivity.finish()
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -84,11 +88,11 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(),
 
     private fun redirectLoginOTable(isOTable: Boolean) {
         if (isOTable) {
-            activity.setAppColorStatusBar(R.color.color_white)
+            baseActivity.setAppColorStatusBar(R.color.color_white)
             fragmentBinding.btnLoginOTable.visible(false)
             fragmentBinding.wvLogin.visible(true)
         } else {
-            activity.setAppColorStatusBar()
+            baseActivity.setAppColorStatusBar()
             fragmentBinding.btnLoginOTable.visible(true)
             fragmentBinding.wvLogin.visible(false)
         }

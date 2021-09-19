@@ -1,6 +1,7 @@
 package vn.geekup.app.module.root
 
 import androidx.lifecycle.MutableLiveData
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -15,6 +16,7 @@ import vn.geekup.app.network.NetworkChange
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
+@HiltViewModel
 class RootViewModel @Inject constructor(
     networkChange: NetworkChange,
     private val authUseCase: AuthUseCase,

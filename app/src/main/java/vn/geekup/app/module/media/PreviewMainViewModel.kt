@@ -2,11 +2,14 @@ package vn.geekup.app.module.media
 
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 import vn.geekup.app.base.BaseViewModel
 import vn.geekup.app.network.NetworkChange
 import vn.geekup.app.utils.KEY_ARGUMENT_IMAGES
 import javax.inject.Inject
 
+@HiltViewModel
 class PreviewMainViewModel @Inject constructor(networkChange: NetworkChange) :
     BaseViewModel(networkChange) {
 

@@ -2,6 +2,7 @@ package vn.geekup.app.base.list
 
 import vn.geekup.app.base.BaseViewItem
 import vn.geekup.app.databinding.ItemPagingStateBinding
+import vn.geekup.app.utils.visible
 
 class PagingStateViewModel(override val viewBinding: ItemPagingStateBinding) :
     BaseRecyclerHolder<BaseViewItem>(viewBinding = viewBinding) {

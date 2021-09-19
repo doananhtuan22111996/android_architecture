@@ -8,9 +8,9 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:${versions.plugin.buildTool}"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.plugin.kotlin}"
-        classpath "com.google.gms:google-services:${versions.plugin.googleService}"
-        classpath "com.google.firebase:firebase-crashlytics-gradle:${versions.plugin.crashlytics}"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.androidX.navigation}"
+        //Todo
+        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.38.1'
     }
 }
 

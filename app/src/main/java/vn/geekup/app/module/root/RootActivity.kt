@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import vn.geekup.app.R
 import vn.geekup.app.base.BaseActivity
@@ -14,12 +16,15 @@ import vn.geekup.app.domain.model.user.UserInfoModel
 import vn.geekup.app.model.user.UserIndicatorModelV
 import vn.geekup.app.utils.setAppColorStatusBar
 
+@AndroidEntryPoint
 class RootActivity : BaseActivity<RootViewModel, ActivityRootBinding>() {
 
     sealed class RootNavigation {
         object Login : RootNavigation()
         object Main : RootNavigation()
     }
+
+    override val viewModel: RootViewModel by viewModels()
 
     private var onBackPressListener: OnBackPressListener? = null
     private var onUserInfoListener: OnUserInfoListener? = null

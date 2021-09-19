@@ -2,6 +2,7 @@ package vn.geekup.app.module.moment
 
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -22,6 +23,7 @@ import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
+@HiltViewModel
 class MomentViewModel @Inject constructor(
     networkChange: NetworkChange,
     private val momentUseCase: MomentUseCase

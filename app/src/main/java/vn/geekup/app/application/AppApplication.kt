@@ -1,23 +1,14 @@
 package vn.geekup.app.application
 
+import android.app.Application
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
-import androidx.lifecycle.ProcessLifecycleOwner
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.ktx.Firebase
-import dagger.android.AndroidInjector
-import dagger.android.support.DaggerApplication
+import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 import vn.geekup.app.data.Config
-import vn.geekup.app.di.application.ApplicationComponent
-import vn.geekup.app.di.application.DaggerApplicationComponent
 
-class AppApplication : DaggerApplication(), LifecycleObserver {
-
-    lateinit var applicationComponent: ApplicationComponent
-    private lateinit var firebaseAnalytics: FirebaseAnalytics
+@HiltAndroidApp
+class AppApplication : Application() {
 
     companion object {
         private val instanceLock = Any()
@@ -29,17 +20,9 @@ class AppApplication : DaggerApplication(), LifecycleObserver {
             }
     }
 
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        applicationComponent =
-            DaggerApplicationComponent.factory().create(this) as ApplicationComponent
-        return applicationComponent
-    }
-
     override fun onCreate() {
         super.onCreate()
         instance = this
-        firebaseAnalytics = Firebase.analytics
-        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
         setupDebug()
     }
 

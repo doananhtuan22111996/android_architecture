@@ -4,8 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
     id 'androidx.navigation.safeargs.kotlin'
-    id 'com.google.gms.google-services'
-    id 'com.google.firebase.crashlytics'
+    id 'dagger.hilt.android.plugin'
 }
 
 // Load keystore
@@ -17,7 +16,7 @@ android {
     compileSdkVersion versions.application.compileSdkVersion
 
     defaultConfig {
-        applicationId "vn.geekup.alia"
+        applicationId "vn.geekup.app"
         minSdkVersion versions.application.minSdkVersion
         targetSdkVersion versions.application.targetSdkVersion
         versionCode versions.application.versionCode
@@ -121,7 +120,7 @@ android {
 
 dependencies {
 
-    implementation "org.jetbrains.kotlin:kotlin-reflect:${versions.kotlin.kotlinStdlib}"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin.kotlinStdlib}"
 //    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     testImplementation "junit:junit:${versions.test.junit}"
@@ -133,11 +132,14 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxandroid:${versions.reactive.rxandroid}"
 
     // DI
-    implementation "com.google.dagger:dagger:${versions.di.dagger}"
-    kapt "com.google.dagger:dagger-compiler:${versions.di.dagger}"
-    implementation "com.google.dagger:dagger-android:${versions.di.dagger}"
-    implementation "com.google.dagger:dagger-android-support:${versions.di.dagger}"
-    kapt "com.google.dagger:dagger-android-processor:${versions.di.dagger}"
+//    implementation "com.google.dagger:dagger:${versions.di.dagger}"
+//    kapt "com.google.dagger:dagger-compiler:${versions.di.dagger}"
+//    implementation "com.google.dagger:dagger-android:${versions.di.dagger}"
+//    implementation "com.google.dagger:dagger-android-support:${versions.di.dagger}"
+//    kapt "com.google.dagger:dagger-android-processor:${versions.di.dagger}"
+    //Todo
+    implementation("com.google.dagger:hilt-android:2.38.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.38.1")
 
     // Image
     implementation "com.github.bumptech.glide:glide:${versions.resource.glide}"
@@ -164,6 +166,10 @@ dependencies {
 
     implementation "org.jsoup:jsoup:${versions.anothers.jsoup}"
     implementation "io.github.ponnamkarthik:richlinkpreview:${versions.anothers.richlink}"
+}
+
+kapt {
+    correctErrorTypes true
 }
 
 gradle.projectsEvaluated {

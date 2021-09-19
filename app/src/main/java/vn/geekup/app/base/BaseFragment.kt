@@ -1,38 +1,32 @@
 package vn.geekup.app.base
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.CallSuper
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.viewbinding.ViewBinding
-import dagger.android.support.DaggerFragment
 import vn.geekup.app.databinding.FragmentBaseBinding
-import vn.geekup.app.di.viewmodel.ViewModelFactory
 import vn.geekup.app.domain.throwable.ServerErrorException
 import vn.geekup.app.network.NetworkStatus
 import vn.geekup.app.utils.setupViewClickHideKeyBoard
 import javax.inject.Inject
 
-abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding>: DaggerFragment() {
+abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding>: Fragment() {
 
-  protected lateinit var activity: BaseActivity<*, *>
+  protected lateinit var baseActivity: BaseActivity<*, *>
 
-  @Inject
-  protected lateinit var factory: ViewModelFactory
-  protected lateinit var viewModel: VM
+  protected abstract val viewModel: VM
+
   protected lateinit var fragmentBinding: VB
   protected lateinit var navController: NavController
   private lateinit var baseBinding: FragmentBaseBinding
 
   var tagFrag: String? = null
-
-  abstract fun provideViewModelClass(): Class<VM>
 
   abstract fun provideViewBinding(parent: ViewGroup): VB
 
@@ -42,20 +36,15 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding>: DaggerFragmen
     return false
   }
 
-  override fun onAttach(context: Context) {
-    super.onAttach(context)
-    activity = context as BaseActivity<*, *>
-  }
-
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    viewModel = ViewModelProvider(if (initViewModelByActivityLifecycle()) activity else this, factory).get(provideViewModelClass())
+    baseActivity = activity as BaseActivity<*, *>
   }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     baseBinding = FragmentBaseBinding.inflate(layoutInflater)
     fragmentBinding = provideViewBinding(baseBinding.root)
-    activity.window?.setupViewClickHideKeyBoard(baseBinding.root)
+    baseActivity.window?.setupViewClickHideKeyBoard(baseBinding.root)
     return baseBinding.root
   }
 

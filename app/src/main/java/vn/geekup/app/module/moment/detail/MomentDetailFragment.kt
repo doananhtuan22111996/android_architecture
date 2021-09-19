@@ -18,17 +18,21 @@ import vn.geekup.app.utils.*
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.activityViewModels
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import vn.geekup.app.model.moment.MomentActionV
+import vn.geekup.app.module.moment.toArrayString
 import java.util.concurrent.TimeUnit
 
+@AndroidEntryPoint
 class MomentDetailFragment : BaseFragment<MomentViewModel, FragmentMomentDetailBinding>() {
 
     private lateinit var adapter: MomentCommentAdapter
 
-    override fun provideViewModelClass(): Class<MomentViewModel> =
-        MomentViewModel::class.java
+    override val viewModel: MomentViewModel by activityViewModels()
 
     override fun initViewModelByActivityLifecycle(): Boolean = true
 
@@ -41,7 +45,7 @@ class MomentDetailFragment : BaseFragment<MomentViewModel, FragmentMomentDetailB
     }
 
     override fun onInitLayout(view: View, savedInstanceState: Bundle?) {
-        (activity as? RootActivity)?.setAppColorStatusBar()
+        (baseActivity as? RootActivity)?.setAppColorStatusBar()
         (parentFragment?.parentFragment as? MainFragment)?.bottomNavigationState(false)
         loadingState(true)
         initRecyclerView()
@@ -109,7 +113,7 @@ class MomentDetailFragment : BaseFragment<MomentViewModel, FragmentMomentDetailB
 
     private fun eventMomentDetail() {
         fragmentBinding.layoutLinkPreview.root.setOnClickListener {
-            activity.openBrowserApp(fragmentBinding.linkPreview?.url ?: "")
+            baseActivity.openBrowserApp(fragmentBinding.linkPreview?.url ?: "")
         }
         fragmentBinding.layoutMomentFooter.btnLikes.setOnClickListener {
             viewModel.requestMomentLike(fragmentBinding.moment?.id ?: 0)
@@ -201,7 +205,7 @@ class MomentDetailFragment : BaseFragment<MomentViewModel, FragmentMomentDetailB
 
     private fun resetInputComment() {
         fragmentBinding.layoutInputComment.edtComment.setText("")
-        activity.window.hideSoftKeyboard()
+        baseActivity.window.hideSoftKeyboard()
     }
 
     private fun executingScrollEndScreen() {
