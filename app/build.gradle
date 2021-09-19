@@ -88,7 +88,8 @@ android {
             configProps.load(project.rootProject.file("env.${variant.flavorName}.properties").newDataInputStream())
             def appName = configProps.getProperty("application.name")
             def formattedDate = new Date().format('yyyyddMMHHmm')
-            def newApkName = "${appName.toLowerCase().replace(" ", "_")}_${formattedDate}.apk"
+//            def newApkName = "${appName.toLowerCase().replace(" ", "_")}_${formattedDate}.apk"
+            def newApkName = "${appName.toLowerCase().replace(" ", "_")}.apk"
             outputFileName = new File(newApkName)
         }
     }
