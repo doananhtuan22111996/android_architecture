@@ -78,7 +78,7 @@ dependencies {
     // debug
     implementation "com.facebook.stetho:stetho:${versions.debug.stetho}"
     api "com.facebook.stetho:stetho-okhttp3:${versions.debug.stetho}"
-    api "com.squareup.okhttp3:logging-interceptor:${versions.debug.loggingInterceptor}"
+    api "com.squareup.okhttp3:logging-interceptor:$versions.debug.loggingInterceptor"
 
     // firebase
 //    api platform("com.google.firebase:firebase-bom:${versions.firebase.bom}")
@@ -91,14 +91,14 @@ dependencies {
 
     // Android core
     api "androidx.core:core-ktx:${versions.androidX.coreKTX}"
-    api "androidx.appcompat:appcompat:${versions.androidX.appcompat}"
+    api "androidx.appcompat:appcompat:$versions.androidX.appcompat"
 
     // DI
 //    implementation "com.google.dagger:dagger:${versions.di.dagger}"
 //    kapt "com.google.dagger:dagger-compiler:${versions.di.dagger}"
     //Todo
-    implementation("com.google.dagger:hilt-android:2.38.1")
-    kapt("com.google.dagger:hilt-android-compiler:2.38.1")
+    implementation('com.google.dagger:hilt-android:2.41')
+    kapt('com.google.dagger:hilt-android-compiler:2.41')
 
     api "com.squareup.retrofit2:retrofit:${versions.httpClient.retrofit}"
     api "com.squareup.retrofit2:converter-gson:${versions.httpClient.retrofit}"

@@ -2,12 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-        <variable
-            name="linkPreview"
-            type="io.github.ponnamkarthik.richlinkpreview.MetaData" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clLinkPreviewContainer"
         android:layout_width="match_parent"
@@ -37,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_image_momnet_landscap"
-                app:momentImageUrl="@{linkPreview.imageurl}" />
+                app:momentImageUrl="@{``}" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvTitle"
@@ -47,7 +41,7 @@
                 android:layout_marginTop="@dimen/margin_16"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:text="@{linkPreview.title}"
+                android:text="@{``}"
                 app:layout_constraintStart_toEndOf="@id/vLine"
                 app:layout_constraintTop_toBottomOf="@id/ivImage" />
 
@@ -59,7 +53,7 @@
                 android:layout_marginTop="@dimen/margin_8"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="@{linkPreview.description}"
+                android:text="@{``}"
                 android:textColor="@color/color_5"
                 app:layout_constraintStart_toEndOf="@id/vLine"
                 app:layout_constraintTop_toBottomOf="@id/ivImage" />

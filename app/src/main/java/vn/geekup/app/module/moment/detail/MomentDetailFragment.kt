@@ -4,14 +4,12 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import io.github.ponnamkarthik.richlinkpreview.MetaData
 import vn.geekup.app.R
 import vn.geekup.app.base.BaseFragment
 import vn.geekup.app.databinding.*
 import vn.geekup.app.domain.throwable.ServerErrorException
 import vn.geekup.app.model.moment.MomentModelV
 import vn.geekup.app.module.moment.MomentViewModel
-import vn.geekup.app.module.moment.executingMomentLinkPreview
 import vn.geekup.app.module.main.MainFragment
 import vn.geekup.app.module.root.RootActivity
 import vn.geekup.app.utils.*
@@ -50,7 +48,6 @@ class MomentDetailFragment : BaseFragment<MomentViewModel, FragmentMomentDetailB
         loadingState(true)
         initRecyclerView()
         eventMomentDetail()
-        fragmentBinding.linkPreview = MetaData()
         fragmentBinding.layoutInputComment.btnSend.isEnabled = false
         fragmentBinding.userInfo = viewModel.userInfo.value
     }
@@ -58,18 +55,15 @@ class MomentDetailFragment : BaseFragment<MomentViewModel, FragmentMomentDetailB
     override fun bindViewModel() {
         super.bindViewModel()
 
-        viewModel.momentDetail.observe(this, {
+        viewModel.momentDetail.observe(this) {
             loadingState(false)
             viewModel.updateMomentToMomentFeeds(it, momentAction = MomentActionV.MomentDetail)
             initToolbar(it)
             fragmentBinding.moment = it
-            executingMomentLinkPreview(it) { linkPreview ->
-                fragmentBinding.linkPreview = linkPreview
-            }
             inflateMomentImages(it)
-        })
+        }
 
-        viewModel.newMomentState.observe(this, {
+        viewModel.newMomentState.observe(this) {
             // Fist: New Moment, second: Position, third: MomentAction
             val (newMoment, _, momentAction) = it
             if (momentAction == MomentActionV.MomentComment) {
@@ -77,13 +71,13 @@ class MomentDetailFragment : BaseFragment<MomentViewModel, FragmentMomentDetailB
             }
             fragmentBinding.moment = newMoment
 
-        })
+        }
 
-        viewModel.momentComments.observe(this, {
+        viewModel.momentComments.observe(this) {
             adapter.addAllItemsWithDiffUtils(it)
             fragmentBinding.tvPreviousComment.visible(viewModel.nextPreviousCommentCursor?.isNotEmpty() == true)
             fragmentBinding.layoutPreviousCommentLoading.rlParentProgressbar.visible(false)
-        })
+        }
 
     }
 
@@ -112,9 +106,6 @@ class MomentDetailFragment : BaseFragment<MomentViewModel, FragmentMomentDetailB
     }
 
     private fun eventMomentDetail() {
-        fragmentBinding.layoutLinkPreview.root.setOnClickListener {
-            baseActivity.openBrowserApp(fragmentBinding.linkPreview?.url ?: "")
-        }
         fragmentBinding.layoutMomentFooter.btnLikes.setOnClickListener {
             viewModel.requestMomentLike(fragmentBinding.moment?.id ?: 0)
         }

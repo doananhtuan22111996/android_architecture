@@ -12,10 +12,6 @@
             type="vn.geekup.app.domain.model.user.UserInfoModel" />
 
         <variable
-            name="linkPreview"
-            type="io.github.ponnamkarthik.richlinkpreview.MetaData" />
-
-        <variable
             name="moment"
             type="vn.geekup.app.model.moment.MomentModelV" />
     </data>
@@ -94,9 +90,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_16"
                     android:layout_marginTop="@dimen/margin_12"
-                    android:visibility="@{moment.imgUrls.size() == 0 &amp;&amp; linkPreview.url.isEmpty() == false ? View.VISIBLE : View.GONE}"
-                    app:layout_constraintTop_toBottomOf="@id/tvContent"
-                    app:linkPreview="@{linkPreview}" />
+                    android:visibility="@{moment.imgUrls.size() == 0 &amp;&amp; false ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintTop_toBottomOf="@id/tvContent" />
 
                 <include
                     android:id="@+id/layoutMomentFooter"

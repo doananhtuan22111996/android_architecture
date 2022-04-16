@@ -2,7 +2,6 @@ package vn.geekup.app.module.moment.feed
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import io.github.ponnamkarthik.richlinkpreview.MetaData
 import vn.geekup.app.R
 import vn.geekup.app.base.BaseViewItem
 import vn.geekup.app.base.list.BaseCallbackDiffUtils
@@ -12,7 +11,6 @@ import vn.geekup.app.base.list.BaseRecyclerViewAdapter
 import vn.geekup.app.databinding.*
 import vn.geekup.app.model.moment.MomentActionV
 import vn.geekup.app.model.moment.MomentModelV
-import vn.geekup.app.module.moment.executingMomentLinkPreview
 
 class MomentFeedsAdapter(
     private val listener: ((data: MomentModelV, position: Int, action: MomentActionV) -> Unit)? = null,
@@ -27,19 +25,12 @@ class MomentFeedsAdapter(
             super.bindData(data, position)
             data.onClickSeeMoreListener = onClickSeeMoreListener
             data.onClickLinkListener = onClickLinkListener
-            viewBinding.linkPreview = MetaData()
-            executingMomentLinkPreview(data) {
-                viewBinding.linkPreview = it
-            }
             viewBinding.moment = data
             viewBinding.root.setOnClickListener {
                 listener?.invoke(data, position, MomentActionV.MomentDetail)
             }
             viewBinding.tvContent.setOnClickListener {
                 listener?.invoke(data, position, MomentActionV.MomentDetail)
-            }
-            viewBinding.layoutLinkPreview.root.setOnClickListener {
-                onClickLinkListener?.invoke(viewBinding.linkPreview?.url ?: "")
             }
             viewBinding.layoutMomentFooter.btnLikes.setOnClickListener {
                 listener?.invoke(data, position, MomentActionV.MomentLike)

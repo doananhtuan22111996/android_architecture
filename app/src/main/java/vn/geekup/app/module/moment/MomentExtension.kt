@@ -15,19 +15,14 @@ import androidx.appcompat.widget.AppCompatImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import io.github.ponnamkarthik.richlinkpreview.MetaData
-import io.github.ponnamkarthik.richlinkpreview.ResponseListener
-import io.github.ponnamkarthik.richlinkpreview.RichPreview
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
-import timber.log.Timber
 import vn.geekup.app.domain.model.moment.ImgUrlModel
 import vn.geekup.app.domain.model.moment.MomentImagePosition
 import vn.geekup.app.domain.model.moment.MomentModel
 import vn.geekup.app.model.moment.MomentModelV
-import java.lang.Exception
 import java.util.regex.Pattern
 
 object MomentExtension {
@@ -249,28 +244,6 @@ fun AppCompatTextView.setHashTagMoment() {
         .subscribe {
             this.text = it
         }
-}
-
-fun executingMomentLinkPreview(
-    moment: MomentModelV,
-    onResultCallBack: ((MetaData?) -> Unit)? = null
-) {
-    if (moment.imgUrls?.size ?: 0 > 0) return
-    val extractLinks = moment.content?.extractLinks()
-    if (extractLinks?.size == 0) return
-    val richPreview = RichPreview(object : ResponseListener {
-        override fun onData(metaData: MetaData?) {
-            Timber.e("Link Preview: ${metaData?.title}")
-            onResultCallBack?.invoke(metaData)
-        }
-
-        override fun onError(e: Exception?) {
-            Timber.e("Link Preview: ${e?.message}")
-            return
-        }
-
-    })
-    richPreview.getPreview(extractLinks?.get(0))
 }
 
 fun ArrayList<MomentModel>.toArrayMomentModelV(listener: ((ArrayList<MomentModelV>) -> Unit)? = null) {

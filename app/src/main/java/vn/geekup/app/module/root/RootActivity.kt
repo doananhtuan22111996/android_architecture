@@ -118,7 +118,7 @@ class RootActivity : BaseActivity<RootViewModel, ActivityRootBinding>() {
             is RootNavigation.Login -> R.id.loginFragment
             else -> R.id.mainFragment
         }
-        graph.startDestination = destination
+        graph.setStartDestination(destination)
         navHostFragment.navController.graph = graph
     }
 

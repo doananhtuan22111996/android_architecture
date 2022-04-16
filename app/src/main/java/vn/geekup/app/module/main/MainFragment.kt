@@ -124,7 +124,7 @@ class MainFragment : BaseFragment<RootViewModel, FragmentMainBinding>() {
     @SuppressLint("RestrictedApi")
     private fun keepInstanceBackStacks(@IdRes navId: Int) {
         if (navController.currentDestination?.id == navId) return
-        val navBackStackEntry = navController.backStack.find {
+        val navBackStackEntry = navController.backQueue.find {
             it.destination.id == navId
         }
         if (navBackStackEntry != null) {
