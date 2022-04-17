@@ -27,7 +27,6 @@ class RootActivity : BaseActivity<RootViewModel, ActivityRootBinding>() {
     override val viewModel: RootViewModel by viewModels()
 
     private var onBackPressListener: OnBackPressListener? = null
-    private var onUserInfoListener: OnUserInfoListener? = null
     private lateinit var navController: NavController
 
     override fun provideViewModelClass(): Class<RootViewModel> {
@@ -41,13 +40,13 @@ class RootActivity : BaseActivity<RootViewModel, ActivityRootBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setAppColorStatusBar()
-        viewModel.getToken()
         val content = findViewById<View>(android.R.id.content)
         content.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
             override fun onPreDraw(): Boolean =
                 when {
                     viewModel.isRootViewReadyFunc() -> {
                         content.viewTreeObserver.removeOnPreDrawListener(this)
+                        redirectAuth(false)
                         true
                     }
                     else -> false
@@ -61,27 +60,9 @@ class RootActivity : BaseActivity<RootViewModel, ActivityRootBinding>() {
     override fun bindViewModel() {
         super.bindViewModel()
 
-        viewModel.isLoggedIn.observe(this, {
+        viewModel.isLoggedIn.observe(this) {
             redirectAuth(it)
-        })
-
-        viewModel.forceToLogin.observe(this, {
-            Timber.d("Force To Login Success")
-            viewModel.resetUserInfoInShareWrapper()
-            redirectAuth(false)
-        })
-
-        viewModel.userInfo.observe(this, {
-            onUserInfoListener?.onUserInfo(it)
-        })
-
-        viewModel.userIndicator.observe(this, {
-            onUserInfoListener?.onUserIndicator(it)
-        })
-
-        viewModel.userIndicationActive.observe(this, {
-            onUserInfoListener?.onUserIndicatorMomentFeedActive(it)
-        })
+        }
 
     }
 
@@ -95,10 +76,6 @@ class RootActivity : BaseActivity<RootViewModel, ActivityRootBinding>() {
 
     fun setOnBackPressListener(listener: OnBackPressListener) {
         this.onBackPressListener = listener
-    }
-
-    fun setOnUserInfoListener(listener: OnUserInfoListener) {
-        this.onUserInfoListener = listener
     }
 
     private fun setupRootNavigation(root: RootNavigation) {
@@ -130,15 +107,8 @@ class RootActivity : BaseActivity<RootViewModel, ActivityRootBinding>() {
         redirectAuth(isLoggedIn = true)
     }
 
-    fun onUserIndicatorMomentFeedActive(isEnable: Boolean) {
-        viewModel.saveUserIndicatorNewFeedsActive(isEnable)
-        onUserInfoListener?.onUserIndicatorMomentFeedActive(isEnable)
-    }
-
     private fun redirectAuth(isLoggedIn: Boolean) {
         if (isLoggedIn) {
-            viewModel.getUserInfoServer()
-            viewModel.getUserIndicator()
             setupRootNavigation(RootNavigation.Main)
         } else {
             setupRootNavigation(RootNavigation.Login)
@@ -147,12 +117,6 @@ class RootActivity : BaseActivity<RootViewModel, ActivityRootBinding>() {
 
     interface OnBackPressListener {
         fun onBackPress()
-    }
-
-    interface OnUserInfoListener {
-        fun onUserInfo(userInfo: UserInfoModel)
-        fun onUserIndicator(userIndicator: UserIndicatorModelV)
-        fun onUserIndicatorMomentFeedActive(isEnable: Boolean)
     }
 
 }

@@ -11,6 +11,7 @@ import timber.log.Timber
 import vn.geekup.app.R
 import vn.geekup.app.base.BaseFragment
 import vn.geekup.app.databinding.FragmentLoginBinding
+import vn.geekup.app.domain.model.general.ResultModel
 import vn.geekup.app.domain.throwable.ServerErrorException
 import vn.geekup.app.module.root.RootActivity
 import vn.geekup.app.utils.*
@@ -33,20 +34,20 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(),
     override fun bindViewModel() {
         super.bindViewModel()
 
-        viewModel.login.observe(this, {
+        viewModel.login.observe(this) {
             Timber.d("Start Main Fragment")
             if (it) {
                 (baseActivity as? RootActivity)?.redirectMain()
             }
-        })
+        }
 
-        viewModel.isLoading.observe(this, {
+        viewModel.isLoading.observe(this) {
             fragmentBinding.vLoading.root.visible(it)
-        })
+        }
 
     }
 
-    override fun handleServerErrorState(serverErrorException: ServerErrorException) {
+    override fun handleServerErrorState(serverErrorException: ResultModel.ServerErrorException?) {
         super.handleServerErrorState(serverErrorException)
         fragmentBinding.btnLoginOTable.visible(true)
     }

@@ -2,6 +2,7 @@ package vn.geekup.app.data.remote.auth
 
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
+import kotlinx.coroutines.flow.Flow
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -14,10 +15,10 @@ import vn.geekup.app.domain.dto.RefreshTokenBody
 interface AuthApiService {
 
     @GET("auth/login/otable")
-    fun loginOTable(
+    suspend fun loginOTable(
         @Query("code") code: String = "",
         @Query("state") state: String = ""
-    ): Single<BaseResponseVO<OTableVO>>
+    ): BaseResponseVO<OTableVO>
 
     @POST("auth/refresh")
     fun refreshToken(

@@ -9,6 +9,8 @@ dependencies {
     api "io.reactivex.rxjava3:rxkotlin:${versions.reactive.rxkotlin}"
     api "com.google.code.gson:gson:${versions.google.gson}"
 
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.5.2'
+
     // debug
     api "com.jakewharton.timber:timber:${versions.debug.timber}"
 }

@@ -21,30 +21,4 @@ class MomentLocalDataSource @Inject constructor(private val preferenceWrapper: P
         return Single.never()
     }
 
-    override fun putMomentLike(
-        momentId: Int,
-        momentLikeRequestBody: MomentLikeRequestBody
-    ): Single<MomentLikeModel> {
-        return Single.never()
-    }
-
-    override fun shareMomentToNexion(momentId: Int): Single<MetaDataModel> {
-        return Single.never()
-    }
-
-    override fun getMomentDetail(momentId: Int): Single<MomentModel> {
-        return Single.never()
-    }
-
-    override fun getMomentComments(momentCommentRequestBody: MomentCommentRequestBody): Single<BaseModelListResponse<MomentCommentModel>> {
-        return Single.never()
-    }
-
-    override fun postMomentComments(
-        momentId: Int,
-        momentPostCommentRequestBody: MomentPostCommentRequestBody
-    ): Single<MomentCommentModel> {
-        return Single.never()
-    }
-
 }

@@ -27,11 +27,4 @@ class UseCaseModule {
         return MomentUseCaseImplement(authRepository)
     }
 
-    @Provides
-    @Singleton
-    fun provideUserUseCase(@Source userRepository: UserRepository): UserUseCase {
-        return UserUseCaseImplement(userRepository)
-    }
-
-
 }

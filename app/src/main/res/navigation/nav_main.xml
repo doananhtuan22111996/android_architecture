@@ -23,17 +23,4 @@
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
 
-    <fragment
-        android:id="@+id/momentDetailFragment"
-        android:name="vn.geekup.app.module.moment.detail.MomentDetailFragment"
-        android:label="fragment_moment_detail"
-        tools:layout="@layout/fragment_moment_detail" />
-
-    <fragment
-        android:id="@+id/previewMainFragment"
-        android:name="vn.geekup.app.module.media.PreviewMainFragment"
-        android:label="fragment_main_preview"
-        tools:layout="@layout/fragment_main_preview" />
-
-
 </navigation>

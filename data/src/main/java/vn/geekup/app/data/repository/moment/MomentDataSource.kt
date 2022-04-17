@@ -27,30 +27,4 @@ class MomentDataSource @Inject constructor(
         return remote.getMomentFeeds(momentFeedRequestBody)
     }
 
-    override fun putMomentLike(
-        momentId: Int,
-        momentLikeRequestBody: MomentLikeRequestBody
-    ): Single<MomentLikeModel> {
-        return remote.putMomentLike(momentId, momentLikeRequestBody)
-    }
-
-    override fun shareMomentToNexion(momentId: Int): Single<MetaDataModel> {
-        return remote.shareMomentToNexion(momentId)
-    }
-
-    override fun getMomentDetail(momentId: Int): Single<MomentModel> {
-        return remote.getMomentDetail(momentId)
-    }
-
-    override fun getMomentComments(momentCommentRequestBody: MomentCommentRequestBody): Single<BaseModelListResponse<MomentCommentModel>> {
-        return remote.getMomentComments(momentCommentRequestBody)
-    }
-
-    override fun postMomentComments(
-        momentId: Int,
-        momentPostCommentRequestBody: MomentPostCommentRequestBody
-    ): Single<MomentCommentModel> {
-        return remote.postMomentComments(momentId, momentPostCommentRequestBody)
-    }
-
 }

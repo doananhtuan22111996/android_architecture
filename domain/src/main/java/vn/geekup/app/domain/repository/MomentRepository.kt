@@ -14,17 +14,4 @@ import vn.geekup.app.domain.model.moment.MomentModel
 interface MomentRepository {
 
     fun getMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Single<BaseModelListResponse<MomentModel>>
-
-    fun putMomentLike(
-        momentId: Int = 0,
-        momentLikeRequestBody: MomentLikeRequestBody
-    ): Single<MomentLikeModel>
-
-    fun shareMomentToNexion(momentId: Int = 0): Single<MetaDataModel>
-
-    fun getMomentDetail(momentId: Int = 0): Single<MomentModel>
-
-    fun getMomentComments(momentCommentRequestBody: MomentCommentRequestBody): Single<BaseModelListResponse<MomentCommentModel>>
-
-    fun postMomentComments(momentId: Int = 0, momentPostCommentRequestBody: MomentPostCommentRequestBody): Single<MomentCommentModel>
 }

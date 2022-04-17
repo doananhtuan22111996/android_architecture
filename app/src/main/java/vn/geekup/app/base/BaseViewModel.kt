@@ -9,6 +9,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import timber.log.Timber
 import vn.geekup.app.data.Config.ErrorCode.CODE_999
+import vn.geekup.app.domain.model.general.ResultModel
 import vn.geekup.app.domain.throwable.ServerErrorException
 import vn.geekup.app.network.NetworkChange
 
@@ -24,7 +25,7 @@ open class BaseViewModel(
     val fullScreenLoadingState: LiveData<Boolean> = fullScreenLoadingLiveData
 
     val forceToLogin: MutableLiveData<Boolean> = MutableLiveData(false)
-    val errorServerState: MutableLiveData<ServerErrorException> = MutableLiveData()
+    val errorServerState: MutableLiveData<ResultModel.ServerErrorException?> = MutableLiveData()
 
     fun fullScreenLoading(isLoading: Boolean) {
         fullScreenLoadingLiveData.postValue(isLoading)
@@ -47,7 +48,7 @@ open class BaseViewModel(
         compositeDisposable.clear()
     }
 
-    fun executingServerErrorException(serverError: ServerErrorException?) {
+    fun executingServerErrorException(serverError: ResultModel.ServerErrorException?) {
         if (serverError == null) return
         forceToLogin.value = serverError.code == CODE_999
         errorServerState.value = serverError

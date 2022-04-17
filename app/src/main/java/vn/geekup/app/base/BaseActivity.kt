@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import vn.geekup.app.databinding.ActivityBaseBinding
+import vn.geekup.app.domain.model.general.ResultModel
 import vn.geekup.app.network.NetworkStatus
 import vn.geekup.app.utils.setupViewClickHideKeyBoard
 import vn.geekup.app.domain.throwable.ServerErrorException
@@ -53,7 +54,7 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
     // Do nothing, maybe handle at subclass
   }
 
-  open fun handleServerErrorState(serverErrorException: ServerErrorException) {
-    Toast.makeText(this, serverErrorException.message.toString(), Toast.LENGTH_SHORT).show()
+  open fun handleServerErrorState(serverErrorException: ResultModel.ServerErrorException?) {
+    Toast.makeText(this, serverErrorException?.message.toString(), Toast.LENGTH_SHORT).show()
   }
 }

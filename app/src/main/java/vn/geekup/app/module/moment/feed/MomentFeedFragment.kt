@@ -29,10 +29,10 @@ import io.reactivex.rxjava3.core.Observable
 import java.util.concurrent.TimeUnit
 import androidx.recyclerview.widget.SimpleItemAnimator
 import dagger.hilt.android.AndroidEntryPoint
+import vn.geekup.app.domain.model.general.ResultModel
 
 @AndroidEntryPoint
-class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBinding>(),
-    RootActivity.OnUserInfoListener {
+class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBinding>() {
 
     private lateinit var adapter: MomentFeedsAdapter
     private lateinit var endlessRecyclerViewScrollListener: EndlessRecyclerViewScrollListener
@@ -50,7 +50,6 @@ class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBindi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.getMomentFeeds(date = dateFilter)
-        (baseActivity as? RootActivity)?.setOnUserInfoListener(this)
         initAdapter()
     }
 
@@ -66,66 +65,34 @@ class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBindi
     override fun bindViewModel() {
         super.bindViewModel()
 
-        viewModel.moments.observe(this, {
+        viewModel.moments.observe(this) {
             fragmentBinding.isMomentEmpty = it.isEmpty()
             adapter.addAllItemsWithDiffUtils(it)
             fragmentBinding.swMoments.isRefreshing = false
-        })
+        }
 
-        viewModel.newMomentState.observe(this, {
-            // Fist: New Moment, second: Position, third: MomentAction
-            val (newMoment, position, _) = it
-            if (position > adapter.itemCount) return@observe
-            adapter.setItemPositionChanged(newMoment, position)
-        })
-
-        viewModel.shareMoment.observe(this, {
-            Toast.makeText(context, it?.message.toString(), Toast.LENGTH_SHORT).show()
-        })
-
-        viewModel.pagingState.observe(this, {
+        viewModel.pagingState.observe(this) {
             Timber.d("Loadmore: $it")
             adapter.setNetworkState(it)
-        })
+        }
     }
 
-    override fun handleServerErrorState(serverErrorException: ServerErrorException) {
+    override fun handleServerErrorState(serverErrorException: ResultModel.ServerErrorException?) {
         super.handleServerErrorState(serverErrorException)
         fragmentBinding.isMomentEmpty = adapter.itemCount == 0
         fragmentBinding.swMoments.isRefreshing = false
     }
 
-    override fun onUserInfo(userInfo: UserInfoModel) {
-        viewModel.userInfo.value = userInfo
-        fragmentBinding.layoutMomentHeaderBar.userInfo = userInfo
-    }
-
-    override fun onUserIndicator(userIndicator: UserIndicatorModelV) {
-        viewModel.userInfoIndicator.value = userIndicator
-        fragmentBinding.layoutMomentHeaderBar.userIndicator = userIndicator
-    }
-
-    override fun onUserIndicatorMomentFeedActive(isEnable: Boolean) {
-        isEnableIndicator = isEnable
-        fragmentBinding.layoutMomentHeaderBar.layoutIndicator.root.visible(isEnable)
-        fragmentBinding.layoutMomentHeaderBar.layoutIndicator.tvHide.visible(isEnable)
-    }
-
     private fun initMomentHeader() {
         fragmentBinding.layoutMomentHeaderBar.day = getCurrentDayName()
-        fragmentBinding.layoutMomentHeaderBar.userInfo = viewModel.userInfo.value
-        fragmentBinding.layoutMomentHeaderBar.userIndicator = viewModel.userInfoIndicator.value
         fragmentBinding.layoutMomentHeaderBar.layoutIndicator.root.visible(isEnableIndicator)
         fragmentBinding.layoutMomentHeaderBar.layoutIndicator.tvHide.visible(isEnableIndicator)
-        fragmentBinding.layoutMomentHeaderBar.layoutIndicator.tvHide.setOnClickListener {
-            (baseActivity as? RootActivity)?.onUserIndicatorMomentFeedActive(isEnable = false)
-        }
     }
 
     private fun initAdapter() {
         adapter = MomentFeedsAdapter(
-            this::listenerAdapter,
-            this::onClickSeeMoreListener,
+            null,
+            null,
             this::onClickLinkListener
         )
     }
@@ -141,7 +108,8 @@ class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBindi
             }
         fragmentBinding.rvMoments.layoutManager = layoutManager
         fragmentBinding.rvMoments.adapter = adapter
-        (fragmentBinding.rvMoments.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+        (fragmentBinding.rvMoments.itemAnimator as SimpleItemAnimator).supportsChangeAnimations =
+            false
         fragmentBinding.rvMoments.addOnScrollListener(endlessRecyclerViewScrollListener)
         adapter.registerAdapterDataObserver(object : AdapterDataObserver() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
@@ -169,40 +137,6 @@ class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBindi
         })
     }
 
-    private fun listenerAdapter(data: MomentModelV, position: Int, action: MomentActionV) =
-        when (action) {
-            MomentActionV.MomentLike -> {
-                viewModel.requestMomentLike(data.id)
-            }
-            MomentActionV.MomentShare -> {
-                if (data.userId == viewModel.userInfo.value?.id) {
-                    viewModel.shareMomentToNexion(data.id)
-                } else {
-                    Toast.makeText(
-                        context,
-                        "Only creator of this moment can share it to Nexion",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-            MomentActionV.MomentDetail -> {
-                redirectMomentDetail(data.id)
-            }
-            MomentActionV.MomentPreview -> {
-                data.imgUrls?.toArrayString {
-                    navController.navigate(
-                        R.id.previewMainFragment,
-                        bundleOf(KEY_ARGUMENT_IMAGES to it)
-                    )
-                }
-            }
-            else -> Unit
-        }
-
-    private fun onClickSeeMoreListener(data: MomentModelV?) {
-        redirectMomentDetail(data?.id)
-    }
-
     private fun onClickLinkListener(url: String) {
         baseActivity.openBrowserApp(url)
     }
@@ -211,13 +145,6 @@ class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBindi
         fragmentBinding.layoutMomentHeaderBar.ivCalendar.setOnClickListener {
             openCalendarBottomSheet()
         }
-    }
-
-    private fun redirectMomentDetail(momentId: Int? = 0) {
-        navController.navigate(
-            R.id.momentDetailFragment,
-            bundleOf(KEY_ARGUMENT_FRAGMENT to momentId)
-        )
     }
 
     private val calendarBottomSheetFragment =

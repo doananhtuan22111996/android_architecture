@@ -121,7 +121,6 @@ android {
 
 dependencies {
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin.kotlinStdlib}"
 //    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     testImplementation "junit:junit:${versions.test.junit}"
@@ -133,8 +132,8 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxandroid:${versions.reactive.rxandroid}"
 
     // DI
-    implementation('com.google.dagger:hilt-android:2.41')
-    kapt('com.google.dagger:hilt-android-compiler:2.41')
+    implementation "com.google.dagger:hilt-android:${versions.di.hilt}"
+    kapt "com.google.dagger:hilt-android-compiler:${versions.di.hilt}"
 
     // Image
     // Todo use Coil

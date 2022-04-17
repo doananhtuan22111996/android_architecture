@@ -11,6 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.viewbinding.ViewBinding
 import vn.geekup.app.databinding.FragmentBaseBinding
+import vn.geekup.app.domain.model.general.ResultModel
 import vn.geekup.app.domain.throwable.ServerErrorException
 import vn.geekup.app.network.NetworkStatus
 import vn.geekup.app.utils.setupViewClickHideKeyBoard
@@ -67,8 +68,8 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding>: Fragment() {
     // Do nothing, maybe handle at subclass
   }
 
-  open fun handleServerErrorState(serverErrorException: ServerErrorException) {
-    Toast.makeText(context, serverErrorException.message.toString(), Toast.LENGTH_SHORT).show()
+  open fun handleServerErrorState(serverErrorException: ResultModel.ServerErrorException?) {
+    Toast.makeText(context, serverErrorException?.message.toString(), Toast.LENGTH_SHORT).show()
   }
 
 }

@@ -51,6 +51,7 @@ versions.google = [
 
 versions.di = [
         dagger: '2.38.1',
+        hilt: '2.41',
 ]
 
 versions.reactive = [
