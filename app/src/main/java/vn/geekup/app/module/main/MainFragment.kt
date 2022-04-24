@@ -72,8 +72,7 @@ class MainFragment : BaseFragment<RootViewModel, FragmentMainBinding>() {
         selectedBottomNavigation(view)
         when (view.id) {
             R.id.lnHome -> keepInstanceBackStacks(R.id.momentFeedFragment)
-            R.id.ivNotification -> keepInstanceBackStacks(R.id.notificationFragment)
-            else -> keepInstanceBackStacks(R.id.profileFragment)
+            else -> keepInstanceBackStacks(R.id.momentFeedFragment)
         }
     }
 
@@ -109,15 +108,12 @@ class MainFragment : BaseFragment<RootViewModel, FragmentMainBinding>() {
             fragmentBinding.bottomNavigation.ivHome.isSelected = false
             fragmentBinding.bottomNavigation.tvMomentFeeds.isSelected = false
         }
-        fragmentBinding.bottomNavigation.ivNotification.isSelected = view.id == R.id.ivNotification
-        fragmentBinding.bottomNavigation.ivProfile.isSelected = view.id == R.id.ivProfile
     }
 
     private fun getViewDestination(@IdRes navId: Int): View {
         return when (navId) {
             R.id.momentFeedFragment -> fragmentBinding.bottomNavigation.lnHome
-            R.id.notificationFragment -> fragmentBinding.bottomNavigation.ivNotification
-            else -> fragmentBinding.bottomNavigation.ivProfile
+            else -> fragmentBinding.bottomNavigation.lnHome
         }
     }
 

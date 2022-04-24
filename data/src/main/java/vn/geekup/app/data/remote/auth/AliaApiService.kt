@@ -40,6 +40,14 @@ interface AliaApiService {
         @Query("date") dates: ArrayList<String>? = null,
     ): Single<BaseResponseVO<ListResponseVO<MomentVO>>>
 
+    @GET("me/subscriptions/moments")
+    suspend fun getFlowMomentFeeds(
+        @Query("cursor") cursor: String? = null,
+        @Query("limit") limit: Int = 20,
+        @Query("sort") sort: String = "desc",
+        @Query("date") dates: ArrayList<String>? = null,
+    ): BaseResponseVO<ListResponseVO<MomentVO>>
+
 
     @PUT("moments/{momentId}/reactions")
     fun putMomentLike(
@@ -56,6 +64,11 @@ interface AliaApiService {
     fun getMomentDetail(
         @Path("momentId") momentId: Int = 0,
     ): Single<BaseResponseVO<MomentVO>>
+
+    @GET("moments/{momentId}")
+    suspend fun getFlowMomentDetail(
+        @Path("momentId") momentId: Int = 0,
+    ): BaseResponseVO<MomentVO>
 
     @GET("moments/{momentId}/comments")
     fun getMomentComments(

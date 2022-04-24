@@ -23,6 +23,8 @@ class AuthRemoteDataSource @Inject constructor(private val authApiService: AuthA
         return authApiService.logout().andThen(Single.just(true))
     }
 
+    override suspend fun saveToken(token: String): Flow<ResultModel<Unit>> = emptyFlow();
+
     override suspend fun loginOTable(otableBody: OTableRequestBody): Flow<ResultModel<OTableModel>> {
         return flow {
             Timber.e("Thread Data Source: ${Thread.currentThread().name}")

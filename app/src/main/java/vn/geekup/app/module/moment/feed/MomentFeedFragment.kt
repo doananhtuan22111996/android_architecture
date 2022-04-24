@@ -49,7 +49,7 @@ class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBindi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getMomentFeeds(date = dateFilter)
+        viewModel.getFlowMomentFeeds(date = dateFilter)
         initAdapter()
     }
 
@@ -103,7 +103,7 @@ class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBindi
             object : EndlessRecyclerViewScrollListener(layoutManager) {
 
                 override fun onLoadMore(page: Int, totalItemsCount: Int) {
-                    viewModel.getMomentFeeds(date = dateFilter)
+                    viewModel.getFlowMomentFeeds(date = dateFilter)
                 }
             }
         fragmentBinding.rvMoments.layoutManager = layoutManager
@@ -126,7 +126,7 @@ class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBindi
 
     private fun initRefreshLayout() {
         fragmentBinding.swMoments.setOnRefreshListener {
-            viewModel.getMomentFeeds(date = dateFilter, isReload = true)
+            viewModel.getFlowMomentFeeds(date = dateFilter, isReload = true)
         }
         (parentFragment?.parentFragment as? MainFragment)?.setOnChildFragmentListener(object :
             MainFragment.OnChildFragmentListener {
@@ -152,12 +152,12 @@ class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBindi
             onDateSelectedListener = { day, month, year ->
                 dateFilter = "$year-$month-$day"
                 fragmentBinding.swMoments.isRefreshing = true
-                viewModel.getMomentFeeds(date = dateFilter, isReload = true)
+                viewModel.getFlowMomentFeeds(date = dateFilter, isReload = true)
             },
             onResetSelectedListener = {
                 dateFilter = ""
                 fragmentBinding.swMoments.isRefreshing = true
-                viewModel.getMomentFeeds(date = dateFilter, isReload = true)
+                viewModel.getFlowMomentFeeds(date = dateFilter, isReload = true)
             }
         )
 
@@ -178,7 +178,7 @@ class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBindi
             .observeOn(AndroidSchedulers.mainThread()).subscribe {
                 fragmentBinding.rvMoments.scrollToPosition(0)
                 fragmentBinding.swMoments.isRefreshing = true
-                viewModel.getMomentFeeds(date = dateFilter, isReload = true)
+                viewModel.getFlowMomentFeeds(date = dateFilter, isReload = true)
             }
     }
 

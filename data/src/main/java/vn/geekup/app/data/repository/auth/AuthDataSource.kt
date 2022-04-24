@@ -28,6 +28,10 @@ class AuthDataSource @Inject constructor(
         return local.getToken()
     }
 
+    override suspend fun saveToken(token: String): Flow<ResultModel<Unit>> {
+        return local.saveToken(token)
+    }
+
     override suspend fun loginOTable(otableBody: OTableRequestBody): Flow<ResultModel<OTableModel>> {
         return remote.loginOTable(otableBody)
     }

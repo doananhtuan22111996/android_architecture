@@ -7,7 +7,6 @@ import dagger.hilt.components.SingletonComponent
 import vn.geekup.app.data.di.qualifier.source.Source
 import vn.geekup.app.domain.repository.AuthRepository
 import vn.geekup.app.domain.repository.MomentRepository
-import vn.geekup.app.domain.repository.UserRepository
 import vn.geekup.app.domain.usecase.*
 import javax.inject.Singleton
 
