@@ -7,11 +7,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import vn.geekup.app.base.BaseViewModel
@@ -96,7 +95,7 @@ class MomentViewModel @Inject constructor(
         pagingState.value =
             if (nextCursor != null) PagingState.LoadingMore else PagingState.Loaded
 
-        viewModelScope.launch {
+        viewModelScope.launch((Dispatchers.Main)) {
             momentUseCase.getFlowMomentFeeds(
                 MomentFeedRequestBody(
                     cursor = nextCursor,
@@ -105,14 +104,14 @@ class MomentViewModel @Inject constructor(
                 )
             ).collectLatest {
                 when (it) {
-                    is ResultModel.ResultListObj -> {
+                    is ResultModel.Success -> {
                         nextCursor = it.nextCursor
-                        it.items?.toArrayMomentModelV { results ->
+                        it.data?.toArrayMomentModelV { results ->
                             localMomentFeeds.addAll(results)
                             moments.value = localMomentFeeds
                         }
                         pagingState.value = PagingState.Loaded
-
+                        getFlowMomentDetail(it.data ?: arrayListOf())
                     }
                     else -> {
                         pagingState.value = PagingState.Loaded
@@ -120,14 +119,19 @@ class MomentViewModel @Inject constructor(
                     }
                 }
             }
-            momentUseCase.getFlowMomentDetail(18).collectLatest {
-                when (it) {
-                    is ResultModel.ResultObj -> {
-                        Timber.e("Results Detail REsponse")
-                    }
-                    else -> {
-                    }
+        }
+    }
+
+    private suspend fun getFlowMomentDetail(data: ArrayList<MomentModel>) {
+        data.asFlow().flatMapConcat {
+            Timber.e("Moment Detail Calling: ${it.id}")
+            momentUseCase.getFlowMomentDetail(it.id ?: 0)
+        }.collect {
+            when (it) {
+                is ResultModel.Success -> {
+                    Timber.e("Moment Detail : ${it.data?.id ?: 0}")
                 }
+                else -> {}
             }
         }
     }

@@ -2,20 +2,14 @@ package vn.geekup.app.data.repository.moment
 
 import io.reactivex.rxjava3.core.Single
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.*
 import timber.log.Timber
 import vn.geekup.app.data.Config
 import vn.geekup.app.data.services.MiddleWareService
 import vn.geekup.app.domain.dto.*
 import vn.geekup.app.domain.model.general.BaseModelListResponse
-import vn.geekup.app.domain.model.general.MetaDataModel
 import vn.geekup.app.domain.model.general.ResultModel
-import vn.geekup.app.domain.model.moment.MomentCommentModel
-import vn.geekup.app.domain.model.moment.MomentLikeModel
 import vn.geekup.app.domain.model.moment.MomentModel
-import vn.geekup.app.domain.model.user.OTableModel
 import vn.geekup.app.domain.repository.MomentRepository
 import javax.inject.Inject
 
@@ -44,7 +38,7 @@ class MomentRemoteDataSource @Inject constructor(
         } as Single<BaseModelListResponse<MomentModel>>
     }
 
-    override suspend fun getFlowMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<ResultModel<MomentModel>> =
+    override suspend fun getFlowMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<ResultModel<ArrayList<MomentModel>>> =
         flow {
             val response = middleWareService.aliaApiService.getFlowMomentFeeds(
                 cursor = momentFeedRequestBody.cursor,
@@ -62,16 +56,16 @@ class MomentRemoteDataSource @Inject constructor(
                     )
                 )
             } else {
-                val results: ResultModel.ResultListObj<MomentModel> =
-                    ResultModel.ResultListObj(
-                        limit = response.data?.limit,
-                        nextCursor = response.data?.nextCursor
-                    )
                 val items: ArrayList<MomentModel> = arrayListOf()
                 response.data?.items?.forEach { item ->
                     items.add(item.vo2Model())
                 }
-                results.items = items
+                val results: ResultModel.Success<ArrayList<MomentModel>> =
+                    ResultModel.Success(
+                        limit = response.data?.limit,
+                        nextCursor = response.data?.nextCursor,
+                        data = items
+                    )
                 emit(results)
             }
 
@@ -80,7 +74,6 @@ class MomentRemoteDataSource @Inject constructor(
     override suspend fun getFlowMomentDetail(id: Int): Flow<ResultModel<MomentModel>> =
         flow {
             val response = middleWareService.aliaApiService.getFlowMomentDetail(momentId = id)
-            Timber.e("Calling Moment Detail: $id")
             if (response.meta?.statusCode != Config.ErrorCode.CODE_200) {
                 emit(
                     ResultModel.ServerErrorException(
@@ -89,7 +82,7 @@ class MomentRemoteDataSource @Inject constructor(
                     )
                 )
             } else {
-                emit(ResultModel.ResultObj(data = response.data?.vo2Model()))
+                emit(ResultModel.Success(data = response.data?.vo2Model()))
             }
         }.flowOn(Dispatchers.IO)
 }

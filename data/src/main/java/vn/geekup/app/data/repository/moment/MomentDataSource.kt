@@ -29,7 +29,7 @@ class MomentDataSource @Inject constructor(
         return remote.getMomentFeeds(momentFeedRequestBody)
     }
 
-    override suspend fun getFlowMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<ResultModel<MomentModel>> {
+    override suspend fun getFlowMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<ResultModel<ArrayList<MomentModel>>> {
         return remote.getFlowMomentFeeds(momentFeedRequestBody)
     }
 

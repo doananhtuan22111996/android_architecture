@@ -11,7 +11,7 @@ import vn.geekup.app.domain.repository.MomentRepository
 interface MomentUseCase {
     fun getMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Single<BaseModelListResponse<MomentModel>>
 
-    suspend fun getFlowMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<ResultModel<MomentModel>>
+    suspend fun getFlowMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<ResultModel<ArrayList<MomentModel>>>
 
     suspend fun getFlowMomentDetail(id: Int): Flow<ResultModel<MomentModel>>
 
@@ -24,7 +24,7 @@ class MomentUseCaseImplement(private val momentRepository: MomentRepository) :
         return momentRepository.getMomentFeeds(momentFeedRequestBody)
     }
 
-    override suspend fun getFlowMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<ResultModel<MomentModel>> {
+    override suspend fun getFlowMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<ResultModel<ArrayList<MomentModel>>> {
         return momentRepository.getFlowMomentFeeds(momentFeedRequestBody)
     }
 

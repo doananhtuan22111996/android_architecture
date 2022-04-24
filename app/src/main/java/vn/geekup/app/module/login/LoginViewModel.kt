@@ -39,7 +39,7 @@ class LoginViewModel @Inject constructor(
             authUseCase.loginOTable(OTableRequestBody(otableToken, roleAuthority)).collectLatest {
                 Timber.e("Thread View Model Collect: ${Thread.currentThread().name}")
                 when (it) {
-                    is ResultModel.ResultObj -> {
+                    is ResultModel.Success -> {
                         authUseCase.saveToken(it.data?.token ?: "")
                         login.value = it.data?.token?.isNotEmpty()
                         isLoading.value = false

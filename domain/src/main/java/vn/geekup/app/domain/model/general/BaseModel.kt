@@ -14,15 +14,16 @@ data class BaseModelListResponse<BM : BaseModel>(
     val nextCursor: String? = ""
 )
 
-sealed class ResultModel<out BM> {
-    data class ResultListObj<BM>(
-        var items: ArrayList<BM>? = arrayListOf(),
+sealed class ResultModel<out R> {
+    data class Success<out T>(
+        val data: T? = null,
         val limit: Int? = 0,
         val nextCursor: String? = ""
-    ) : ResultModel<BM>()
-
-    data class ResultObj<out BM>(val data: BM? = null) : ResultModel<BM>()
+    ) : ResultModel<T>()
 
     data class ServerErrorException(val code: Int? = 0, val message: String? = "") :
         ResultModel<Nothing>()
+
+    object Loading : ResultModel<Nothing>()
+
 }

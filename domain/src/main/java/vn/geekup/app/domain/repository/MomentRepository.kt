@@ -17,7 +17,7 @@ interface MomentRepository {
 
     fun getMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Single<BaseModelListResponse<MomentModel>>
 
-    suspend fun getFlowMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<ResultModel<MomentModel>>
+    suspend fun getFlowMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<ResultModel<ArrayList<MomentModel>>>
 
     suspend fun getFlowMomentDetail(id: Int): Flow<ResultModel<MomentModel>>
 }

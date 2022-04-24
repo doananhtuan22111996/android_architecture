@@ -24,7 +24,7 @@ class MomentLocalDataSource @Inject constructor(private val preferenceWrapper: P
         return Single.never()
     }
 
-    override suspend fun getFlowMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<ResultModel<MomentModel>> =
+    override suspend fun getFlowMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<ResultModel<ArrayList<MomentModel>>> =
         emptyFlow()
 
 

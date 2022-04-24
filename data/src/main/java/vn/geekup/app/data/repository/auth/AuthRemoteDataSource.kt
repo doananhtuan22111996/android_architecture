@@ -38,7 +38,7 @@ class AuthRemoteDataSource @Inject constructor(private val authApiService: AuthA
                     )
                 )
             } else {
-                emit(ResultModel.ResultObj(data = response.data?.vo2Model() ?: OTableModel()))
+                emit(ResultModel.Success(data = response.data?.vo2Model() ?: OTableModel()))
             }
         }.flowOn(Dispatchers.IO)
     }

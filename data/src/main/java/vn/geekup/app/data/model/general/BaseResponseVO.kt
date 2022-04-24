@@ -14,5 +14,8 @@ data class ListResponseVO<BV>(
 
 data class BaseResponseVO<BV>(
     val meta: MetaData? = MetaData(),
+    val limit: Int? = 0,
+    val nextCursor: String? = "",
+    var items: ArrayList<BV>? = arrayListOf(),
     val data: BV? = null
 )
