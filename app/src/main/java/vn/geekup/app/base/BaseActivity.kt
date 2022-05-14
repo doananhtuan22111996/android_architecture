@@ -6,14 +6,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import vn.geekup.app.databinding.ActivityBaseBinding
 import vn.geekup.app.domain.model.general.ResultModel
 import vn.geekup.app.network.NetworkStatus
 import vn.geekup.app.utils.setupViewClickHideKeyBoard
-import vn.geekup.app.domain.throwable.ServerErrorException
-import javax.inject.Inject
 
 abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatActivity() {
 

@@ -10,7 +10,6 @@ import io.reactivex.rxjava3.disposables.Disposable
 import timber.log.Timber
 import vn.geekup.app.data.Config.ErrorCode.CODE_999
 import vn.geekup.app.domain.model.general.ResultModel
-import vn.geekup.app.domain.throwable.ServerErrorException
 import vn.geekup.app.network.NetworkChange
 
 open class BaseViewModel(

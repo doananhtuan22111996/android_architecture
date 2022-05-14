@@ -1,88 +1,58 @@
 package vn.geekup.app.data.repository.moment
 
-import io.reactivex.rxjava3.core.Single
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
-import timber.log.Timber
-import vn.geekup.app.data.Config
-import vn.geekup.app.data.services.MiddleWareService
+import retrofit2.Response
+import vn.geekup.app.data.Config.ErrorCode.CODE_999
+import vn.geekup.app.data.model.general.ListResponseVO
+import vn.geekup.app.data.model.general.ObjectResponseVO
+import vn.geekup.app.data.model.moment.MomentVO
+import vn.geekup.app.data.remote.auth.AliaApiService
+import vn.geekup.app.data.di.remote.NetworkBoundService
 import vn.geekup.app.domain.dto.*
-import vn.geekup.app.domain.model.general.BaseModelListResponse
 import vn.geekup.app.domain.model.general.ResultModel
 import vn.geekup.app.domain.model.moment.MomentModel
 import vn.geekup.app.domain.repository.MomentRepository
 import javax.inject.Inject
 
 class MomentRemoteDataSource @Inject constructor(
-    private val middleWareService: MiddleWareService
+    private val aliaApiService: AliaApiService,
 ) : MomentRepository {
 
-    override fun getMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Single<BaseModelListResponse<MomentModel>> {
-        val requestFunc = middleWareService.aliaApiService.getMomentFeeds(
-            cursor = momentFeedRequestBody.cursor,
-            limit = momentFeedRequestBody.limit,
-            sort = when (momentFeedRequestBody.sort) {
-                MomentSort.DESC() -> MomentSort.DESC().sortName
-                else -> MomentSort.ASC().sortName
-            }, dates = momentFeedRequestBody.dates
-        )
-        return middleWareService.requestSingleApi(requestFunc = requestFunc) {
-            val results: BaseModelListResponse<MomentModel> =
-                BaseModelListResponse(limit = it.data?.limit, nextCursor = it.data?.nextCursor)
-            val items: ArrayList<MomentModel> = arrayListOf()
-            it.data?.items?.forEach { item ->
-                items.add(item.vo2Model())
-            }
-            results.items = items
-            Single.just(results)
-        } as Single<BaseModelListResponse<MomentModel>>
-    }
-
     override suspend fun getFlowMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<ResultModel<ArrayList<MomentModel>>> =
-        flow {
-            val response = middleWareService.aliaApiService.getFlowMomentFeeds(
-                cursor = momentFeedRequestBody.cursor,
-                limit = momentFeedRequestBody.limit,
-                sort = when (momentFeedRequestBody.sort) {
-                    MomentSort.DESC() -> MomentSort.DESC().sortName
-                    else -> MomentSort.ASC().sortName
-                }, dates = momentFeedRequestBody.dates
-            )
-            if (response.meta?.statusCode != Config.ErrorCode.CODE_200) {
-                emit(
-                    ResultModel.ServerErrorException(
-                        response.meta?.statusCode,
-                        response.meta?.message
-                    )
+        object :
+            NetworkBoundService<ObjectResponseVO<ListResponseVO<MomentVO>>, ArrayList<MomentModel>>() {
+
+            override suspend fun onApi(): Response<ObjectResponseVO<ListResponseVO<MomentVO>>> =
+                aliaApiService.getFlowMomentFeeds(
+                    cursor = momentFeedRequestBody.cursor,
+                    sort = when (momentFeedRequestBody.sort) {
+                        MomentSort.DESC() -> MomentSort.DESC().sortName
+                        else -> MomentSort.ASC().sortName
+                    }, dates = momentFeedRequestBody.dates
                 )
-            } else {
+
+            override suspend fun processResponse(request: ObjectResponseVO<ListResponseVO<MomentVO>>?): ResultModel.Success<ArrayList<MomentModel>> {
                 val items: ArrayList<MomentModel> = arrayListOf()
-                response.data?.items?.forEach { item ->
+                request?.data?.items?.forEach { item ->
                     items.add(item.vo2Model())
                 }
-                val results: ResultModel.Success<ArrayList<MomentModel>> =
-                    ResultModel.Success(
-                        limit = response.data?.limit,
-                        nextCursor = response.data?.nextCursor,
-                        data = items
-                    )
-                emit(results)
+                return ResultModel.Success(
+                    limit = request?.data?.limit,
+                    nextCursor = request?.data?.nextCursor,
+                    data = items
+                )
             }
 
-        }.flowOn(Dispatchers.IO)
+        }.build()
 
     override suspend fun getFlowMomentDetail(id: Int): Flow<ResultModel<MomentModel>> =
         flow {
-            val response = middleWareService.aliaApiService.getFlowMomentDetail(momentId = id)
-            if (response.meta?.statusCode != Config.ErrorCode.CODE_200) {
-                emit(
-                    ResultModel.ServerErrorException(
-                        response.meta?.statusCode,
-                        response.meta?.message
-                    )
+            emit(
+                ResultModel.ServerErrorException(
+                    CODE_999,
+                    "Force Server Error"
                 )
-            } else {
-                emit(ResultModel.Success(data = response.data?.vo2Model()))
-            }
+            )
         }.flowOn(Dispatchers.IO)
 }

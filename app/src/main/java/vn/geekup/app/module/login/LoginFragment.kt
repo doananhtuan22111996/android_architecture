@@ -12,7 +12,6 @@ import vn.geekup.app.R
 import vn.geekup.app.base.BaseFragment
 import vn.geekup.app.databinding.FragmentLoginBinding
 import vn.geekup.app.domain.model.general.ResultModel
-import vn.geekup.app.domain.throwable.ServerErrorException
 import vn.geekup.app.module.root.RootActivity
 import vn.geekup.app.utils.*
 

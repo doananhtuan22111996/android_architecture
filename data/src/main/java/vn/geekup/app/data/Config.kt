@@ -33,6 +33,7 @@ object Config {
     object ErrorCode {
         const val CODE_200 = 200
         const val CODE_201 = 201
+        const val CODE_204 = 204
         const val CODE_302 = 302
         const val CODE_401 = 401 //Unauthorized
         const val CODE_400 = 400 //Unauthorized
