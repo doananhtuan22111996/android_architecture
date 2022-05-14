@@ -3,7 +3,6 @@ package vn.geekup.app.module.moment
 import android.annotation.SuppressLint
 import android.text.SpannableStringBuilder
 import android.text.Spanned
-import android.text.style.ForegroundColorSpan
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
@@ -15,15 +14,11 @@ import androidx.appcompat.widget.AppCompatImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.schedulers.Schedulers
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
-import vn.geekup.app.domain.model.moment.ImgUrlModel
+import kotlinx.coroutines.*
 import vn.geekup.app.domain.model.moment.MomentImagePosition
 import vn.geekup.app.domain.model.moment.MomentModel
 import vn.geekup.app.model.moment.MomentModelV
-import java.util.regex.Pattern
 
 object MomentExtension {
 
@@ -76,33 +71,6 @@ object MomentExtension {
         createdAt: String?
     ) {
         textView.text = "$creatorName - ${createdAt?.calculatorDiffToMomentDate(textView.context)}"
-    }
-
-    @JvmStatic
-    @BindingAdapter(value = ["moment", "onClickSeeMore", "onClickLink"], requireAll = false)
-    fun setContentMoment(
-        textView: AppCompatTextView,
-        moment: MomentModelV?,
-        onClickSeeMore: ((MomentModelV?) -> Unit)? = null,
-        onClickLink: ((url: String) -> Unit)? = null
-    ) {
-        val sizeImages = moment?.imgUrls?.size ?: 0
-        val contentChars = moment?.content?.length ?: 0
-        if (sizeImages > 0 && contentChars > KEY_MOMENT_MAX_CHARS_IMAGES) {
-            textView.makeTextSeeMore(
-                content = moment?.content,
-                maxChars = KEY_MOMENT_MAX_CHARS_IMAGES
-            ) { onClickSeeMore?.invoke(moment) }
-        } else if (sizeImages == 0 && contentChars > KEY_MOMENT_MAX_CHARS) {
-            textView.makeTextSeeMore(
-                content = moment?.content,
-                maxChars = KEY_MOMENT_MAX_CHARS
-            ) { onClickSeeMore?.invoke(moment) }
-        } else {
-            textView.text = moment?.content
-        }
-        textView.makeLinkUnderLine(onLinkListener = onClickLink)
-        textView.setHashTagMoment()
     }
 
     @JvmStatic
@@ -226,50 +194,14 @@ object MomentExtension {
 
 }
 
-fun AppCompatTextView.setHashTagMoment() {
-    Observable.create<SpannableStringBuilder> {
-        val spannable = SpannableStringBuilder(text)
-        val matcher = Pattern.compile(KEY_MOMENT_HASH_TAG_PATTERN).matcher(spannable)
-        while (matcher.find()) {
-            spannable.setSpan(
-                ForegroundColorSpan(this.context.getColor(R.color.color_text_hash_tag)),
-                matcher.start(),
-                matcher.end(),
-                0
-            )
-        }
-        it.onNext(spannable)
-    }.subscribeOn(Schedulers.newThread())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe {
-            this.text = it
-        }
-}
-
 fun ArrayList<MomentModel>.toArrayMomentModelV(listener: ((ArrayList<MomentModelV>) -> Unit)? = null) {
-    Observable.create<ArrayList<MomentModelV>> {
+    CoroutineScope(Dispatchers.IO).launch {
         val results: ArrayList<MomentModelV> = arrayListOf()
         forEach { moment ->
             results.add(MomentModelV().model2ModelV(moment))
         }
-        it.onNext(results)
-    }.subscribeOn(Schedulers.newThread())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe {
-            listener?.invoke(it)
+        withContext(Dispatchers.Main) {
+            listener?.invoke(results)
         }
-}
-
-fun ArrayList<ImgUrlModel>.toArrayString(listener: ((ArrayList<String>) -> Unit)? = null) {
-    Observable.create<ArrayList<String>> {
-        val results: ArrayList<String> = arrayListOf()
-        forEach { img ->
-            results.add(img.original ?: "")
-        }
-        it.onNext(results)
-    }.subscribeOn(Schedulers.newThread())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe {
-            listener?.invoke(it)
-        }
+    }
 }

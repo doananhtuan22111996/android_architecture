@@ -13,10 +13,6 @@
             name="userInfo"
             type="vn.geekup.app.domain.model.user.UserInfoModel" />
 
-        <variable
-            name="userIndicator"
-            type="vn.geekup.app.model.user.UserIndicatorModelV" />
-
     </data>
 
     <com.google.android.material.appbar.AppBarLayout
@@ -90,15 +86,6 @@
                         android:textColor="@color/color_5" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <include
-                    android:id="@+id/layoutIndicator"
-                    layout="@layout/item_user_indicator"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_16"
-                    android:layout_marginBottom="@dimen/margin_16"
-                    app:userIndicator="@{userIndicator}" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

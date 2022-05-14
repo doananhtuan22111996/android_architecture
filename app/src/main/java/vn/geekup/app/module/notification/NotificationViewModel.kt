@@ -8,8 +8,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NotificationViewModel @Inject constructor(
-    networkChange: NetworkChange,
-    //Todo change notification use-case
-    authUseCase: AuthUseCase
+    networkChange: NetworkChange
 ) : BaseViewModel(networkChange) {
 }

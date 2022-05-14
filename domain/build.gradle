@@ -6,7 +6,6 @@ plugins {
 
 dependencies {
     api "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin.kotlinStdlib}"
-    api "io.reactivex.rxjava3:rxkotlin:${versions.reactive.rxkotlin}"
     api "com.google.code.gson:gson:${versions.google.gson}"
 
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.5.2'

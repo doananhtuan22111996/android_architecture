@@ -129,8 +129,6 @@ dependencies {
 
     implementation project(path: ':data')
 
-    implementation "io.reactivex.rxjava3:rxandroid:${versions.reactive.rxandroid}"
-
     // DI
     implementation "com.google.dagger:hilt-android:${versions.di.hilt}"
     kapt "com.google.dagger:hilt-android-compiler:${versions.di.hilt}"

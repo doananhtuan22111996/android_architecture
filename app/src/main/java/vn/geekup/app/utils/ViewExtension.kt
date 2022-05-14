@@ -9,7 +9,6 @@ import android.text.style.ClickableSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.LayoutRes
@@ -22,9 +21,6 @@ import androidx.databinding.ViewDataBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.*
-import io.reactivex.rxjava3.schedulers.Schedulers
 import vn.geekup.app.R
 
 object ViewBindingAdapter {
@@ -116,36 +112,6 @@ fun AppCompatTextView.onClickTextInsideTextView(
 //    this.highlightColor = Color.TRANSPARENT // prevent TextView change background when highlight
     this.movementMethod = LinkMovementMethod.getInstance()
     this.setText(spannableString, TextView.BufferType.SPANNABLE)
-}
-
-fun AppCompatTextView.makeTextSeeMore(
-    content: String? = "",
-    maxChars: Int = KEY_MOMENT_MAX_CHARS,
-    expandText: String = KEY_MOMENT_SEE_MORE,
-    listener: (() -> Unit)? = null
-) {
-    if (content?.isEmpty() == true) return
-    if (this.tag == null) {
-        this.tag = this.text
-    }
-    this.viewTreeObserver.addOnGlobalLayoutListener(object :
-        ViewTreeObserver.OnGlobalLayoutListener {
-        override fun onGlobalLayout() {
-            val obs = this@makeTextSeeMore.viewTreeObserver
-            obs.removeOnGlobalLayoutListener(this)
-            Observable.create<String> {
-                val text = content?.substring(0, maxChars - expandText.length + 1) + expandText
-                it.onNext(text)
-            }.subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    this@makeTextSeeMore.text = it
-                    this@makeTextSeeMore.onClickTextInsideTextView(expandText) { _, _ ->
-                        listener?.invoke()
-                    }
-                }
-        }
-    })
 }
 
 fun AppCompatTextView.makeLinkUnderLine(onLinkListener: ((url: String) -> Unit)? = null) {

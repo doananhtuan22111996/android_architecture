@@ -5,8 +5,6 @@ import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.disposables.Disposable
 import timber.log.Timber
 import vn.geekup.app.data.Config.ErrorCode.CODE_999
 import vn.geekup.app.domain.model.general.ResultModel
@@ -16,8 +14,6 @@ open class BaseViewModel(
     networkChange: NetworkChange,
 //  protected val authUseCase: AuthUseCase,
 ) : ViewModel() {
-
-    private val compositeDisposable = CompositeDisposable()
 
     val networkChangeState = networkChange.networkState()
     private val fullScreenLoadingLiveData: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
@@ -36,15 +32,6 @@ open class BaseViewModel(
 
     open fun loadIntentBundle(intent: Intent?) {
         //Do Nothing, handle in subclass
-    }
-
-    protected fun Disposable.push() {
-        compositeDisposable.addAll(this)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.clear()
     }
 
     fun executingServerErrorException(serverError: ResultModel.ServerErrorException?) {

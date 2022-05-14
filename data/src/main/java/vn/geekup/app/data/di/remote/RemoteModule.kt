@@ -10,18 +10,17 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import vn.geekup.app.data.Config
 import vn.geekup.app.data.di.qualifier.interceptor.InterceptorAuthenticate
 import vn.geekup.app.data.di.qualifier.interceptor.InterceptorDefault
 import vn.geekup.app.data.di.qualifier.source.Source
 import vn.geekup.app.data.remote.auth.AuthApiService
-import vn.geekup.app.domain.repository.AuthRepository
 import vn.geekup.app.data.di.qualifier.retrofit.OkHttpClientAuthenticated
 import vn.geekup.app.data.di.qualifier.retrofit.OkHttpClientDefault
 import vn.geekup.app.data.di.qualifier.retrofit.RetrofitAuthenticated
 import vn.geekup.app.data.di.qualifier.retrofit.RetrofitDefault
+import vn.geekup.app.data.local.PreferenceWrapper
 import vn.geekup.app.data.remote.auth.AliaApiService
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -40,8 +39,8 @@ class RemoteModule {
     @Singleton
     @Provides
     @InterceptorAuthenticate
-    fun provideAuthenticateInterceptor(@Source authRepository: AuthRepository): Interceptor {
-        return AuthenticatedInterceptor(authRepository)
+    fun provideAuthenticateInterceptor(preferenceWrapper: PreferenceWrapper): Interceptor {
+        return AuthenticatedInterceptor(preferenceWrapper)
     }
 
     @Singleton
@@ -72,14 +71,12 @@ class RemoteModule {
     @RetrofitDefault
     fun provideRetrofitDefault(
         @OkHttpClientDefault okHttpClient: OkHttpClient,
-        gsonConverterFactory: GsonConverterFactory,
-        rxJava3CallAdapterFactory: RxJava3CallAdapterFactory
+        gsonConverterFactory: GsonConverterFactory
     ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(Config.mainDomain)
             .addConverterFactory(NullOrEmptyConverterFactory())
             .addConverterFactory(gsonConverterFactory)
-            .addCallAdapterFactory(rxJava3CallAdapterFactory)
             .client(okHttpClient)
             .build()
     }
@@ -112,14 +109,12 @@ class RemoteModule {
     @RetrofitAuthenticated
     fun provideRetrofitAuthenticated(
         @OkHttpClientAuthenticated okHttpClient: OkHttpClient,
-        gsonConverterFactory: GsonConverterFactory,
-        rxJava3CallAdapterFactory: RxJava3CallAdapterFactory
+        gsonConverterFactory: GsonConverterFactory
     ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(Config.mainDomain)
             .addConverterFactory(NullOrEmptyConverterFactory())
             .addConverterFactory(gsonConverterFactory)
-            .addCallAdapterFactory(rxJava3CallAdapterFactory)
             .client(okHttpClient)
             .build()
     }

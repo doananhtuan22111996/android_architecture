@@ -8,12 +8,9 @@ import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 import vn.geekup.app.R
 import vn.geekup.app.base.BaseActivity
 import vn.geekup.app.databinding.ActivityRootBinding
-import vn.geekup.app.domain.model.user.UserInfoModel
-import vn.geekup.app.model.user.UserIndicatorModelV
 import vn.geekup.app.utils.setAppColorStatusBar
 
 @AndroidEntryPoint
@@ -41,17 +38,19 @@ class RootActivity : BaseActivity<RootViewModel, ActivityRootBinding>() {
         super.onCreate(savedInstanceState)
         setAppColorStatusBar()
         val content = findViewById<View>(android.R.id.content)
-        content.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
-            override fun onPreDraw(): Boolean =
-                when {
-                    viewModel.isRootViewReadyFunc() -> {
-                        content.viewTreeObserver.removeOnPreDrawListener(this)
-                        redirectAuth(false)
-                        true
-                    }
-                    else -> false
-                }
-        })
+//        content.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
+//            override fun onPreDraw(): Boolean =
+//                when {
+//                    viewModel.isRootViewReadyFunc() -> {
+//                        content.viewTreeObserver.removeOnPreDrawListener(this)
+//                        redirectAuth(false)
+//                        true
+//                    }
+//                    else -> false
+//                }
+//        })
+        redirectAuth(false)
+
     }
 
     override fun onInitLayout(savedInstanceState: Bundle?) {

@@ -49,9 +49,6 @@
             android:hyphenationFrequency="none"
             android:visibility="@{moment.content.isEmpty() == true ? View.GONE : View.VISIBLE}"
             app:layout_constraintTop_toBottomOf="@id/vLine"
-            app:moment="@{moment}"
-            app:onClickLink="@{moment.onClickLinkListener}"
-            app:onClickSeeMore="@{moment.onClickSeeMoreListener}"
             tools:text="Đồng đội cùng làm cùng chơi #WorkFromHome rồi vẫn nhớ lời cảm ơn… see more" />
 
         <include

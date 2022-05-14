@@ -1,6 +1,5 @@
 package vn.geekup.app.data.repository.auth
 
-import io.reactivex.rxjava3.core.Single
 import kotlinx.coroutines.flow.Flow
 import vn.geekup.app.data.di.qualifier.source.SourceLocal
 import vn.geekup.app.data.di.qualifier.source.SourceRemote
@@ -20,12 +19,8 @@ class AuthDataSource @Inject constructor(
 
 ) : AuthRepository {
 
-    override fun logout(): Single<Boolean> {
+    override fun logout(): Flow<ResultModel<Boolean>> {
         return remote.logout()
-    }
-
-    override fun getToken(): Single<String> {
-        return local.getToken()
     }
 
     override suspend fun saveToken(token: String): Flow<ResultModel<Unit>> {

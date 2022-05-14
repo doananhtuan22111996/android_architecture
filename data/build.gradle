@@ -94,14 +94,12 @@ dependencies {
     api "androidx.appcompat:appcompat:$versions.androidX.appcompat"
 
     // DI
-//    implementation "com.google.dagger:dagger:${versions.di.dagger}"
-//    kapt "com.google.dagger:dagger-compiler:${versions.di.dagger}"
     implementation "com.google.dagger:hilt-android:${versions.di.hilt}"
     kapt "com.google.dagger:hilt-android-compiler:${versions.di.hilt}"
 
     api "com.squareup.retrofit2:retrofit:${versions.httpClient.retrofit}"
     api "com.squareup.retrofit2:converter-gson:${versions.httpClient.retrofit}"
-    api "com.squareup.retrofit2:adapter-rxjava3:${versions.httpClient.retrofit}"
+//    api "com.squareup.retrofit2:adapter-rxjava3:${versions.httpClient.retrofit}"
 
 }
 

@@ -1,6 +1,5 @@
 package vn.geekup.app.domain.usecase
 
-import io.reactivex.rxjava3.core.Single
 import kotlinx.coroutines.flow.*
 import vn.geekup.app.domain.dto.OTableRequestBody
 import vn.geekup.app.domain.model.general.ResultModel
@@ -9,7 +8,7 @@ import vn.geekup.app.domain.repository.AuthRepository
 
 interface AuthUseCase {
 
-    fun logout(): Single<Boolean>
+    fun logout(): Flow<ResultModel<Boolean>>
 
     suspend fun saveToken(token : String) : Flow<ResultModel<Unit>>
 
@@ -19,7 +18,7 @@ interface AuthUseCase {
 
 class AuthUseCaseImplement(private var authRepository: AuthRepository) : AuthUseCase {
 
-    override fun logout(): Single<Boolean> {
+    override fun logout(): Flow<ResultModel<Boolean>> {
         return authRepository.logout()
     }
 

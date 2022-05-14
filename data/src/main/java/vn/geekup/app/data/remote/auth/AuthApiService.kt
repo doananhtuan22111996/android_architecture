@@ -1,6 +1,5 @@
 package vn.geekup.app.data.remote.auth
 
-import io.reactivex.rxjava3.core.Completable
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -17,5 +16,5 @@ interface AuthApiService {
     ): Response<ObjectResponseVO<OTableVO>>
 
     @POST("auth/logout")
-    fun logout(): Completable
+    fun logout(): Response<ObjectResponseVO<Nothing>>
 }

@@ -1,6 +1,5 @@
 package vn.geekup.app.data.repository.auth
 
-import io.reactivex.rxjava3.core.Single
 import kotlinx.coroutines.flow.*
 import retrofit2.Response
 import vn.geekup.app.data.model.general.ObjectResponseVO
@@ -16,15 +15,16 @@ import javax.inject.Inject
 class AuthRemoteDataSource @Inject constructor(private val authApiService: AuthApiService) :
     AuthRepository {
 
-    override fun getToken(): Single<String> {
-        return Single.never()
-    }
+    override fun logout(): Flow<ResultModel<Boolean>> =
+        object : NetworkBoundService<ObjectResponseVO<Nothing>, Boolean>() {
+            override suspend fun onApi(): Response<ObjectResponseVO<Nothing>> =
+                authApiService.logout()
 
-    override fun logout(): Single<Boolean> {
-        return authApiService.logout().andThen(Single.just(true))
-    }
+            override suspend fun processResponse(request: ObjectResponseVO<Nothing>?): ResultModel.Success<Boolean>? =
+                ResultModel.Success(data = true)
+        }.build()
 
-    override suspend fun saveToken(token: String): Flow<ResultModel<Unit>> = emptyFlow();
+    override suspend fun saveToken(token: String): Flow<ResultModel<Unit>> = emptyFlow()
 
     override suspend fun loginOTable(otableBody: OTableRequestBody): Flow<ResultModel<OTableModel>> =
         object : NetworkBoundService<ObjectResponseVO<OTableVO>, OTableModel>() {
