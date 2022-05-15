@@ -148,7 +148,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:${versions.androidX.lifecycle}"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:${versions.swipeLayout.swiperefreshlayout}"
 
-//    implementation "androidx.paging:paging-runtime-ktx:$versions.androidX.paging"
+    // Paging
+    implementation "androidx.paging:paging-runtime-ktx:$versions.androidX.paging"
 
     implementation "org.jsoup:jsoup:${versions.anothers.jsoup}"
 }

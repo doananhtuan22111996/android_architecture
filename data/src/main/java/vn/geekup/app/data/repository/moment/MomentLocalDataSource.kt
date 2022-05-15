@@ -1,5 +1,6 @@
 package vn.geekup.app.data.repository.moment
 
+import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import vn.geekup.app.data.local.PreferenceWrapper
@@ -17,5 +18,8 @@ class MomentLocalDataSource @Inject constructor(private val preferenceWrapper: P
 
 
     override suspend fun getFlowMomentDetail(id: Int): Flow<ResultModel<MomentModel>> =
+        emptyFlow()
+
+    override suspend fun getPagingMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<PagingData<MomentModel>> =
         emptyFlow()
 }

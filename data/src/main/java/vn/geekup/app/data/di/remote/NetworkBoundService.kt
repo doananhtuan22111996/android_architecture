@@ -10,6 +10,7 @@ import vn.geekup.app.data.Config.ErrorCode.CODE_200
 import vn.geekup.app.data.Config.ErrorCode.CODE_201
 import vn.geekup.app.data.Config.ErrorCode.CODE_204
 import vn.geekup.app.data.Config.ErrorCode.CODE_999
+import vn.geekup.app.data.model.general.ObjectResponse
 import vn.geekup.app.domain.model.general.ResultModel
 
 abstract class NetworkBoundService<RequestType, ResultType> {
@@ -60,8 +61,8 @@ abstract class NetworkBoundService<RequestType, ResultType> {
         return result
     }
 
-    abstract suspend fun onApi(): Response<RequestType>
+    abstract suspend fun onApi(): Response<ObjectResponse<RequestType>>
 
-    abstract suspend fun processResponse(request: RequestType?): ResultModel.Success<ResultType>?
+    abstract suspend fun processResponse(request: ObjectResponse<RequestType>?): ResultModel.Success<ResultType>?
 
 }

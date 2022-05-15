@@ -1,5 +1,6 @@
 package vn.geekup.app.data.repository.moment
 
+import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import vn.geekup.app.data.di.qualifier.source.SourceLocal
 import vn.geekup.app.data.di.qualifier.source.SourceRemote
@@ -23,6 +24,10 @@ class MomentDataSource @Inject constructor(
 
     override suspend fun getFlowMomentDetail(id: Int): Flow<ResultModel<MomentModel>> {
         return remote.getFlowMomentDetail(id)
+    }
+
+    override suspend fun getPagingMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<PagingData<MomentModel>> {
+        return remote.getPagingMomentFeeds(momentFeedRequestBody)
     }
 
 }

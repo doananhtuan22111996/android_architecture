@@ -41,7 +41,7 @@ versions.androidX = [
         recyclerview    : '1.1.0',
         cardview        : '1.0.0',
         splashScreen    : '1.0.0-beta02',
-        paging          : '2.1.0',
+        paging          : '3.1.1',
 ]
 
 versions.google = [

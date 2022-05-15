@@ -1,6 +1,6 @@
 package vn.geekup.app.data.model.general
 
-abstract class BaseResponseVO<BV>(
+abstract class BaseResponse<BV>(
     val meta: MetaData? = MetaData(),
 ) {
     data class MetaData(
@@ -10,9 +10,9 @@ abstract class BaseResponseVO<BV>(
     )
 }
 
-data class ObjectResponseVO<BV>(val data: BV? = null) : BaseResponseVO<BV>()
+data class ObjectResponse<BV>(val data: BV? = null) : BaseResponse<BV>()
 
-data class ListResponseVO<BV>(
+data class ListResponse<BV>(
     var items: ArrayList<BV>? = arrayListOf(),
     val limit: Int? = 0,
     val nextCursor: String? = ""
