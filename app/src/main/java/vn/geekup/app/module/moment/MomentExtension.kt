@@ -11,14 +11,13 @@ import androidx.databinding.BindingAdapter
 import vn.geekup.app.R
 import vn.geekup.app.utils.*
 import androidx.appcompat.widget.AppCompatImageView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.MultiTransformation
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation
+import coil.load
+import coil.transform.RoundedCornersTransformation
 import kotlinx.coroutines.*
 import vn.geekup.app.domain.model.moment.MomentImagePosition
 import vn.geekup.app.domain.model.moment.MomentModel
 import vn.geekup.app.model.moment.MomentModelV
+import java.io.File
 
 object MomentExtension {
 
@@ -83,102 +82,44 @@ object MomentExtension {
         if (url?.isNotEmpty() == true) {
             val multiTransform = when (positionImage) {
                 MomentImagePosition.ALL_LEFT ->
-                    MultiTransformation(
-                        RoundedCornersTransformation(
-                            12.toPx.toInt(),
-                            0,
-                            RoundedCornersTransformation.CornerType.TOP_LEFT
-                        ),
-                        RoundedCornersTransformation(
-                            12.toPx.toInt(),
-                            0,
-                            RoundedCornersTransformation.CornerType.BOTTOM_LEFT
-                        )
-                    )
+                    RoundedCornersTransformation(topLeft = 12f, bottomLeft = 12f)
                 MomentImagePosition.ALL_RIGHT ->
-                    MultiTransformation(
-                        RoundedCornersTransformation(
-                            12.toPx.toInt(),
-                            0,
-                            RoundedCornersTransformation.CornerType.TOP_RIGHT
-                        ),
-                        RoundedCornersTransformation(
-                            12.toPx.toInt(),
-                            0,
-                            RoundedCornersTransformation.CornerType.BOTTOM_RIGHT
-                        )
-                    )
+                    RoundedCornersTransformation(topRight = 12f, bottomRight = 12f)
                 MomentImagePosition.ALL_BOTTOM ->
-                    MultiTransformation(
-                        RoundedCornersTransformation(
-                            12,
-                            0,
-                            RoundedCornersTransformation.CornerType.BOTTOM_LEFT
-                        ),
-                        RoundedCornersTransformation(
-                            12,
-                            0,
-                            RoundedCornersTransformation.CornerType.BOTTOM_RIGHT
-                        )
-                    )
+                    RoundedCornersTransformation(bottomLeft = 12f, bottomRight = 12f)
                 MomentImagePosition.ALL_TOP ->
-                    MultiTransformation(
-                        RoundedCornersTransformation(
-                            12.toPx.toInt(),
-                            0,
-                            RoundedCornersTransformation.CornerType.TOP_LEFT
-                        ),
-                        RoundedCornersTransformation(
-                            12.toPx.toInt(),
-                            0,
-                            RoundedCornersTransformation.CornerType.TOP_RIGHT
-                        )
-                    )
+                    RoundedCornersTransformation(topLeft = 12f, topRight = 12f)
                 MomentImagePosition.TOP_LEFT ->
-                    RoundedCornersTransformation(
-                        12.toPx.toInt(),
-                        0,
-                        RoundedCornersTransformation.CornerType.TOP_LEFT
-                    )
+                    RoundedCornersTransformation(topLeft = 12f)
                 MomentImagePosition.TOP_RIGHT ->
-                    RoundedCornersTransformation(
-                        12.toPx.toInt(),
-                        0,
-                        RoundedCornersTransformation.CornerType.TOP_RIGHT
-                    )
+                    RoundedCornersTransformation(topRight = 12f)
                 MomentImagePosition.BOTTOM_LEFT ->
-                    RoundedCornersTransformation(
-                        12.toPx.toInt(),
-                        0,
-                        RoundedCornersTransformation.CornerType.BOTTOM_LEFT
-                    )
+                    RoundedCornersTransformation(bottomLeft = 12f)
                 MomentImagePosition.BOTTOM_RIGHT ->
-                    RoundedCornersTransformation(
-                        12.toPx.toInt(),
-                        0,
-                        RoundedCornersTransformation.CornerType.BOTTOM_RIGHT
-                    )
+                    RoundedCornersTransformation(bottomRight = 12f)
                 else ->
-                    RoundedCornersTransformation(
-                        12.toPx.toInt(),
-                        0,
-                        RoundedCornersTransformation.CornerType.ALL
-                    )
+                    RoundedCornersTransformation(12f)
             }
-            Glide.with(imageView.context)
-                .load(url)
-                .thumbnail(
-                    Glide.with(imageView.context)
-                        .load(R.drawable.bg_image_momnet_landscap)
-                        .transform(CenterCrop())
-                )
-                .transform(CenterCrop(), multiTransform)
-                .placeholder(R.drawable.bg_image_momnet_landscap)
-                .into(imageView)
+            if (url.lowercase().contains(KEY_MOMENT_LINK_PATTERN_S) || url.lowercase()
+                    .contains(KEY_MOMENT_LINK_PATTERN)
+            ) {
+                imageView.load(url) {
+                    transformations(multiTransform)
+                    crossfade(true)
+                    placeholder(R.drawable.bg_image_momnet_landscap)
+                }
+            } else {
+                imageView.load(File(url)) {
+                    transformations(multiTransform)
+                    crossfade(true)
+                    placeholder(R.drawable.bg_image_momnet_landscap)
+                }
+            }
         } else {
             imageView.setImageResource(R.drawable.bg_image_momnet_landscap)
         }
     }
+
 
     @JvmStatic
     @BindingAdapter(value = ["isLiked"], requireAll = true)
