@@ -3,18 +3,16 @@ package vn.geekup.app.data.repository.moment
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import retrofit2.Response
 import vn.geekup.app.data.Config.ErrorCode.CODE_999
-import vn.geekup.app.data.model.general.ListResponseVO
-import vn.geekup.app.data.model.general.ObjectResponseVO
 import vn.geekup.app.data.model.moment.MomentVO
 import vn.geekup.app.data.remote.auth.AliaApiService
 import vn.geekup.app.data.di.remote.NetworkBoundService
 import vn.geekup.app.data.di.remote.paging.PagingByKeyDataSource
+import vn.geekup.app.data.model.general.ListResponse
+import vn.geekup.app.data.model.general.ObjectResponse
 import vn.geekup.app.domain.dto.*
 import vn.geekup.app.domain.model.general.ResultModel
 import vn.geekup.app.domain.model.moment.MomentModel
@@ -27,9 +25,9 @@ class MomentRemoteDataSource @Inject constructor(
 
     override suspend fun getFlowMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<ResultModel<ArrayList<MomentModel>>> =
         object :
-            NetworkBoundService<ListResponseVO<MomentVO>, ArrayList<MomentModel>>() {
+            NetworkBoundService<ListResponse<MomentVO>, ArrayList<MomentModel>>() {
 
-            override suspend fun onApi(): Response<ObjectResponseVO<ListResponseVO<MomentVO>>> =
+            override suspend fun onApi(): Response<ObjectResponse<ListResponse<MomentVO>>> =
                 aliaApiService.getFlowMomentFeeds(
                     cursor = momentFeedRequestBody.cursor,
                     sort = when (momentFeedRequestBody.sort) {
@@ -38,7 +36,7 @@ class MomentRemoteDataSource @Inject constructor(
                     }, dates = momentFeedRequestBody.dates
                 )
 
-            override suspend fun processResponse(request: ObjectResponseVO<ListResponseVO<MomentVO>>?): ResultModel.Success<ArrayList<MomentModel>> {
+            override suspend fun processResponse(request: ObjectResponse<ListResponse<MomentVO>>?): ResultModel.Success<ArrayList<MomentModel>> {
                 val items: ArrayList<MomentModel> = arrayListOf()
                 request?.data?.items?.forEach { item ->
                     items.add(item.vo2Model())
@@ -54,24 +52,24 @@ class MomentRemoteDataSource @Inject constructor(
 
     override suspend fun getPagingMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<PagingData<MomentModel>> =
         Pager(
-            config = PagingConfig(5),
+            config = PagingConfig(13),
         ) {
             object : PagingByKeyDataSource<MomentVO, MomentModel>() {
-                override suspend fun onApi(): Response<ObjectResponseVO<ListResponseVO<MomentVO>>> =
+                override suspend fun onApi(nextKey : String?): Response<ObjectResponse<ListResponse<MomentVO>>> =
                     aliaApiService.getFlowMomentFeeds(
-                        cursor = momentFeedRequestBody.cursor,
+                        cursor = nextKey,
                         sort = when (momentFeedRequestBody.sort) {
                             MomentSort.DESC() -> MomentSort.DESC().sortName
                             else -> MomentSort.ASC().sortName
                         }, dates = momentFeedRequestBody.dates
                     )
 
-                override suspend fun processResponse(request: ListResponseVO<MomentVO>?): ListResponseVO<MomentModel>? {
+                override suspend fun processResponse(request: ListResponse<MomentVO>?): ListResponse<MomentModel>? {
                     val items: ArrayList<MomentModel> = arrayListOf()
                     request?.items?.forEach { item ->
                         items.add(item.vo2Model())
                     }
-                    return ListResponseVO(
+                    return ListResponse(
                         limit = request?.limit,
                         nextCursor = request?.nextCursor,
                         items = items

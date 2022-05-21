@@ -18,9 +18,8 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import coil.load
+import coil.transform.RoundedCornersTransformation
 import vn.geekup.app.R
 
 object ViewBindingAdapter {
@@ -29,10 +28,10 @@ object ViewBindingAdapter {
     @BindingAdapter(value = ["avatarImageUrl"], requireAll = true)
     fun setAvatarImageUrl(imageView: AppCompatImageView, url: String?) {
         if (url?.isNotEmpty() == true) {
-            Glide.with(imageView.context)
-                .load(url)
-                .transform(CenterCrop(), RoundedCorners(12))
-                .into(imageView)
+            imageView.load(url) {
+                transformations((RoundedCornersTransformation(12f)))
+                crossfade(true)
+            }
         } else {
             imageView.setImageResource(R.drawable.ic_app)
         }
@@ -48,9 +47,9 @@ object ViewBindingAdapter {
     @BindingAdapter(value = ["imageUrl"], requireAll = true)
     fun setImageUrl(imageView: AppCompatImageView, url: String?) {
         if (url?.isNotEmpty() == true) {
-            Glide.with(imageView.context)
-                .load(url)
-                .into(imageView)
+            imageView.load(url) {
+                crossfade(true)
+            }
         } else {
             imageView.setImageResource(R.color.color_3)
         }

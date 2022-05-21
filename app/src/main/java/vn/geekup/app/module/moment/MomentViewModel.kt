@@ -1,7 +1,7 @@
 package vn.geekup.app.module.moment
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import androidx.paging.PagingData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -10,6 +10,7 @@ import timber.log.Timber
 import vn.geekup.app.base.BaseViewModel
 import vn.geekup.app.domain.dto.*
 import vn.geekup.app.domain.model.general.ResultModel
+import vn.geekup.app.domain.model.moment.MomentModel
 import vn.geekup.app.domain.usecase.MomentUseCase
 import vn.geekup.app.model.moment.MomentModelV
 import vn.geekup.app.model.PagingState
@@ -29,6 +30,8 @@ class MomentViewModel @Inject constructor(
 
     private val localMomentFeeds: ArrayList<MomentModelV> = arrayListOf()
     private var nextCursor: String? = null
+
+    val pagingMoment: MediatorLiveData<PagingData<MomentModel>> = MediatorLiveData()
 
     fun getFlowMomentFeeds(date: String = "", isReload: Boolean = false) {
         if (isReload) {
@@ -64,6 +67,23 @@ class MomentViewModel @Inject constructor(
                         executingServerErrorException(it as? ResultModel.ServerErrorException)
                     }
                 }
+            }
+        }
+    }
+
+
+    fun getPagingMomentFeeds(date: String = "") {
+        viewModelScope.launch((Dispatchers.Main)) {
+            pagingMoment.addSource(
+                momentUseCase.getPagingMomentFeeds(
+                    MomentFeedRequestBody(
+                        cursor = nextCursor,
+                        limit = KEY_PAGING_LIMIT_20,
+                        dates = if (date.isNotEmpty()) arrayListOf(date) else null
+                    )
+                ).asLiveData()
+            ) {
+                pagingMoment.value = it
             }
         }
     }

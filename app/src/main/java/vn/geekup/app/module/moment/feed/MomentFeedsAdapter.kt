@@ -23,27 +23,6 @@ class MomentFeedsAdapter(
 
         override fun bindData(data: MomentModelV, position: Int) {
             super.bindData(data, position)
-            data.onClickSeeMoreListener = onClickSeeMoreListener
-            data.onClickLinkListener = onClickLinkListener
-            viewBinding.moment = data
-            viewBinding.root.setOnClickListener {
-                listener?.invoke(data, position, MomentActionV.MomentDetail)
-            }
-            viewBinding.tvContent.setOnClickListener {
-                listener?.invoke(data, position, MomentActionV.MomentDetail)
-            }
-            viewBinding.layoutMomentFooter.btnLikes.setOnClickListener {
-                listener?.invoke(data, position, MomentActionV.MomentLike)
-            }
-            viewBinding.layoutMomentFooter.btnShares.setOnClickListener {
-                listener?.invoke(data, position, MomentActionV.MomentShare)
-            }
-            viewBinding.layoutMomentFooter.btnComments.setOnClickListener {
-                listener?.invoke(data, position, MomentActionV.MomentDetail)
-            }
-            viewBinding.layoutMomentOneImage.root.setOnClickListener {
-                listener?.invoke(data, position, MomentActionV.MomentPreview)
-            }
         }
     }
 

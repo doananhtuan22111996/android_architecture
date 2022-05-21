@@ -43,13 +43,13 @@
                 android:background="@color/color_white"
                 android:paddingVertical="@dimen/padding_16">
 
-                <include
-                    android:id="@+id/layoutMomentHeader"
-                    layout="@layout/layout_item_moment_header"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_16"
-                    app:moment="@{moment}" />
+                <!--                <include-->
+                <!--                    android:id="@+id/layoutMomentHeader"-->
+                <!--                    layout="@layout/layout_item_moment_header"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginHorizontal="@dimen/margin_16"-->
+                <!--                    app:moment="@{moment}" />-->
 
                 <View
                     android:id="@+id/vLine"
@@ -57,7 +57,7 @@
                     android:layout_height="@dimen/stroke_0.5"
                     android:layout_marginTop="@dimen/margin_9"
                     android:background="@color/color_item_moment_line"
-                    app:layout_constraintTop_toBottomOf="@id/layoutMomentHeader" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvContent"
@@ -106,18 +106,18 @@
 
                 <View
                     android:id="@+id/vDummy"
-                    app:layout_constraintTop_toBottomOf="@id/layoutMomentFooter"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/padding_12"/>
+                    android:layout_height="@dimen/padding_12"
+                    app:layout_constraintTop_toBottomOf="@id/layoutMomentFooter" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvPreviousComment"
                     style="@style/TextAppearance.FontPath.Gilroy.Body_13_SemiBold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/color_bg_app"
                     android:paddingHorizontal="@dimen/padding_16"
                     android:paddingVertical="@dimen/padding_12"
-                    android:background="@color/color_bg_app"
                     android:text="@string/view_previous_comment"
                     app:layout_constraintTop_toBottomOf="@id/vDummy" />
 
