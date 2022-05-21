@@ -9,6 +9,7 @@
 ### Dependency Injection
     - Dagger2 (old version)
     - Hilt
+    - Koin (Pending)
 
 ### Asynchronous
     - RxJava, RxAndroid (old version)
@@ -22,6 +23,7 @@
     - Paging library: Paging 3
     - Navigation
     - Camera X
+    - Coil (load image)
 
 #### Data Layer
     - Live data
