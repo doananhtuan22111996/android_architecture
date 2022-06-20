@@ -12,23 +12,23 @@ import vn.geekup.app.data.di.remote.RemoteModule
 import vn.geekup.app.domain.repository.AuthRepository
 import javax.inject.Singleton
 
-@Module(includes = [LocalModule::class, RemoteModule::class])
+@Module
 @InstallIn(SingletonComponent::class)
 abstract class AuthDataSourceModule {
-  
-  @Singleton
-  @Binds
-  @SourceLocal
-  abstract fun provideAuthLocalDataSource(authLocalDataSource: AuthLocalDataSource): AuthRepository
-  
-  @Singleton
-  @Binds
-  @SourceRemote
-  abstract fun provideAuthRemoteDataSource(authRemoteDataSource: AuthRemoteDataSource): AuthRepository
-  
-  @Singleton
-  @Binds
-  @Source
-  abstract fun provideAuthDataSource(authDataSource: AuthDataSource): AuthRepository
-  
+
+    @Singleton
+    @Binds
+    @SourceLocal
+    abstract fun provideAuthLocalDataSource(authLocalDataSource: AuthLocalDataSource): AuthRepository
+
+    @Singleton
+    @Binds
+    @SourceRemote
+    abstract fun provideAuthRemoteDataSource(authRemoteDataSource: AuthRemoteDataSource): AuthRepository
+
+    @Singleton
+    @Binds
+    @Source
+    abstract fun provideAuthDataSource(authDataSource: AuthDataSource): AuthRepository
+
 }

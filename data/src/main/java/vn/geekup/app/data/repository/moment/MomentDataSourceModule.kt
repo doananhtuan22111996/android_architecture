@@ -12,7 +12,7 @@ import vn.geekup.app.data.di.remote.RemoteModule
 import vn.geekup.app.domain.repository.MomentRepository
 import javax.inject.Singleton
 
-@Module(includes = [LocalModule::class, RemoteModule::class])
+@Module
 @InstallIn(SingletonComponent::class)
 abstract class MomentDataSourceModule {
 
