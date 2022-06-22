@@ -3,17 +3,14 @@ package vn.geekup.app.module.root
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
-import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import vn.geekup.app.R
 import vn.geekup.app.base.BaseActivity
 import vn.geekup.app.databinding.ActivityRootBinding
 import vn.geekup.app.utils.setAppColorStatusBar
 
-@AndroidEntryPoint
 class RootActivity : BaseActivity<RootViewModel, ActivityRootBinding>() {
 
     sealed class RootNavigation {
@@ -21,7 +18,7 @@ class RootActivity : BaseActivity<RootViewModel, ActivityRootBinding>() {
         object Main : RootNavigation()
     }
 
-    override val viewModel: RootViewModel by viewModels()
+    override val viewModel: RootViewModel by viewModel()
 
     private var onBackPressListener: OnBackPressListener? = null
     private lateinit var navController: NavController

@@ -1,4 +1,4 @@
-package vn.geekup.app.data.remote.auth
+package vn.geekup.app.data.remote
 
 import retrofit2.Response
 import retrofit2.http.*

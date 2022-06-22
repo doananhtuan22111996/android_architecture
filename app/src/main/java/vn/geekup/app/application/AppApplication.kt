@@ -3,11 +3,18 @@ package vn.geekup.app.application
 import android.app.Application
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.OnLifecycleEvent
-import dagger.hilt.android.HiltAndroidApp
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 import timber.log.Timber
 import vn.geekup.app.data.Config
+import vn.geekup.app.data.di.localModules
+import vn.geekup.app.data.di.remoteModules
+import vn.geekup.app.data.repository.repositoryModules
+import vn.geekup.app.di.applicationModules
+import vn.geekup.app.di.useCaseModules
+import vn.geekup.app.di.viewModelModules
 
-@HiltAndroidApp
 class AppApplication : Application() {
 
     companion object {
@@ -24,6 +31,7 @@ class AppApplication : Application() {
         super.onCreate()
         instance = this
         setupDebug()
+        startKoin()
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
@@ -39,5 +47,22 @@ class AppApplication : Application() {
     private fun setupDebug() {
         Timber.plant(Timber.DebugTree())
         Config.setup(this)
+    }
+
+    private fun startKoin() {
+        startKoin {
+            // use Koin logger
+            androidLogger()
+            androidContext(this@AppApplication)
+            // declare modules
+            modules(
+                applicationModules,
+                localModules,
+                remoteModules,
+                repositoryModules,
+                useCaseModules,
+                viewModelModules,
+            )
+        }
     }
 }

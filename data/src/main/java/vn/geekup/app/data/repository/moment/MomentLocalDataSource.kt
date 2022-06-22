@@ -7,9 +7,8 @@ import vn.geekup.app.domain.dto.MomentFeedRequestBody
 import vn.geekup.app.domain.model.general.ResultModel
 import vn.geekup.app.domain.model.moment.MomentModel
 import vn.geekup.app.domain.repository.MomentRepository
-import javax.inject.Inject
 
-class MomentLocalDataSource @Inject constructor(private val preferenceWrapper: PreferenceWrapper) :
+class MomentLocalDataSource constructor(private val preferenceWrapper: PreferenceWrapper) :
     MomentRepository {
 
     override suspend fun getFlowMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<ResultModel<ArrayList<MomentModel>>> =

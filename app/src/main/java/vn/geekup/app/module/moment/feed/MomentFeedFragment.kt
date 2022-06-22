@@ -3,7 +3,6 @@ package vn.geekup.app.module.moment.feed
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import timber.log.Timber
 import vn.geekup.app.R
@@ -13,17 +12,16 @@ import vn.geekup.app.module.main.MainFragment
 import vn.geekup.app.module.moment.MomentViewModel
 import vn.geekup.app.utils.*
 import androidx.recyclerview.widget.SimpleItemAnimator
-import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import vn.geekup.app.domain.model.general.ResultModel
 
-@AndroidEntryPoint
 class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBinding>() {
 
     private lateinit var adapter: MomentFeedsAdapter
     private lateinit var endlessRecyclerViewScrollListener: EndlessRecyclerViewScrollListener
     private var dateFilter: String = ""
 
-    override val viewModel: MomentViewModel by activityViewModels()
+    override val viewModel: MomentViewModel by viewModel()
 
     override fun initViewModelByActivityLifecycle(): Boolean = true
 

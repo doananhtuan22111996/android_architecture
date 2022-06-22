@@ -4,7 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
     id 'androidx.navigation.safeargs.kotlin'
-    id 'dagger.hilt.android.plugin'
+//    id 'dagger.hilt.android.plugin'
 }
 
 // Load keystore
@@ -130,8 +130,10 @@ dependencies {
     implementation project(path: ':data')
 
     // DI
-    implementation "com.google.dagger:hilt-android:${versions.di.hilt}"
-    kapt "com.google.dagger:hilt-android-compiler:${versions.di.hilt}"
+//    implementation "com.google.dagger:hilt-android:${versions.di.hilt}"
+//    kapt "com.google.dagger:hilt-android-compiler:${versions.di.hilt}"
+//    implementation "io.insert-koin:koin-core:${versions.di.koin}"
+//    implementation "io.insert-koin:koin-android:${versions.di.koin}"
 
     // Image
     // Todo use Coil

@@ -5,10 +5,9 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.IdRes
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import vn.geekup.app.R
 import vn.geekup.app.base.BaseFragment
 import vn.geekup.app.databinding.FragmentMainBinding
@@ -16,7 +15,6 @@ import vn.geekup.app.module.root.RootViewModel
 import vn.geekup.app.utils.setAppColorStatusBar
 import vn.geekup.app.utils.visible
 
-@AndroidEntryPoint
 class MainFragment : BaseFragment<RootViewModel, FragmentMainBinding>() {
 
     // Listener for MomentFeedFragment
@@ -24,7 +22,7 @@ class MainFragment : BaseFragment<RootViewModel, FragmentMainBinding>() {
         fun onAutoReloadMomentFeed()
     }
 
-    override val viewModel: RootViewModel by activityViewModels()
+    override val viewModel: RootViewModel by viewModel()
 
     private var onChildFragmentListener: OnChildFragmentListener? = null
 

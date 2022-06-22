@@ -1,4 +1,4 @@
-package vn.geekup.app.data.di.remote
+package vn.geekup.app.data.di
 
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers

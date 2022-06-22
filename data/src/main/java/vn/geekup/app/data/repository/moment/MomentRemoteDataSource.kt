@@ -7,15 +7,14 @@ import vn.geekup.app.data.Config.ErrorCode.CODE_999
 import vn.geekup.app.data.model.general.ListResponseVO
 import vn.geekup.app.data.model.general.ObjectResponseVO
 import vn.geekup.app.data.model.moment.MomentVO
-import vn.geekup.app.data.remote.auth.AliaApiService
-import vn.geekup.app.data.di.remote.NetworkBoundService
+import vn.geekup.app.data.remote.AliaApiService
+import vn.geekup.app.data.di.NetworkBoundService
 import vn.geekup.app.domain.dto.*
 import vn.geekup.app.domain.model.general.ResultModel
 import vn.geekup.app.domain.model.moment.MomentModel
 import vn.geekup.app.domain.repository.MomentRepository
-import javax.inject.Inject
 
-class MomentRemoteDataSource @Inject constructor(
+class MomentRemoteDataSource constructor(
     private val aliaApiService: AliaApiService,
 ) : MomentRepository {
 

@@ -2,7 +2,6 @@ package vn.geekup.app.module.moment
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -15,11 +14,9 @@ import vn.geekup.app.model.moment.MomentModelV
 import vn.geekup.app.model.PagingState
 import vn.geekup.app.network.NetworkChange
 import vn.geekup.app.utils.*
-import javax.inject.Inject
 import kotlin.collections.ArrayList
 
-@HiltViewModel
-class MomentViewModel @Inject constructor(
+class MomentViewModel(
     networkChange: NetworkChange,
     private val momentUseCase: MomentUseCase
 ) : BaseViewModel(networkChange) {
