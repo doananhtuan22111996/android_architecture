@@ -34,18 +34,6 @@ class RootActivity : BaseActivity<RootViewModel, ActivityRootBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setAppColorStatusBar()
-        val content = findViewById<View>(android.R.id.content)
-//        content.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
-//            override fun onPreDraw(): Boolean =
-//                when {
-//                    viewModel.isRootViewReadyFunc() -> {
-//                        content.viewTreeObserver.removeOnPreDrawListener(this)
-//                        redirectAuth(false)
-//                        true
-//                    }
-//                    else -> false
-//                }
-//        })
         redirectAuth(false)
 
     }

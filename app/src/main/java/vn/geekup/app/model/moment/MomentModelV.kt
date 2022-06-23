@@ -8,9 +8,6 @@ import vn.geekup.app.domain.model.moment.TaggedUserModel
 
 sealed class MomentActionV {
     object MomentDetail : MomentActionV()
-    object MomentLike : MomentActionV()
-    object MomentComment : MomentActionV()
-    object MomentShare : MomentActionV()
     object MomentPreview : MomentActionV()
 }
 
@@ -56,16 +53,7 @@ data class MomentModelV(
         )
     }
 
-    override fun getViewType(): Int {
-        val size = imgUrls?.size ?: 0
-        return when {
-            size == 2 -> R.layout.item_moment_feed_2_images
-            size == 3 -> R.layout.item_moment_feed_3_images
-            size > 3 -> R.layout.item_moment_feed_more_images
-            else -> R.layout.item_moment_feed_1_image
-        }
-    }
-
+    override fun getViewType(): Int = R.layout.item_moment_feed_1_image
 
     override fun getItemId(): String = id.toString()
 

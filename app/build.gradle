@@ -4,7 +4,6 @@ plugins {
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
     id 'androidx.navigation.safeargs.kotlin'
-//    id 'dagger.hilt.android.plugin'
 }
 
 // Load keystore
@@ -120,23 +119,13 @@ android {
 }
 
 dependencies {
-
-//    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-
     testImplementation "junit:junit:${versions.test.junit}"
     androidTestImplementation "androidx.test.ext:junit:${versions.test.androidxJunit}"
     androidTestImplementation "androidx.test.espresso:espresso-core:${versions.test.espressoCore}"
 
     implementation project(path: ':data')
 
-    // DI
-//    implementation "com.google.dagger:hilt-android:${versions.di.hilt}"
-//    kapt "com.google.dagger:hilt-android-compiler:${versions.di.hilt}"
-//    implementation "io.insert-koin:koin-core:${versions.di.koin}"
-//    implementation "io.insert-koin:koin-android:${versions.di.koin}"
-
     // Image
-    // Todo use Coil
     implementation "com.github.bumptech.glide:glide:${versions.resource.glide}"
     implementation "jp.wasabeef:glide-transformations:${versions.resource.glideTransformations}"
     kapt "com.github.bumptech.glide:compiler:${versions.resource.glide}"
@@ -152,8 +141,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.androidX.lifecycle}"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:${versions.androidX.lifecycle}"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:${versions.swipeLayout.swiperefreshlayout}"
-
-//    implementation "androidx.paging:paging-runtime-ktx:$versions.androidX.paging"
 
     implementation "org.jsoup:jsoup:${versions.anothers.jsoup}"
 }

@@ -24,7 +24,6 @@ var repositoryModules = module(createdAtStart = true) {
 
     factory<MomentRepository> {
         MomentDataSource(
-            MomentLocalDataSource(get()),
             MomentRemoteDataSource(get())
         )
     }

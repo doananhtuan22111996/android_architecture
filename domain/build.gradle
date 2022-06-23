@@ -8,7 +8,7 @@ dependencies {
     api "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin.kotlinStdlib}"
     api "com.google.code.gson:gson:${versions.google.gson}"
 
-    api 'org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.5.2'
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.reactive.coroutine}"
 
     // debug
     api "com.jakewharton.timber:timber:${versions.debug.timber}"

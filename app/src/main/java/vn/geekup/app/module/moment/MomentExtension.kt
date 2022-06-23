@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
@@ -12,7 +11,6 @@ import vn.geekup.app.R
 import vn.geekup.app.utils.*
 import androidx.appcompat.widget.AppCompatImageView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlinx.coroutines.*
@@ -74,97 +72,17 @@ object MomentExtension {
     }
 
     @JvmStatic
-    @BindingAdapter(value = ["momentImageUrl", "positionImage"], requireAll = false)
+    @BindingAdapter(value = ["momentImageUrl"], requireAll = false)
     fun setMomentImageUrl(
         imageView: AppCompatImageView,
         url: String?,
-        positionImage: MomentImagePosition?
     ) {
         if (url?.isNotEmpty() == true) {
-            val multiTransform = when (positionImage) {
-                MomentImagePosition.ALL_LEFT ->
-                    MultiTransformation(
-                        RoundedCornersTransformation(
-                            12.toPx.toInt(),
-                            0,
-                            RoundedCornersTransformation.CornerType.TOP_LEFT
-                        ),
-                        RoundedCornersTransformation(
-                            12.toPx.toInt(),
-                            0,
-                            RoundedCornersTransformation.CornerType.BOTTOM_LEFT
-                        )
-                    )
-                MomentImagePosition.ALL_RIGHT ->
-                    MultiTransformation(
-                        RoundedCornersTransformation(
-                            12.toPx.toInt(),
-                            0,
-                            RoundedCornersTransformation.CornerType.TOP_RIGHT
-                        ),
-                        RoundedCornersTransformation(
-                            12.toPx.toInt(),
-                            0,
-                            RoundedCornersTransformation.CornerType.BOTTOM_RIGHT
-                        )
-                    )
-                MomentImagePosition.ALL_BOTTOM ->
-                    MultiTransformation(
-                        RoundedCornersTransformation(
-                            12,
-                            0,
-                            RoundedCornersTransformation.CornerType.BOTTOM_LEFT
-                        ),
-                        RoundedCornersTransformation(
-                            12,
-                            0,
-                            RoundedCornersTransformation.CornerType.BOTTOM_RIGHT
-                        )
-                    )
-                MomentImagePosition.ALL_TOP ->
-                    MultiTransformation(
-                        RoundedCornersTransformation(
-                            12.toPx.toInt(),
-                            0,
-                            RoundedCornersTransformation.CornerType.TOP_LEFT
-                        ),
-                        RoundedCornersTransformation(
-                            12.toPx.toInt(),
-                            0,
-                            RoundedCornersTransformation.CornerType.TOP_RIGHT
-                        )
-                    )
-                MomentImagePosition.TOP_LEFT ->
-                    RoundedCornersTransformation(
-                        12.toPx.toInt(),
-                        0,
-                        RoundedCornersTransformation.CornerType.TOP_LEFT
-                    )
-                MomentImagePosition.TOP_RIGHT ->
-                    RoundedCornersTransformation(
-                        12.toPx.toInt(),
-                        0,
-                        RoundedCornersTransformation.CornerType.TOP_RIGHT
-                    )
-                MomentImagePosition.BOTTOM_LEFT ->
-                    RoundedCornersTransformation(
-                        12.toPx.toInt(),
-                        0,
-                        RoundedCornersTransformation.CornerType.BOTTOM_LEFT
-                    )
-                MomentImagePosition.BOTTOM_RIGHT ->
-                    RoundedCornersTransformation(
-                        12.toPx.toInt(),
-                        0,
-                        RoundedCornersTransformation.CornerType.BOTTOM_RIGHT
-                    )
-                else ->
-                    RoundedCornersTransformation(
-                        12.toPx.toInt(),
-                        0,
-                        RoundedCornersTransformation.CornerType.ALL
-                    )
-            }
+            val multiTransform = RoundedCornersTransformation(
+                12.toPx.toInt(),
+                0,
+                RoundedCornersTransformation.CornerType.ALL
+            )
             Glide.with(imageView.context)
                 .load(url)
                 .thumbnail(
@@ -178,18 +96,6 @@ object MomentExtension {
         } else {
             imageView.setImageResource(R.drawable.bg_image_momnet_landscap)
         }
-    }
-
-    @JvmStatic
-    @BindingAdapter(value = ["isLiked"], requireAll = true)
-    fun setMomentButtonFooterLike(button: AppCompatButton, isLiked: Boolean = false) {
-        button.isEnabled = !isLiked
-        button.setCompoundDrawablesWithIntrinsicBounds(
-            if (isLiked) R.drawable.ic_like_active else R.drawable.ic_like,
-            0,
-            0,
-            0
-        )
     }
 
 }

@@ -2,11 +2,7 @@ package vn.geekup.app.di
 
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.core.qualifier.named
 import org.koin.dsl.module
-import vn.geekup.app.application.AppApplication
-import vn.geekup.app.base.BaseViewModel
-import vn.geekup.app.domain.repository.AuthRepository
 import vn.geekup.app.domain.usecase.AuthUseCase
 import vn.geekup.app.domain.usecase.AuthUseCaseImplement
 import vn.geekup.app.domain.usecase.MomentUseCase

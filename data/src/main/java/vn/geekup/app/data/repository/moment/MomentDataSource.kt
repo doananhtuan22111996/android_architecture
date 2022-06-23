@@ -7,7 +7,6 @@ import vn.geekup.app.domain.model.moment.MomentModel
 import vn.geekup.app.domain.repository.MomentRepository
 
 class MomentDataSource constructor(
-    private val local: MomentRepository,
     private val remote: MomentRepository
 ) : MomentRepository {
 
