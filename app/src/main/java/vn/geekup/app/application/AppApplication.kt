@@ -52,7 +52,9 @@ class AppApplication : Application() {
     private fun startKoin() {
         startKoin {
             // use Koin logger
-            androidLogger()
+            if (Config.isDebug) {
+                androidLogger()
+            }
             androidContext(this@AppApplication)
             // declare modules
             modules(
