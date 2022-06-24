@@ -31,9 +31,6 @@ class MomentFeedsAdapter(
             viewBinding.tvContent.setOnClickListener {
                 listener?.invoke(data, position, MomentActionV.MomentDetail)
             }
-            viewBinding.layoutMomentOneImage.root.setOnClickListener {
-                listener?.invoke(data, position, MomentActionV.MomentPreview)
-            }
         }
     }
 

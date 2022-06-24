@@ -10,11 +10,12 @@ import androidx.databinding.BindingAdapter
 import vn.geekup.app.R
 import vn.geekup.app.utils.*
 import androidx.appcompat.widget.AppCompatImageView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation
+import coil.ImageLoader
+import coil.load
+import coil.request.ImageRequest
+import coil.transform.RoundedCornersTransformation
 import kotlinx.coroutines.*
-import vn.geekup.app.domain.model.moment.MomentImagePosition
+import timber.log.Timber
 import vn.geekup.app.domain.model.moment.MomentModel
 import vn.geekup.app.model.moment.MomentModelV
 
@@ -77,22 +78,21 @@ object MomentExtension {
         imageView: AppCompatImageView,
         url: String?,
     ) {
+        Timber.e("Moment Image URL $")
         if (url?.isNotEmpty() == true) {
-            val multiTransform = RoundedCornersTransformation(
-                12.toPx.toInt(),
-                0,
-                RoundedCornersTransformation.CornerType.ALL
-            )
-            Glide.with(imageView.context)
-                .load(url)
-                .thumbnail(
-                    Glide.with(imageView.context)
-                        .load(R.drawable.bg_image_momnet_landscap)
-                        .transform(CenterCrop())
+            imageView.load(url) {
+                transformations(RoundedCornersTransformation(12f))
+                crossfade(true)
+                placeholder(R.drawable.bg_image_momnet_landscap)
+                listener(
+                    onError = { _, result ->
+                        Timber.e("Error: ${result.throwable.message}")
+                    },
+                    onSuccess = { _, result ->
+                        Timber.e("Success: $result")
+                    }
                 )
-                .transform(CenterCrop(), multiTransform)
-                .placeholder(R.drawable.bg_image_momnet_landscap)
-                .into(imageView)
+            }
         } else {
             imageView.setImageResource(R.drawable.bg_image_momnet_landscap)
         }
