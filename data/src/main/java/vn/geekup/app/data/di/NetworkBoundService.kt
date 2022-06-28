@@ -52,8 +52,10 @@ abstract class NetworkBoundService<RequestType, ResultType> {
                 }
             }
         } else {
+            Timber.e("NetworkBoundError: ${apiResponse.code()} ---  ${Gson().toJson(apiResponse.errorBody())}")
+            // Todo check object matching
             result = Gson().fromJson(
-                apiResponse.errorBody()?.toString(),
+                "{message: Some thing when wrong}",
                 ResultModel.ServerErrorException::class.java
             )
         }

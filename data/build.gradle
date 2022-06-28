@@ -78,7 +78,9 @@ dependencies {
 
 
     // local
-    implementation "androidx.security:security-crypto-ktx:${versions.local.securePreference}"
+//    implementation "androidx.security:security-crypto:${versions.local.securityCrypto}"
+    implementation "androidx.datastore:datastore-preferences:${versions.local.datastorePreferences}"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:${versions.plugin.serializationJson}"
 
     // Android core
     api "androidx.core:core-ktx:${versions.androidX.coreKTX}"

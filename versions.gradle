@@ -22,10 +22,11 @@ versions.debug = [
 ]
 
 versions.plugin = [
-        buildTool    : '7.2.1',
-        glux         : '0.0.7',
-        googleService: '4.3.10',
-        crashlytics  : '2.7.1'
+        buildTool        : '7.2.1',
+        glux             : '0.0.7',
+        googleService    : '4.3.10',
+        crashlytics      : '2.7.1',
+        serializationJson: '1.0.1',
 ]
 
 versions.kotlin = [
@@ -62,12 +63,13 @@ versions.reactive = [
 ]
 
 versions.local = [
-        preferance      : '0.25',
-        securePreference: '1.1.0-alpha03'
+        preferance          : '0.25',
+        datastorePreferences: '1.0.0',
+        securityCrypto      : '1.0.0'
 ]
 
 versions.database = [
-        room: '2.2.5'
+        room: '2.2.5',
 ]
 
 versions.httpClient = [

@@ -1,6 +1,7 @@
 package vn.geekup.app.data
 
 import android.content.Context
+import androidx.datastore.preferences.core.stringPreferencesKey
 import com.facebook.stetho.Stetho
 
 object Config {
@@ -40,9 +41,10 @@ object Config {
         const val CODE_999 = 999 //Unauthorized
     }
 
-    object SharePreference{
-         const val KEY_AUTH_TOKEN = "key_auth_token"
-         const val KEY_AUTH_REFRESH_TOKEN = "key_auth_refresh_token"
-         const val KEY_AUTH_INFO_INDICATOR = "key_auth_info_indicator"
+    object DataStore {
+        const val DATA_STORE_NAME = "data-store"
+        const val DATA_STORE_ALIAS = "data-store-alias"
+        val KEY_AUTH_TOKEN = stringPreferencesKey("key_auth_token")
+        val KEY_AUTH_TOKEN_SECURE = stringPreferencesKey("key_auth_token_secure")
     }
 }
