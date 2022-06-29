@@ -89,6 +89,9 @@ dependencies {
 
     api "com.squareup.retrofit2:retrofit:${versions.httpClient.retrofit}"
     api "com.squareup.retrofit2:converter-gson:${versions.httpClient.retrofit}"
+
+    // debug
+    api "com.jakewharton.timber:timber:${versions.debug.timber}"
 }
 
 kapt {

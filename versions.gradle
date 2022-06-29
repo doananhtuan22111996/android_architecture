@@ -18,7 +18,7 @@ versions.test = [
 versions.debug = [
         stetho            : '1.6.0',
         loggingInterceptor: '5.0.0-alpha.9',
-        timber            : '4.7.1'
+        timber            : '5.0.1'
 ]
 
 versions.plugin = [
