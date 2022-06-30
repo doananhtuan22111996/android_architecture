@@ -6,6 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import vn.geekup.app.base.BaseViewModel
 import vn.geekup.app.domain.dto.*
@@ -74,10 +75,11 @@ class MomentViewModel @Inject constructor(
 
     fun getPagingMomentFeeds(date: String = "") {
         viewModelScope.launch((Dispatchers.Main)) {
+            Timber.tag("getPagingMomentFeeds").e(Thread.currentThread().name)
             pagingMoment.addSource(
                 momentUseCase.getPagingMomentFeeds(
                     MomentFeedRequestBody(
-                        cursor = nextCursor,
+                        cursor = "1",
                         limit = KEY_PAGING_LIMIT_20,
                         dates = if (date.isNotEmpty()) arrayListOf(date) else null
                     )

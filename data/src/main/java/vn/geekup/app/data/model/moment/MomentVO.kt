@@ -1,5 +1,6 @@
 package vn.geekup.app.data.model.moment
 
+import com.google.gson.annotations.SerializedName
 import vn.geekup.app.data.model.general.BaseVO
 import vn.geekup.app.domain.model.moment.ImgUrlModel
 import vn.geekup.app.domain.model.moment.MomentModel
@@ -9,6 +10,7 @@ data class MomentVO(
     val id: Int? = 0,
     val channelName: String? = "",
     val userId: Int? = 0,
+    @SerializedName("title")
     val posterName: String? = "",
     val avatar: String? = "",
     val creatorProfileId: Int? = 0,

@@ -18,4 +18,11 @@ interface AliaApiService {
         @Query("date") dates: ArrayList<String>? = null,
     ): Response<ObjectResponse<ListResponse<MomentVO>>>
 
+
+    @GET("search-user")
+    suspend fun getFlowTravelFeeds(
+        @Query("page") page: Int = 1,
+        @Query("current_per_page") perPage: Int = 15
+    ): Response<ListResponse<MomentVO>>
+
 }

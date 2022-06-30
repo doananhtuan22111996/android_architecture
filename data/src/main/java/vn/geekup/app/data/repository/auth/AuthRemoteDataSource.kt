@@ -36,4 +36,14 @@ class AuthRemoteDataSource @Inject constructor(private val authApiService: AuthA
                 return ResultModel.Success(data = request?.data?.vo2Model() ?: OTableModel())
             }
         }.build()
+
+    override suspend fun loginWithTravel(): Flow<ResultModel<OTableModel>> =
+        object : NetworkBoundService<OTableVO, OTableModel>() {
+            override suspend fun onApi(): Response<ObjectResponse<OTableVO>> =
+                authApiService.loginWithTravel()
+
+            override suspend fun processResponse(request: ObjectResponse<OTableVO>?): ResultModel.Success<OTableModel> {
+                return ResultModel.Success(data = request?.data?.vo2Model() ?: OTableModel())
+            }
+        }.build()
 }

@@ -22,12 +22,12 @@ class MomentDataSource @Inject constructor(
         return remote.getFlowMomentFeeds(momentFeedRequestBody)
     }
 
-    override suspend fun getFlowMomentDetail(id: Int): Flow<ResultModel<MomentModel>> {
-        return remote.getFlowMomentDetail(id)
+    override suspend fun getPagingTravelFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<PagingData<MomentModel>> {
+        return remote.getPagingTravelFeeds(momentFeedRequestBody)
     }
 
-    override suspend fun getPagingMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<PagingData<MomentModel>> {
-        return remote.getPagingMomentFeeds(momentFeedRequestBody)
+    override suspend fun getFlowMomentDetail(id: Int): Flow<ResultModel<MomentModel>> {
+        return remote.getFlowMomentDetail(id)
     }
 
 }

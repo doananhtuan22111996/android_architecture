@@ -16,10 +16,10 @@ class MomentLocalDataSource @Inject constructor(private val preferenceWrapper: P
     override suspend fun getFlowMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<ResultModel<ArrayList<MomentModel>>> =
         emptyFlow()
 
+    override suspend fun getPagingTravelFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<PagingData<MomentModel>> {
+      return emptyFlow()
+    }
 
     override suspend fun getFlowMomentDetail(id: Int): Flow<ResultModel<MomentModel>> =
-        emptyFlow()
-
-    override suspend fun getPagingMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<PagingData<MomentModel>> =
         emptyFlow()
 }

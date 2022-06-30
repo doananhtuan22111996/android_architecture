@@ -29,6 +29,6 @@ class MomentUseCaseImplement(private val momentRepository: MomentRepository) :
     }
 
     override suspend fun getPagingMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<PagingData<MomentModel>> {
-        return momentRepository.getPagingMomentFeeds(momentFeedRequestBody)
+        return momentRepository.getPagingTravelFeeds(momentFeedRequestBody)
     }
 }

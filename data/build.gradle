@@ -33,6 +33,7 @@ android {
             Properties configProps = new Properties()
             configProps.load(project.rootProject.file("env.${context.name}.properties").newDataInputStream())
             context.buildConfigField("String", "MAIN_DOMAIN", configProps.getProperty('main.domain'))
+            context.buildConfigField("String", "TRAVEL_DOMAIN", configProps.getProperty('travel.domain'))
             context.buildConfigField("String", "OTABLE_ENDPOINT", configProps.getProperty('otable.endpoint'))
             context.buildConfigField("String", "SPARROW_ID", configProps.getProperty('sparrow.id'))
             context.buildConfigField("String", "SPARROW_URL_STORE", configProps.getProperty('sparrow.url_store'))

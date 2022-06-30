@@ -54,4 +54,25 @@ class LoginViewModel @Inject constructor(
         }
     }
 
+    fun loginWithTravel() {
+        isLoading.value = true
+        viewModelScope.launch {
+            authUseCase.loginWithTravel().collectLatest {
+                Timber.e("Thread View Model Collect: ${Thread.currentThread().name}")
+                when (it) {
+                    is ResultModel.Success -> {
+                        authUseCase.saveToken(it.data?.token ?: "")
+                        login.value = it.data?.token?.isNotEmpty()
+                        isLoading.value = false
+                    }
+                    is ResultModel.ServerErrorException -> {
+                        isLoading.value = false
+                        executingServerErrorException(it)
+                    }
+                    else -> {}
+                }
+            }
+        }
+    }
+
 }

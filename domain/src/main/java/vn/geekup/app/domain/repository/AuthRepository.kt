@@ -13,4 +13,6 @@ interface AuthRepository {
 
     suspend fun loginOTable(otableBody: OTableRequestBody): Flow<ResultModel<OTableModel>>
 
+    suspend fun loginWithTravel(): Flow<ResultModel<OTableModel>>
+
 }

@@ -50,18 +50,43 @@ class MomentRemoteDataSource @Inject constructor(
 
         }.build()
 
-    override suspend fun getPagingMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<PagingData<MomentModel>> =
+//    override suspend fun getPagingMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<PagingData<MomentModel>> =
+//        Pager(
+//            config = PagingConfig(13),
+//        ) {
+//            object : PagingByKeyDataSource<MomentVO, MomentModel>() {
+//                override suspend fun onApi(nextKey: String?): Response<ObjectResponse<ListResponse<MomentVO>>> =
+//                    aliaApiService.getFlowMomentFeeds(
+//                        cursor = nextKey,
+//                        sort = when (momentFeedRequestBody.sort) {
+//                            MomentSort.DESC() -> MomentSort.DESC().sortName
+//                            else -> MomentSort.ASC().sortName
+//                        }, dates = momentFeedRequestBody.dates
+//                    )
+//
+//                override suspend fun processResponse(request: ListResponse<MomentVO>?): ListResponse<MomentModel>? {
+//                    val items: ArrayList<MomentModel> = arrayListOf()
+//                    request?.items?.forEach { item ->
+//                        items.add(item.vo2Model())
+//                    }
+//                    return ListResponse(
+//                        limit = request?.limit,
+//                        nextCursor = request?.nextCursor,
+//                        items = items
+//                    )
+//                }
+//
+//            }
+//        }.flow
+
+    override suspend fun getPagingTravelFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<PagingData<MomentModel>> =
         Pager(
-            config = PagingConfig(13),
+            config = PagingConfig(15),
         ) {
             object : PagingByKeyDataSource<MomentVO, MomentModel>() {
-                override suspend fun onApi(nextKey : String?): Response<ObjectResponse<ListResponse<MomentVO>>> =
-                    aliaApiService.getFlowMomentFeeds(
-                        cursor = nextKey,
-                        sort = when (momentFeedRequestBody.sort) {
-                            MomentSort.DESC() -> MomentSort.DESC().sortName
-                            else -> MomentSort.ASC().sortName
-                        }, dates = momentFeedRequestBody.dates
+                override suspend fun onApi(nextKey: String?): Response<ListResponse<MomentVO>> =
+                    aliaApiService.getFlowTravelFeeds(
+                        page = nextKey?.toInt() ?: 1
                     )
 
                 override suspend fun processResponse(request: ListResponse<MomentVO>?): ListResponse<MomentModel>? {
@@ -72,7 +97,8 @@ class MomentRemoteDataSource @Inject constructor(
                     return ListResponse(
                         limit = request?.limit,
                         nextCursor = request?.nextCursor,
-                        items = items
+                        items = items,
+                        metadata = request?.metadata
                     )
                 }
 

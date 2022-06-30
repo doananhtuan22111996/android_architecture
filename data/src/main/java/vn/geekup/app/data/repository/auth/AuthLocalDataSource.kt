@@ -25,4 +25,8 @@ class AuthLocalDataSource @Inject constructor(private val preferenceWrapper: Pre
         return emptyFlow()
     }
 
+    override suspend fun loginWithTravel(): Flow<ResultModel<OTableModel>> {
+        return emptyFlow()
+    }
+
 }

@@ -30,4 +30,8 @@ class AuthDataSource @Inject constructor(
     override suspend fun loginOTable(otableBody: OTableRequestBody): Flow<ResultModel<OTableModel>> {
         return remote.loginOTable(otableBody)
     }
+
+    override suspend fun loginWithTravel(): Flow<ResultModel<OTableModel>> {
+        return remote.loginWithTravel()
+    }
 }
