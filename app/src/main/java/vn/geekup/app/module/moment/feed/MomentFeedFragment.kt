@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import vn.geekup.app.R
 import vn.geekup.app.base.BaseFragment
@@ -13,6 +14,7 @@ import vn.geekup.app.module.main.MainFragment
 import vn.geekup.app.module.moment.MomentViewModel
 import vn.geekup.app.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import timber.log.Timber
 import vn.geekup.app.base.list.PagingLoadStateAdapter
 
@@ -54,6 +56,14 @@ class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBindi
             Timber.e("Moment data Observer")
             lifecycleScope.launchWhenCreated {
                 adapterPaging.submitData(it)
+            }
+        }
+
+        lifecycleScope.launchWhenCreated {
+            adapterPaging.loadStateFlow.collect { loadStates ->
+                Timber.e("Adapter Listener")
+                fragmentBinding.swMoments.isRefreshing =
+                    loadStates.mediator?.refresh is LoadState.Loading
             }
         }
 
