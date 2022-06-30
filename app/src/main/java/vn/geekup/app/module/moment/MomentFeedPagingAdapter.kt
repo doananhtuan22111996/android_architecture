@@ -1,4 +1,4 @@
-package vn.geekup.app.module.moment.feed
+package vn.geekup.app.module.moment
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

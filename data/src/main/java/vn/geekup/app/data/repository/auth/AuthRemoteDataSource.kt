@@ -4,15 +4,14 @@ import kotlinx.coroutines.flow.*
 import retrofit2.Response
 import vn.geekup.app.data.model.general.ObjectResponse
 import vn.geekup.app.data.model.user.OTableVO
-import vn.geekup.app.data.remote.auth.AuthApiService
-import vn.geekup.app.data.di.remote.NetworkBoundService
+import vn.geekup.app.data.remote.AuthApiService
+import vn.geekup.app.data.di.NetworkBoundService
 import vn.geekup.app.domain.dto.OTableRequestBody
 import vn.geekup.app.domain.model.general.ResultModel
 import vn.geekup.app.domain.model.user.OTableModel
 import vn.geekup.app.domain.repository.AuthRepository
-import javax.inject.Inject
 
-class AuthRemoteDataSource @Inject constructor(private val authApiService: AuthApiService) :
+class AuthRemoteDataSource constructor(private val authApiService: AuthApiService) :
     AuthRepository {
 
     override fun logout(): Flow<ResultModel<Boolean>> =

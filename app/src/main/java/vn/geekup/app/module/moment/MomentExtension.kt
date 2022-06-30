@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
@@ -14,10 +13,9 @@ import androidx.appcompat.widget.AppCompatImageView
 import coil.load
 import coil.transform.RoundedCornersTransformation
 import kotlinx.coroutines.*
-import vn.geekup.app.domain.model.moment.MomentImagePosition
+import timber.log.Timber
 import vn.geekup.app.domain.model.moment.MomentModel
 import vn.geekup.app.model.moment.MomentModelV
-import java.io.File
 
 object MomentExtension {
 
@@ -73,64 +71,29 @@ object MomentExtension {
     }
 
     @JvmStatic
-    @BindingAdapter(value = ["momentImageUrl", "positionImage"], requireAll = false)
+    @BindingAdapter(value = ["momentImageUrl"], requireAll = false)
     fun setMomentImageUrl(
         imageView: AppCompatImageView,
         url: String?,
-        positionImage: MomentImagePosition?
     ) {
+        Timber.e("Moment Image URL $")
         if (url?.isNotEmpty() == true) {
-            val multiTransform = when (positionImage) {
-                MomentImagePosition.ALL_LEFT ->
-                    RoundedCornersTransformation(topLeft = 12f, bottomLeft = 12f)
-                MomentImagePosition.ALL_RIGHT ->
-                    RoundedCornersTransformation(topRight = 12f, bottomRight = 12f)
-                MomentImagePosition.ALL_BOTTOM ->
-                    RoundedCornersTransformation(bottomLeft = 12f, bottomRight = 12f)
-                MomentImagePosition.ALL_TOP ->
-                    RoundedCornersTransformation(topLeft = 12f, topRight = 12f)
-                MomentImagePosition.TOP_LEFT ->
-                    RoundedCornersTransformation(topLeft = 12f)
-                MomentImagePosition.TOP_RIGHT ->
-                    RoundedCornersTransformation(topRight = 12f)
-                MomentImagePosition.BOTTOM_LEFT ->
-                    RoundedCornersTransformation(bottomLeft = 12f)
-                MomentImagePosition.BOTTOM_RIGHT ->
-                    RoundedCornersTransformation(bottomRight = 12f)
-                else ->
-                    RoundedCornersTransformation(12f)
-            }
-            if (url.lowercase().contains(KEY_MOMENT_LINK_PATTERN_S) || url.lowercase()
-                    .contains(KEY_MOMENT_LINK_PATTERN)
-            ) {
-                imageView.load(url) {
-                    transformations(multiTransform)
-                    crossfade(true)
-                    placeholder(R.drawable.bg_image_momnet_landscap)
-                }
-            } else {
-                imageView.load(File(url)) {
-                    transformations(multiTransform)
-                    crossfade(true)
-                    placeholder(R.drawable.bg_image_momnet_landscap)
-                }
+            imageView.load(url) {
+                transformations(RoundedCornersTransformation(12f))
+                crossfade(true)
+                placeholder(R.drawable.bg_image_momnet_landscap)
+                listener(
+                    onError = { _, result ->
+                        Timber.e("Error: ${result.throwable.message}")
+                    },
+                    onSuccess = { _, result ->
+                        Timber.e("Success: $result")
+                    }
+                )
             }
         } else {
             imageView.setImageResource(R.drawable.bg_image_momnet_landscap)
         }
-    }
-
-
-    @JvmStatic
-    @BindingAdapter(value = ["isLiked"], requireAll = true)
-    fun setMomentButtonFooterLike(button: AppCompatButton, isLiked: Boolean = false) {
-        button.isEnabled = !isLiked
-        button.setCompoundDrawablesWithIntrinsicBounds(
-            if (isLiked) R.drawable.ic_like_active else R.drawable.ic_like,
-            0,
-            0,
-            0
-        )
     }
 
 }

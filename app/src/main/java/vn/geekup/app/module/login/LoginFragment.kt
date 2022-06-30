@@ -5,8 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
-import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 import vn.geekup.app.R
 import vn.geekup.app.base.BaseFragment
@@ -15,11 +14,10 @@ import vn.geekup.app.domain.model.general.ResultModel
 import vn.geekup.app.module.root.RootActivity
 import vn.geekup.app.utils.*
 
-@AndroidEntryPoint
 class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(),
     RootActivity.OnBackPressListener {
 
-    override val viewModel: LoginViewModel by viewModels()
+    override val viewModel: LoginViewModel by viewModel()
 
     override fun provideViewBinding(parent: ViewGroup): FragmentLoginBinding =
         FragmentLoginBinding.inflate(layoutInflater, parent, true)

@@ -2,11 +2,11 @@ package vn.geekup.app.module.moment
 
 import androidx.lifecycle.*
 import androidx.paging.PagingData
-import dagger.hilt.android.lifecycle.HiltViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import timber.log.Timber
 import vn.geekup.app.base.BaseViewModel
 import vn.geekup.app.domain.dto.*
@@ -17,11 +17,9 @@ import vn.geekup.app.model.moment.MomentModelV
 import vn.geekup.app.model.PagingState
 import vn.geekup.app.network.NetworkChange
 import vn.geekup.app.utils.*
-import javax.inject.Inject
 import kotlin.collections.ArrayList
 
-@HiltViewModel
-class MomentViewModel @Inject constructor(
+class MomentViewModel(
     networkChange: NetworkChange,
     private val momentUseCase: MomentUseCase
 ) : BaseViewModel(networkChange) {

@@ -1,9 +1,8 @@
-package vn.geekup.app.module.moment.feed
+package vn.geekup.app.module.moment
 
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,21 +10,18 @@ import vn.geekup.app.R
 import vn.geekup.app.base.BaseFragment
 import vn.geekup.app.databinding.FragmentMomentFeedBinding
 import vn.geekup.app.module.main.MainFragment
-import vn.geekup.app.module.moment.MomentViewModel
 import vn.geekup.app.utils.*
-import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 import vn.geekup.app.base.list.PagingLoadStateAdapter
 
-@AndroidEntryPoint
 class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBinding>() {
 
     //    private lateinit var adapter: MomentFeedsAdapter
     private lateinit var adapterPaging: MomentFeedPagingAdapter
     private var dateFilter: String = ""
 
-    override val viewModel: MomentViewModel by activityViewModels()
+    override val viewModel: MomentViewModel by viewModel()
 
     override fun initViewModelByActivityLifecycle(): Boolean = true
 

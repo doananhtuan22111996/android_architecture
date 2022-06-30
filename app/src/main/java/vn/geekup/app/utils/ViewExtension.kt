@@ -29,8 +29,9 @@ object ViewBindingAdapter {
     fun setAvatarImageUrl(imageView: AppCompatImageView, url: String?) {
         if (url?.isNotEmpty() == true) {
             imageView.load(url) {
-                transformations((RoundedCornersTransformation(12f)))
                 crossfade(true)
+                transformations(RoundedCornersTransformation(12f))
+                placeholder(R.drawable.ic_app)
             }
         } else {
             imageView.setImageResource(R.drawable.ic_app)
@@ -49,6 +50,7 @@ object ViewBindingAdapter {
         if (url?.isNotEmpty() == true) {
             imageView.load(url) {
                 crossfade(true)
+                placeholder(R.drawable.ic_app)
             }
         } else {
             imageView.setImageResource(R.color.color_3)
