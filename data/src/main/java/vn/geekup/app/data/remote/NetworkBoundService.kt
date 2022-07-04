@@ -1,4 +1,4 @@
-package vn.geekup.app.data.di
+package vn.geekup.app.data.remote
 
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +24,7 @@ abstract class NetworkBoundService<RequestType, ResultType> {
         emit(
             fetchFromNetwork() ?: ResultModel.ServerErrorException(
                 code = CODE_999,
-                message = "Somethings when wrong!"
+                message = "Somethings wrong!"
             )
         )
     }.flowOn(Dispatchers.IO)
@@ -36,8 +36,6 @@ abstract class NetworkBoundService<RequestType, ResultType> {
         Timber.i(tag, "Fetch data from network")
 
         val apiResponse = onApi()
-
-        Timber.i(tag, "Data fetched from network")
 
         if (apiResponse.isSuccessful) {
             val body = apiResponse.body()

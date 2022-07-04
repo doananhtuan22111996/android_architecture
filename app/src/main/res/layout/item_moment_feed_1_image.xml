@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_15"
             android:hyphenationFrequency="none"
-            android:visibility="@{moment.posterName.isEmpty() == true ? View.GONE : View.VISIBLE}"
+            android:text="@{moment.id + `-` + moment.channelName}"
             app:layout_constraintTop_toBottomOf="@id/vLine"
             tools:text="Đồng đội cùng làm cùng chơi #WorkFromHome rồi vẫn nhớ lời cảm ơn… see more" />
 
@@ -55,10 +55,8 @@
             android:id="@+id/ivImage"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_214"
-            android:background="@drawable/bg_image_momnet_landscap"
-            android:visibility="@{moment.imgUrls.size() > 0 ? View.VISIBLE : View.GONE}"
-            app:layout_constraintTop_toBottomOf="@id/tvContent"
-            app:momentImageUrl="@{moment.imgUrls.size() > 0 ? moment.imgUrls.get(0).original : ``}" />
+            android:src="@drawable/bg_image_momnet_landscap"
+            app:layout_constraintTop_toBottomOf="@id/tvContent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

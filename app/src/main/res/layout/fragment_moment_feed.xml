@@ -12,51 +12,38 @@
             android:value="false" />
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/coordinator"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include
-            android:id="@+id/layoutMomentHeaderBar"
-            layout="@layout/layout_moment_header_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swMoments"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clContainer"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMoments"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvMoments"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/color_9"
-                    android:visibility="@{isMomentEmpty == true ? View.GONE : View.VISIBLE}"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvEmpty"
-                    style="@style/TextAppearance.FontPath.Gilroy.H2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/moment_feeds_are_empty"
-                    android:visibility="@{isMomentEmpty == true ? View.VISIBLE : View.GONE}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_height="match_parent"
+                android:background="@color/color_9"
+                android:visibility="@{isMomentEmpty == true ? View.GONE : View.VISIBLE}" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvEmpty"
+            style="@style/TextAppearance.FontPath.Gilroy.H2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/moment_feeds_are_empty"
+            android:visibility="@{isMomentEmpty == true ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -19,10 +19,9 @@
             android:id="@+id/ivAvatar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_avatar_moment"
-            app:avatarImageUrl="@{moment.avatar}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_app" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/lnHeader"
@@ -42,16 +41,6 @@
                 android:textColor="@color/color_4"
                 app:channelName="@{moment.channelName}"
                 app:posterName="@{moment.posterName}" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvCreatedAt"
-                style="@style/TextAppearance.FontPath.Gilroy.Body_13_Medium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_4"
-                app:creatorName="@{moment.creatorProfileName}"
-                app:createdAt="@{moment.createdAt}"
-                android:textColor="@color/color_5" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

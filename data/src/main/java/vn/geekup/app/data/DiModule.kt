@@ -1,4 +1,4 @@
-package vn.geekup.app.data.di
+package vn.geekup.app.data
 
 import android.content.Context
 import com.facebook.stetho.okhttp3.StethoInterceptor
@@ -10,10 +10,11 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import vn.geekup.app.data.Config
-import vn.geekup.app.data.remote.AuthApiService
+import vn.geekup.app.data.local.AppDatabase
+import vn.geekup.app.data.service.AuthApiService
 import vn.geekup.app.data.local.PreferenceWrapper
-import vn.geekup.app.data.remote.AliaApiService
+import vn.geekup.app.data.service.AliaApiService
+import vn.geekup.app.data.remote.NullOrEmptyConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
 
@@ -68,6 +69,8 @@ inline fun <reified T> provideRetrofit(
 
 val localModules = module {
     single { PreferenceWrapper(androidContext()) }
+    single { AppDatabase.getInstance(androidContext()) }
+    single { get<AppDatabase>().travelFeedDao() }
 }
 
 val remoteModules = module {

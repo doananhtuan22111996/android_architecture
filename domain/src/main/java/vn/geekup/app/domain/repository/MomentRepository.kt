@@ -12,7 +12,9 @@ interface MomentRepository {
 
 //    suspend fun getPagingMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<PagingData<MomentModel>>
 
-    suspend fun getPagingTravelFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<PagingData<MomentModel>>
+    suspend fun getPagingTravelFeeds(): Flow<PagingData<MomentModel>>
 
-    suspend fun getFlowMomentDetail(id: Int): Flow<ResultModel<MomentModel>>
+    suspend fun getFlowLocalTravelFeeds(): Flow<ResultModel<List<MomentModel>>>
+
+    suspend fun getPagingLocalTravelFeeds(): Flow<PagingData<MomentModel>>
 }

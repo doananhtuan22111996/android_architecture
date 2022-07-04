@@ -1,5 +1,8 @@
 package vn.geekup.app.domain.model.general
 
+import androidx.room.Entity
+
+@Entity
 open class BaseModel
 
 sealed class ResultModel<out R> {

@@ -71,20 +71,34 @@ class MomentViewModel(
     }
 
 
-    fun getPagingMomentFeeds(date: String = "") {
+    fun getPagingMomentFeeds() {
         viewModelScope.launch((Dispatchers.Main)) {
-            Timber.tag("getPagingMomentFeeds").e(Thread.currentThread().name)
+//            pagingMoment.addSource(
+//                momentUseCase.getPagingMomentFeeds().asLiveData()
+//            ) {
+//                pagingMoment.value = it
+//            }
             pagingMoment.addSource(
-                momentUseCase.getPagingMomentFeeds(
-                    MomentFeedRequestBody(
-                        cursor = "1",
-                        limit = KEY_PAGING_LIMIT_20,
-                        dates = if (date.isNotEmpty()) arrayListOf(date) else null
-                    )
-                ).asLiveData()
+                momentUseCase.getPagingLocalMomentFeeds().asLiveData()
             ) {
                 pagingMoment.value = it
             }
+//            momentUseCase.getFlowLocalMomentFeeds().collectLatest {
+//                when (it) {
+//                    is ResultModel.Success -> {
+//                        Timber.e("Moment View Model ${it.data?.size ?: 0}")
+//                        pagingState.value = PagingState.Loaded
+//                    }
+//                    is ResultModel.Loading -> {
+//                        Timber.e("Moment DataBase Loading")
+//                    }
+//                    else -> {
+//                        Timber.e("Moment DataBase Error")
+//                        pagingState.value = PagingState.Loaded
+//                        executingServerErrorException(it as? ResultModel.ServerErrorException)
+//                    }
+//                }
+//            }
         }
     }
 }

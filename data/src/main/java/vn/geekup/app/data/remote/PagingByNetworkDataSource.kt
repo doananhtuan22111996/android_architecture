@@ -1,9 +1,8 @@
-package vn.geekup.app.data.di.remote.paging
+package vn.geekup.app.data.remote
 
 import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
@@ -11,16 +10,15 @@ import retrofit2.Response
 import timber.log.Timber
 import vn.geekup.app.data.Config
 import vn.geekup.app.data.model.general.ListResponse
-import vn.geekup.app.data.model.general.ObjectResponse
 import vn.geekup.app.domain.model.general.ResultModel
 import java.io.IOException
 
 /**
  * A [PagingSource] that uses the before/after keys returned in page requests.
  *
- * @see PagingByKeyDataSource
+ * @see PagingByNetworkDataSource
  */
-abstract class PagingByKeyDataSource<RequestType : Any, ResultType : Any> :
+abstract class PagingByNetworkDataSource<RequestType : Any, ResultType : Any> :
     PagingSource<String, ResultType>() {
 
     abstract suspend fun onApi(nextKey: String?): Response<ListResponse<RequestType>>
@@ -66,11 +64,12 @@ abstract class PagingByKeyDataSource<RequestType : Any, ResultType : Any> :
                 } else {
                     Log.e("PagingByKeyDataSource", "${apiResponse.errorBody()?.toString()}")
 
+                    // Todo Change when know baseResponse
 //                val result = Gson().fromJson(
 //                    apiResponse.errorBody()?.toString(),
 //                    ResultModel.ServerErrorException::class.java
 //                )
-                    LoadResult.Error(Throwable("Api something when wrong"))
+                    LoadResult.Error(Throwable("Api something wrong"))
                 }
             }
 

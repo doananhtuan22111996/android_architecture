@@ -67,7 +67,7 @@ versions.local = [
 ]
 
 versions.database = [
-        room: '2.2.5'
+        room      : '2.4.2',
 ]
 
 versions.httpClient = [

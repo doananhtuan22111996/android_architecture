@@ -1,4 +1,4 @@
-package vn.geekup.app.data.di
+package vn.geekup.app.data.remote
 
 import okhttp3.ResponseBody
 import retrofit2.Converter

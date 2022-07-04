@@ -11,9 +11,11 @@ interface MomentUseCase {
 
     suspend fun getFlowMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<ResultModel<ArrayList<MomentModel>>>
 
-    suspend fun getPagingMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<PagingData<MomentModel>>
+    suspend fun getPagingMomentFeeds(): Flow<PagingData<MomentModel>>
 
-    suspend fun getFlowMomentDetail(id: Int): Flow<ResultModel<MomentModel>>
+    suspend fun getFlowLocalMomentFeeds(): Flow<ResultModel<List<MomentModel>>>
+
+    suspend fun getPagingLocalMomentFeeds(): Flow<PagingData<MomentModel>>
 
 }
 
@@ -24,11 +26,15 @@ class MomentUseCaseImplement(private val momentRepository: MomentRepository) :
         return momentRepository.getFlowMomentFeeds(momentFeedRequestBody)
     }
 
-    override suspend fun getFlowMomentDetail(id: Int): Flow<ResultModel<MomentModel>> {
-        return momentRepository.getFlowMomentDetail(id)
+    override suspend fun getPagingMomentFeeds(): Flow<PagingData<MomentModel>> {
+        return momentRepository.getPagingTravelFeeds()
     }
 
-    override suspend fun getPagingMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<PagingData<MomentModel>> {
-        return momentRepository.getPagingTravelFeeds(momentFeedRequestBody)
+    override suspend fun getFlowLocalMomentFeeds(): Flow<ResultModel<List<MomentModel>>> {
+        return momentRepository.getFlowLocalTravelFeeds()
+    }
+
+    override suspend fun getPagingLocalMomentFeeds(): Flow<PagingData<MomentModel>> {
+        return momentRepository.getPagingLocalTravelFeeds()
     }
 }

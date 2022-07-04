@@ -8,8 +8,8 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import timber.log.Timber
 import vn.geekup.app.data.Config
-import vn.geekup.app.data.di.localModules
-import vn.geekup.app.data.di.remoteModules
+import vn.geekup.app.data.localModules
+import vn.geekup.app.data.remoteModules
 import vn.geekup.app.data.repository.repositoryModules
 import vn.geekup.app.di.applicationModules
 import vn.geekup.app.di.useCaseModules

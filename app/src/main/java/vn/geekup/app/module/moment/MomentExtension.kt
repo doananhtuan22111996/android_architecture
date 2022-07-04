@@ -70,32 +70,6 @@ object MomentExtension {
         textView.text = "$creatorName - ${createdAt?.calculatorDiffToMomentDate(textView.context)}"
     }
 
-    @JvmStatic
-    @BindingAdapter(value = ["momentImageUrl"], requireAll = false)
-    fun setMomentImageUrl(
-        imageView: AppCompatImageView,
-        url: String?,
-    ) {
-        Timber.e("Moment Image URL $")
-        if (url?.isNotEmpty() == true) {
-            imageView.load(url) {
-                transformations(RoundedCornersTransformation(12f))
-                crossfade(true)
-                placeholder(R.drawable.bg_image_momnet_landscap)
-                listener(
-                    onError = { _, result ->
-                        Timber.e("Error: ${result.throwable.message}")
-                    },
-                    onSuccess = { _, result ->
-                        Timber.e("Success: $result")
-                    }
-                )
-            }
-        } else {
-            imageView.setImageResource(R.drawable.bg_image_momnet_landscap)
-        }
-    }
-
 }
 
 fun ArrayList<MomentModel>.toArrayMomentModelV(listener: ((ArrayList<MomentModelV>) -> Unit)? = null) {

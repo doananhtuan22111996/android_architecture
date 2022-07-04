@@ -77,8 +77,11 @@ dependencies {
     api "com.facebook.stetho:stetho-okhttp3:${versions.debug.stetho}"
     api "com.squareup.okhttp3:logging-interceptor:$versions.debug.loggingInterceptor"
 
-
     // local
+    implementation "androidx.room:room-ktx:${versions.database.room}"
+    implementation "androidx.room:room-runtime:${versions.database.room}"
+    implementation "androidx.room:room-paging:${versions.database.room}"
+    kapt "androidx.room:room-compiler:${versions.database.room}"
     implementation "androidx.security:security-crypto-ktx:${versions.local.securePreference}"
 
     // Android core

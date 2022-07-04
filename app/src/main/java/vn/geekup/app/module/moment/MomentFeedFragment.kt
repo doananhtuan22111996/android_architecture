@@ -5,21 +5,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import vn.geekup.app.R
 import vn.geekup.app.base.BaseFragment
+import vn.geekup.app.base.list.PagingLoadStateAdapter
 import vn.geekup.app.databinding.FragmentMomentFeedBinding
 import vn.geekup.app.module.main.MainFragment
 import vn.geekup.app.utils.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
-import vn.geekup.app.base.list.PagingLoadStateAdapter
+
 
 class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBinding>() {
 
-    //    private lateinit var adapter: MomentFeedsAdapter
     private lateinit var adapterPaging: MomentFeedPagingAdapter
-    private var dateFilter: String = ""
 
     override val viewModel: MomentViewModel by viewModel()
 
@@ -32,14 +31,13 @@ class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBindi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        viewModel.getFlowMomentFeeds(date = dateFilter)
-        viewModel.getPagingMomentFeeds(date = dateFilter)
+        viewModel.getPagingMomentFeeds()
         initAdapter()
     }
 
     override fun onInitLayout(view: View, savedInstanceState: Bundle?) {
         baseActivity.setAppColorStatusBar(R.color.color_white)
         (parentFragment?.parentFragment as? MainFragment)?.bottomNavigationState(true)
-        initMomentHeader()
         initRecyclerView()
         initRefreshLayout()
     }
@@ -47,9 +45,7 @@ class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBindi
     override fun bindViewModel() {
         super.bindViewModel()
 
-
         viewModel.pagingMoment.observe(this) {
-            Timber.e("Moment data Observer")
             lifecycleScope.launchWhenCreated {
                 adapterPaging.submitData(it)
             }
@@ -57,7 +53,6 @@ class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBindi
 
         lifecycleScope.launchWhenCreated {
             adapterPaging.loadStateFlow.collect { loadStates ->
-                Timber.e("Adapter Listener")
                 fragmentBinding.swMoments.isRefreshing =
                     loadStates.mediator?.refresh is LoadState.Loading
             }
@@ -75,45 +70,22 @@ class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBindi
 //        }
     }
 
-    private fun initMomentHeader() {
-        fragmentBinding.layoutMomentHeaderBar.day = getCurrentDayName()
-    }
-
     private fun initAdapter() {
-//        adapter = MomentFeedsAdapter(
-//            null,
-//            null,
-//            this::onClickLinkListener
-//        )
         adapterPaging = MomentFeedPagingAdapter()
     }
 
     private fun initRecyclerView() {
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-//        endlessRecyclerViewScrollListener =
-//            object : EndlessRecyclerViewScrollListener(layoutManager) {
-//
-//                override fun onLoadMore(page: Int, totalItemsCount: Int) {
-//                    viewModel.getFlowMomentFeeds(date = dateFilter)
-//                }
-//            }
         fragmentBinding.rvMoments.layoutManager = layoutManager
+        fragmentBinding.rvMoments.itemAnimator = DefaultItemAnimator()
         fragmentBinding.rvMoments.adapter =
             adapterPaging.withLoadStateFooter(footer = PagingLoadStateAdapter())
-//        (fragmentBinding.rvMoments.itemAnimator as SimpleItemAnimator).supportsChangeAnimations =
-//            false
-//        fragmentBinding.rvMoments.addOnScrollListener(endlessRecyclerViewScrollListener)
     }
 
     private fun initRefreshLayout() {
         fragmentBinding.swMoments.setOnRefreshListener {
             adapterPaging.refresh()
-//            viewModel.getFlowMomentFeeds(date = dateFilter, isReload = true)
         }
-    }
-
-    private fun onClickLinkListener(url: String) {
-        baseActivity.openBrowserApp(url)
     }
 
 }

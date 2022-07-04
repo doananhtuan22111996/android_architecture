@@ -1,18 +1,23 @@
-package vn.geekup.app.data.repository.auth
+package vn.geekup.app.data.repository
 
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import retrofit2.Response
+import vn.geekup.app.data.Config
+import vn.geekup.app.data.local.PreferenceWrapper
 import vn.geekup.app.data.model.general.ObjectResponse
 import vn.geekup.app.data.model.user.OTableVO
-import vn.geekup.app.data.remote.AuthApiService
-import vn.geekup.app.data.di.NetworkBoundService
+import vn.geekup.app.data.service.AuthApiService
+import vn.geekup.app.data.remote.NetworkBoundService
 import vn.geekup.app.domain.dto.OTableRequestBody
 import vn.geekup.app.domain.model.general.ResultModel
 import vn.geekup.app.domain.model.user.OTableModel
 import vn.geekup.app.domain.repository.AuthRepository
 
-class AuthRemoteDataSource constructor(private val authApiService: AuthApiService) :
-    AuthRepository {
+class AuthDataSource constructor(
+    private val preferenceWrapper: PreferenceWrapper,
+    private val authApiService: AuthApiService
+) : AuthRepository {
 
     override fun logout(): Flow<ResultModel<Boolean>> =
         object : NetworkBoundService<Nothing, Boolean>() {
@@ -23,7 +28,10 @@ class AuthRemoteDataSource constructor(private val authApiService: AuthApiServic
                 ResultModel.Success(data = true)
         }.build()
 
-    override suspend fun saveToken(token: String): Flow<ResultModel<Unit>> = emptyFlow()
+    override suspend fun saveToken(token: String): Flow<ResultModel<Unit>> {
+        preferenceWrapper.saveString(Config.SharePreference.KEY_AUTH_TOKEN, token)
+        return emptyFlow()
+    }
 
     override suspend fun loginOTable(otableBody: OTableRequestBody): Flow<ResultModel<OTableModel>> =
         object : NetworkBoundService<OTableVO, OTableModel>() {
