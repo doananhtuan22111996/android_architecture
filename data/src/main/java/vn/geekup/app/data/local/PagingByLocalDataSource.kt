@@ -18,6 +18,7 @@ abstract class PagingByLocalDataSource<RequestType : Any, ResultType : Any, remo
 
     abstract suspend fun onApi(nextKey: String?): Response<ListResponse<RequestType>>
     abstract suspend fun processResponse(request: ListResponse<RequestType>?): ListResponse<ResultType>?
+    abstract suspend fun getInitKey(): remote?
     abstract suspend fun getRemoteKey(state: PagingState<Int, ResultType>): remote?
     abstract suspend fun onRefresh()
     abstract suspend fun onDB(response: ListResponse<ResultType>?)
@@ -25,6 +26,9 @@ abstract class PagingByLocalDataSource<RequestType : Any, ResultType : Any, remo
     override suspend fun initialize(): InitializeAction {
         // Require that remote REFRESH is launched on initial load and succeeds before launching
         // remote PREPEND / APPEND.
+        withContext(Dispatchers.IO) {
+            getInitKey()
+        }
         return InitializeAction.LAUNCH_INITIAL_REFRESH
     }
 

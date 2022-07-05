@@ -65,12 +65,14 @@ class MomentDataSource(
                 )
             }
 
+            override suspend fun getInitKey(): RemoteKey? = db.remoteKeyDao()
+                .remoteKeysIdAll().lastOrNull()
+
             override suspend fun getRemoteKey(
                 state: PagingState<Int, MomentModel>
             ): RemoteKey? {
                 val repoId =
-                    if (state.pages.lastOrNull()?.data?.isEmpty() == true) db.remoteKeyDao()
-                        .remoteKeysIdAll().lastOrNull()?.repoId else
+                    if (state.pages.lastOrNull()?.data?.isEmpty() == true) getInitKey()?.repoId else
                         state.pages
                             .lastOrNull()?.data?.lastOrNull()?.id?.toString()
                 return db.withTransaction {
