@@ -11,10 +11,10 @@ import vn.geekup.app.domain.model.general.RemoteKey
 interface BaseDao<T : BaseModel> {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(obj: List<T>)
+    suspend fun insertAll(obj: List<T>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg obj: T)
+    suspend fun insert(vararg obj: T)
 }
 
 @Dao
@@ -27,5 +27,5 @@ interface RemoteKeyDao : BaseDao<RemoteKey> {
     fun remoteKeysIdAll(): List<RemoteKey>
 
     @Query("DELETE FROM RemoteKey")
-    fun delete()
+    suspend fun delete()
 }

@@ -8,13 +8,7 @@ import vn.geekup.app.domain.model.moment.MomentModel
 
 interface MomentRepository {
 
-    suspend fun getFlowMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<ResultModel<ArrayList<MomentModel>>>
-
-//    suspend fun getPagingMomentFeeds(momentFeedRequestBody: MomentFeedRequestBody): Flow<PagingData<MomentModel>>
-
     suspend fun getPagingTravelFeeds(): Flow<PagingData<MomentModel>>
-
-    suspend fun getFlowLocalTravelFeeds(): Flow<ResultModel<List<MomentModel>>>
 
     suspend fun getPagingLocalTravelFeeds(): Flow<PagingData<MomentModel>>
 }

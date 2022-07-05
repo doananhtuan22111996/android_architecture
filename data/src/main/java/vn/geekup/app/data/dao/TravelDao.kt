@@ -16,6 +16,6 @@ interface TravelDao : BaseDao<MomentModel> {
     fun getPagingTravelFeeds(): PagingSource<Int, MomentModel>
 
     @Query("DELETE FROM MomentModel")
-    fun delete()
+    suspend fun delete()
 
 }

@@ -29,7 +29,7 @@ versions.plugin = [
 ]
 
 versions.kotlin = [
-        kotlinStdlib: '1.7.0'
+        kotlinStdlib: '1.6.20'
 ]
 
 versions.androidX = [

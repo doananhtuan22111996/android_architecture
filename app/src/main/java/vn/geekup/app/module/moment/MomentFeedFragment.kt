@@ -5,16 +5,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 import vn.geekup.app.R
 import vn.geekup.app.base.BaseFragment
 import vn.geekup.app.base.list.PagingLoadStateAdapter
 import vn.geekup.app.databinding.FragmentMomentFeedBinding
 import vn.geekup.app.module.main.MainFragment
 import vn.geekup.app.utils.*
-
 
 class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBinding>() {
 
@@ -30,8 +31,6 @@ class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBindi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        viewModel.getFlowMomentFeeds(date = dateFilter)
-        viewModel.getPagingMomentFeeds()
         initAdapter()
     }
 
@@ -45,39 +44,39 @@ class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBindi
     override fun bindViewModel() {
         super.bindViewModel()
 
-        viewModel.pagingMoment.observe(this) {
-            lifecycleScope.launchWhenCreated {
+        lifecycleScope.launchWhenCreated {
+            viewModel.fetchPagingLocalFlow().distinctUntilChanged().collectLatest {
+                Timber.e("Render Data Moment: ${adapterPaging.itemCount} -- Thread: ${Thread.currentThread().name}")
                 adapterPaging.submitData(it)
             }
         }
 
         lifecycleScope.launchWhenCreated {
             adapterPaging.loadStateFlow.collect { loadStates ->
+                // Todo Error: ${loadState.refresh is LoadState.Error}
+                if (loadStates.append is LoadState.NotLoading && loadStates.append.endOfPaginationReached) {
+                    fragmentBinding.tvEmpty.visible(adapterPaging.itemCount == 0)
+                }
                 fragmentBinding.swMoments.isRefreshing =
-                    loadStates.mediator?.refresh is LoadState.Loading
+                    loadStates.mediator?.refresh is LoadState.Loading && adapterPaging.itemCount > 0
             }
         }
-
-//        viewModel.moments.observe(this) {
-//            fragmentBinding.isMomentEmpty = it.isEmpty()
-//            adapter.addAllItemsWithDiffUtils(it)
-//            fragmentBinding.swMoments.isRefreshing = false
-//        }
-//
-//        viewModel.pagingState.observe(this) {
-//            Timber.d("Loadmore: $it")
-//            adapter.setNetworkState(it)
-//        }
     }
 
     private fun initAdapter() {
         adapterPaging = MomentFeedPagingAdapter()
+//        adapterPaging.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+//            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+//                if (positionStart == 0) {
+//                    fragmentBinding.rvMoments.scrollToPosition(0)
+//                }
+//            }
+//        })
     }
 
     private fun initRecyclerView() {
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         fragmentBinding.rvMoments.layoutManager = layoutManager
-        fragmentBinding.rvMoments.itemAnimator = DefaultItemAnimator()
         fragmentBinding.rvMoments.adapter =
             adapterPaging.withLoadStateFooter(footer = PagingLoadStateAdapter())
     }

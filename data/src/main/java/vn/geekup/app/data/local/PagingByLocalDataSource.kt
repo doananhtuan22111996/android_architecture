@@ -38,12 +38,8 @@ abstract class PagingByLocalDataSource<RequestType : Any, ResultType : Any, remo
 
                 // Get the closest item from PagingState that we want to load data around.
                 val loadKey = when (loadType) {
-                    LoadType.REFRESH -> {
-                        Timber.e("PagingByLocalDataSource: Refresh")
-                        null
-                    }
+                    LoadType.REFRESH -> null
                     LoadType.PREPEND -> {
-                        Timber.e("PagingByLocalDataSource: PREPEND")
                         return@withContext MediatorResult.Success(
                             endOfPaginationReached = true
                         )
@@ -54,7 +50,6 @@ abstract class PagingByLocalDataSource<RequestType : Any, ResultType : Any, remo
                         // receive from the Reddit API to fetch the next or previous page.
                         val remoteKey = getRemoteKey(state)
 
-                        Timber.e("PagingByLocalDataSource: APPEND ${remoteKey?.nextKey}")
 
                         // We must explicitly check if the page key is null when appending, since the
                         // Reddit API informs the end of the list by returning null for page key, but

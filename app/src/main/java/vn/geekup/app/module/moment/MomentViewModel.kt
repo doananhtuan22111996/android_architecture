@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -24,81 +25,11 @@ class MomentViewModel(
     private val momentUseCase: MomentUseCase
 ) : BaseViewModel(networkChange) {
 
-    val moments: MutableLiveData<ArrayList<MomentModelV>> = MutableLiveData()
-    val pagingState: MutableLiveData<PagingState> = MutableLiveData()
-
-    private val localMomentFeeds: ArrayList<MomentModelV> = arrayListOf()
-    private var nextCursor: String? = null
-
-    val pagingMoment: MediatorLiveData<PagingData<MomentModel>> = MediatorLiveData()
-
-    fun getFlowMomentFeeds(date: String = "", isReload: Boolean = false) {
-        if (isReload) {
-            localMomentFeeds.clear()
-            nextCursor = null
-        }
-        if (nextCursor?.isEmpty() == true) return
-        pagingState.value =
-            if (nextCursor != null) PagingState.LoadingMore else PagingState.Loaded
-
-        viewModelScope.launch((Dispatchers.Main)) {
-            momentUseCase.getFlowMomentFeeds(
-                MomentFeedRequestBody(
-                    cursor = nextCursor,
-                    limit = KEY_PAGING_LIMIT_20,
-                    dates = if (date.isNotEmpty()) arrayListOf(date) else null
-                )
-            ).collectLatest {
-                when (it) {
-                    is ResultModel.Success -> {
-                        nextCursor = it.nextCursor
-                        it.data?.toArrayMomentModelV { results ->
-                            localMomentFeeds.addAll(results)
-                            moments.value = localMomentFeeds
-                        }
-                        pagingState.value = PagingState.Loaded
-                    }
-                    is ResultModel.Loading -> {
-                        Timber.e("Moment Network Loading")
-                    }
-                    else -> {
-                        pagingState.value = PagingState.Loaded
-                        executingServerErrorException(it as? ResultModel.ServerErrorException)
-                    }
-                }
-            }
-        }
+    suspend fun fetchPagingNetworkFlow(): Flow<PagingData<MomentModel>> {
+        return momentUseCase.getPagingMomentFeeds().cachedIn(viewModelScope)
     }
 
-
-    fun getPagingMomentFeeds() {
-        viewModelScope.launch((Dispatchers.Main)) {
-//            pagingMoment.addSource(
-//                momentUseCase.getPagingMomentFeeds().asLiveData()
-//            ) {
-//                pagingMoment.value = it
-//            }
-            pagingMoment.addSource(
-                momentUseCase.getPagingLocalMomentFeeds().asLiveData()
-            ) {
-                pagingMoment.value = it
-            }
-//            momentUseCase.getFlowLocalMomentFeeds().collectLatest {
-//                when (it) {
-//                    is ResultModel.Success -> {
-//                        Timber.e("Moment View Model ${it.data?.size ?: 0}")
-//                        pagingState.value = PagingState.Loaded
-//                    }
-//                    is ResultModel.Loading -> {
-//                        Timber.e("Moment DataBase Loading")
-//                    }
-//                    else -> {
-//                        Timber.e("Moment DataBase Error")
-//                        pagingState.value = PagingState.Loaded
-//                        executingServerErrorException(it as? ResultModel.ServerErrorException)
-//                    }
-//                }
-//            }
-        }
+    suspend fun fetchPagingLocalFlow(): Flow<PagingData<MomentModel>> {
+        return momentUseCase.getPagingLocalMomentFeeds().cachedIn(viewModelScope)
     }
 }
