@@ -49,7 +49,6 @@ class MomentDataSource(
             override suspend fun onApi(nextKey: String?): Response<ListResponse<MomentVO>> =
                 aliaApiService.getFlowTravelFeeds(
                     page = nextKey?.toInt() ?: 1,
-                    perPage = 25
                 )
 
             override suspend fun processResponse(request: ListResponse<MomentVO>?): ListResponse<MomentModel> {

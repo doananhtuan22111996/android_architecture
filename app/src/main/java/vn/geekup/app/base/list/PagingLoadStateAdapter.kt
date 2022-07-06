@@ -5,12 +5,11 @@ import android.view.ViewGroup
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
-import vn.geekup.app.base.BaseViewItem
-import vn.geekup.app.databinding.ItemMomentFeed1ImageBinding
 import vn.geekup.app.databinding.ItemPagingStateBinding
 import vn.geekup.app.utils.visible
 
-class PagingLoadStateAdapter : LoadStateAdapter<PagingLoadStateAdapter.PagingStateViewHolder>() {
+class PagingLoadStateAdapter(private val retryFunc: (() -> Unit)? = null) :
+    LoadStateAdapter<PagingLoadStateAdapter.PagingStateViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         loadState: LoadState
@@ -28,10 +27,14 @@ class PagingLoadStateAdapter : LoadStateAdapter<PagingLoadStateAdapter.PagingSta
         holder.bindData()
     }
 
-    inner class PagingStateViewHolder(val viewBinding: ItemPagingStateBinding) :
+    inner class PagingStateViewHolder(private val viewBinding: ItemPagingStateBinding) :
         RecyclerView.ViewHolder(viewBinding.root) {
         fun bindData() {
-            viewBinding.rlParentProgressbar.visible(true)
+            viewBinding.rlParentProgressbar.visible(loadState is LoadState.Loading)
+            viewBinding.lnRetry.visible(loadState is LoadState.Error)
+            viewBinding.btnRetry.setOnClickListener {
+                retryFunc?.invoke()
+            }
         }
     }
 }

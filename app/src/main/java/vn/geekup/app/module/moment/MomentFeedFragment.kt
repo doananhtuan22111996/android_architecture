@@ -45,45 +45,45 @@ class MomentFeedFragment : BaseFragment<MomentViewModel, FragmentMomentFeedBindi
         super.bindViewModel()
 
         lifecycleScope.launchWhenCreated {
-            viewModel.fetchPagingLocalFlow().distinctUntilChanged().collectLatest {
-                Timber.e("Render Data Moment: ${adapterPaging.itemCount} -- Thread: ${Thread.currentThread().name}")
+            viewModel.fetchPagingNetworkFlow().distinctUntilChanged().collectLatest {
                 adapterPaging.submitData(it)
             }
         }
 
         lifecycleScope.launchWhenCreated {
             adapterPaging.loadStateFlow.collect { loadStates ->
-                // Todo Error: ${loadState.refresh is LoadState.Error}
                 if (loadStates.append is LoadState.NotLoading && loadStates.append.endOfPaginationReached) {
-                    fragmentBinding.tvEmpty.visible(adapterPaging.itemCount == 0)
+                    fragmentBinding.isMomentEmpty = adapterPaging.itemCount == 0
                 }
+                fragmentBinding.lnRetry.visible(loadStates.refresh is LoadState.Error)
                 fragmentBinding.swMoments.isRefreshing =
-                    loadStates.mediator?.refresh is LoadState.Loading && adapterPaging.itemCount > 0
+                    loadStates.refresh is LoadState.Loading && adapterPaging.itemCount > 0
             }
         }
     }
 
     private fun initAdapter() {
         adapterPaging = MomentFeedPagingAdapter()
-//        adapterPaging.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-//            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-//                if (positionStart == 0) {
-//                    fragmentBinding.rvMoments.scrollToPosition(0)
-//                }
-//            }
-//        })
     }
 
     private fun initRecyclerView() {
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         fragmentBinding.rvMoments.layoutManager = layoutManager
         fragmentBinding.rvMoments.adapter =
-            adapterPaging.withLoadStateFooter(footer = PagingLoadStateAdapter())
+            adapterPaging.withLoadStateFooter(
+                footer = PagingLoadStateAdapter(retryFunc = {
+                    adapterPaging.retry()
+                }),
+            )
     }
 
     private fun initRefreshLayout() {
         fragmentBinding.swMoments.setOnRefreshListener {
             adapterPaging.refresh()
+        }
+
+        fragmentBinding.btnRetry.setOnClickListener {
+            adapterPaging.retry()
         }
     }
 
