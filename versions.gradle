@@ -35,9 +35,9 @@ versions.kotlin = [
 versions.androidX = [
         coreKTX         : '1.8.0',
         appcompat       : '1.4.2',
-        navigation      : '2.4.2',
+        navigation      : '2.5.0',
         constraintlayout: '2.1.4',
-        lifecycle       : '2.4.1',
+        lifecycle       : '2.5.0',
         recyclerview    : '1.1.0',
         cardview        : '1.0.0',
         splashScreen    : '1.0.0-rc01',
@@ -67,7 +67,7 @@ versions.local = [
 ]
 
 versions.database = [
-        room      : '2.4.2',
+        room: '2.4.2',
 ]
 
 versions.httpClient = [

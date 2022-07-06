@@ -1,8 +1,9 @@
 package vn.geekup.app.application
 
 import android.app.Application
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ProcessLifecycleOwner
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -27,21 +28,26 @@ class AppApplication : Application() {
             }
     }
 
+    private val defaultLifecycleObserver = object : DefaultLifecycleObserver {
+
+        override fun onStart(owner: LifecycleOwner) {
+            super.onStart(owner)
+            //your code here
+        }
+
+        override fun onStop(owner: LifecycleOwner) {
+            super.onStop(owner)
+            //your code here
+        }
+    }
+
     override fun onCreate() {
         super.onCreate()
         instance = this
         setupDebug()
         startKoin()
-    }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    fun appOnForegrounded() {
-        // Handle action app to foreground
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    fun appOnBackgrounded() {
-        // Handle action app to background
+        ProcessLifecycleOwner.get().lifecycle.addObserver(defaultLifecycleObserver)
     }
 
     private fun setupDebug() {

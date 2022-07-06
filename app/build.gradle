@@ -138,6 +138,7 @@ dependencies {
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.androidX.lifecycle}"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:${versions.androidX.lifecycle}"
+    implementation "androidx.lifecycle:lifecycle-extensions:${versions.androidX.lifecycle}"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:${versions.swipeLayout.swiperefreshlayout}"
 
     // Paging
