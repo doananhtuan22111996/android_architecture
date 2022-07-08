@@ -46,15 +46,15 @@ class LoginViewModel(
     }
 
     fun loginWithTravel() {
-        isLoading.value = true
         viewModelScope.launch {
             authUseCase.loginWithTravel().collectLatest {
                 Timber.e("Thread View Model Collect: ${Thread.currentThread().name}")
+                isLoading.value = it is ResultModel.Loading
                 when (it) {
                     is ResultModel.Success -> {
+                        isLoading.value = false
                         authUseCase.saveToken(it.data?.token ?: "")
                         login.value = it.data?.token?.isNotEmpty()
-                        isLoading.value = false
                     }
                     is ResultModel.ServerErrorException -> {
                         isLoading.value = false
