@@ -6,7 +6,7 @@
 
         <variable
             name="fragment"
-            type="vn.geekup.app.module.main.MainFragment" />
+            type="vn.geekup.app.pages.main.MainFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

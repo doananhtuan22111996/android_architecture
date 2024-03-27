@@ -3,13 +3,13 @@ package vn.geekup.app.di
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-import vn.geekup.app.domain.usecase.AuthUseCase
-import vn.geekup.app.domain.usecase.AuthUseCaseImplement
-import vn.geekup.app.domain.usecase.MomentUseCase
-import vn.geekup.app.domain.usecase.MomentUseCaseImplement
-import vn.geekup.app.module.login.LoginViewModel
-import vn.geekup.app.module.moment.MomentViewModel
-import vn.geekup.app.module.root.RootViewModel
+import vn.geekup.domain.usecase.AuthUseCase
+import vn.geekup.domain.usecase.AuthUseCaseImplement
+import vn.geekup.domain.usecase.MomentUseCase
+import vn.geekup.domain.usecase.MomentUseCaseImplement
+import vn.geekup.app.pages.login.LoginViewModel
+import vn.geekup.app.pages.moment.MomentViewModel
+import vn.geekup.app.pages.root.RootViewModel
 import vn.geekup.app.network.NetworkChange
 
 val applicationModules = module {

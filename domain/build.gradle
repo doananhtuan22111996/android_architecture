@@ -5,14 +5,14 @@ plugins {
 }
 
 dependencies {
-    api "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin.kotlinStdlib}"
-    api "com.google.code.gson:gson:${versions.google.gson}"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin.kotlinStdlib}"
+    implementation "com.google.code.gson:gson:${versions.google.gson}"
 
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.reactive.coroutine}"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.reactive.coroutine}"
 
-    api("androidx.paging:paging-common:${versions.androidX.paging}")
+    implementation("androidx.paging:paging-common:${versions.androidX.paging}")
 
-    api "androidx.room:room-common:${versions.database.room}"
+    implementation "androidx.room:room-common:${versions.database.room}"
 }
 
 java {

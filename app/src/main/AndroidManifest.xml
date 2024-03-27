@@ -15,7 +15,7 @@
         android:theme="@style/Theme.AliaMoment">
 
         <activity
-            android:name="vn.geekup.app.module.root.RootActivity"
+            android:name="vn.geekup.app.pages.root.RootActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:theme="@style/Theme.AliaMoment.NoActionBar.SplashBackground"

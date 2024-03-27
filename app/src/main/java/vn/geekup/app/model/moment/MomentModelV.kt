@@ -3,7 +3,7 @@ package vn.geekup.app.model.moment
 import com.google.gson.annotations.SerializedName
 import vn.geekup.app.R
 import vn.geekup.app.base.BaseViewItem
-import vn.geekup.app.domain.model.moment.MomentModel
+import vn.geekup.domain.model.moment.MomentModel
 
 data class MomentModelV(
     val id: Int? = 0,

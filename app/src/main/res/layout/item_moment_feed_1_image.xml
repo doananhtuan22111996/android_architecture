@@ -9,7 +9,7 @@
 
         <variable
             name="moment"
-            type="vn.geekup.app.domain.model.moment.MomentModel" />
+            type="vn.geekup.domain.model.moment.MomentModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

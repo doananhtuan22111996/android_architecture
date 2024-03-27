@@ -6,8 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import timber.log.Timber
-import vn.geekup.app.data.Config.ErrorCode.CODE_999
-import vn.geekup.app.domain.model.general.ResultModel
+import vn.geekup.data.Config.ErrorCode.CODE_999
+import vn.geekup.domain.model.general.ResultModel
 import vn.geekup.app.network.NetworkChange
 
 open class BaseViewModel(

@@ -11,7 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.viewbinding.ViewBinding
 import vn.geekup.app.databinding.FragmentBaseBinding
-import vn.geekup.app.domain.model.general.ResultModel
+import vn.geekup.domain.model.general.ResultModel
 import vn.geekup.app.network.NetworkStatus
 import vn.geekup.app.utils.setupViewClickHideKeyBoard
 

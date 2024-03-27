@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/momentFeedFragment"
-        android:name="vn.geekup.app.module.moment.MomentFeedFragment"
+        android:name="vn.geekup.app.pages.moment.MomentFeedFragment"
         android:label="fragment_feed_moment"
         tools:layout="@layout/fragment_moment_feed" />
 

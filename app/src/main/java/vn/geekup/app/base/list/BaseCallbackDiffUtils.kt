@@ -3,15 +3,10 @@ package vn.geekup.app.base.list
 import androidx.recyclerview.widget.DiffUtil
 import vn.geekup.app.base.BaseViewItem
 
-abstract class BaseCallbackDiffUtils : DiffUtil.Callback {
-
-    private var mOldList: MutableList<BaseViewItem> = arrayListOf()
-    private var mNewList: MutableList<BaseViewItem> = arrayListOf()
-
-    constructor(mOldList: MutableList<BaseViewItem>, mNewList: MutableList<BaseViewItem>) {
-        this.mOldList = mOldList
-        this.mNewList = mNewList
-    }
+abstract class BaseCallbackDiffUtils(
+    private var mOldList: MutableList<BaseViewItem>,
+    private var mNewList: MutableList<BaseViewItem>
+) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int = mOldList.size
 

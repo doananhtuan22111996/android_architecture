@@ -8,7 +8,7 @@ import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import vn.geekup.app.databinding.ActivityBaseBinding
-import vn.geekup.app.domain.model.general.ResultModel
+import vn.geekup.domain.model.general.ResultModel
 import vn.geekup.app.network.NetworkStatus
 import vn.geekup.app.utils.setupViewClickHideKeyBoard
 
